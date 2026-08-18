@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="ablacao">
+  <title>Módulo 3.2 — Do relatório aos cortes | Auditoria de Ablação</title>
+  <script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+  })();
+  </script>
+  <script type="application/json" data-inema-manifest>
+  {
+    "course": "ablacao",
+    "tracks": [
+      { "n": "1", "title": "Por que apagar", "modules": [
+        { "id": "1-1", "title": "Configuracao envelhece", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O metodo de ablacao", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" }
+      ]},
+      { "n": "2", "title": "Como diagnosticar", "modules": [
+        { "id": "2-1", "title": "A taxonomia: o que cada linha e", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "De microgerenciamento a criterio", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" }
+      ]},
+      { "n": "3", "title": "Auditar de verdade", "modules": [
+        { "id": "3-1", "title": "Rodando a skill audit-ablacao", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Do relatorio aos cortes", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" }
+      ]},
+      { "n": "4", "title": "Provar e manter", "modules": [
+        { "id": "4-1", "title": "O plano de ablacao A/B/C", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O ciclo continuo", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" }
+      ]}
+    ]
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/learn.css">
+  <link rel="stylesheet" href="../../assets/curso.css">
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+<a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700">Pular para o conteudo</a>
+
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-14 gap-2">
+      <div class="flex items-center space-x-3 flex-shrink-0">
+        <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+          <span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Auditoria de Ablação</span>
+        </a>
+        <span class="text-neutral-600 hidden sm:inline">|</span>
+        <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline">INEMA.CLUB</a>
+        <span class="text-neutral-600 hidden sm:inline">-</span>
+        <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline">PRO</a>
+      </div>
+      <div class="flex items-center space-x-1">
+        <a href="../trilha1/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Por que apagar</span></a>
+        <a href="../trilha2/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnosticar</span></a>
+        <a href="index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Auditar</span></a>
+        <a href="../trilha4/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Provar e manter</span></a>
+        <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" title="Minha jornada">
+          <span aria-hidden="true">◷</span><span class="hidden xl:inline">Jornada</span><span class="inema-journey-badge hidden" aria-hidden="true"></span>
+        </button>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" aria-label="Alternar tema claro/escuro">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4" aria-label="Trilha de navegacao">
+  <div class="flex items-center space-x-2 text-sm text-neutral-400">
+    <a href="../../index.html" class="hover:text-purple-400">Início</a><span>/</span>
+    <a href="index.html" class="hover:text-purple-400">Trilha 3</a><span>/</span>
+    <span class="text-purple-400">Módulo 3.2</span>
+  </div>
+</nav>
+
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="3-2" data-inema-track="3">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.2</span>
+    <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔧 Do relatório aos cortes: skill é a unidade certa</h1>
+    <p class="text-lg text-neutral-400 max-w-3xl">
+      O relatório aponta. Este módulo é sobre <strong class="text-purple-400">aplicar</strong> — na ordem certa, com
+      volta garantida, e usando a ferramenta que emagrece a config sem perder nada:
+      <strong class="text-purple-400">mover procedimento do <code>CLAUDE.md</code> para uma skill</strong>.
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div>
+      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+    </div>
+    <div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="flex items-center justify-between">
+        <span class="text-sm text-neutral-300 font-semibold">Progresso deste módulo</span>
+        <div data-inema-meter="modulo:3-2" class="inema-meter text-sm" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do modulo 3.2">
+          <span class="inema-meter-pct text-purple-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+
+  <nav data-inema-toc aria-label="Índice da página" class="hidden lg:block sticky top-24 self-start">
+    <p class="text-sm text-neutral-400 mb-3">Seção <span class="inema-toc-pos">1</span> de <span class="inema-toc-total">6</span></p>
+    <ul class="space-y-1 text-sm">
+      <li><a href="#topico-1" class="inema-toc-link text-neutral-400 hover:text-purple-400">1. Separe auditar de aplicar</a></li>
+      <li><a href="#topico-2" class="inema-toc-link text-neutral-400 hover:text-purple-400">2. Ataque na ordem certa</a></li>
+      <li><a href="#topico-3" class="inema-toc-link text-neutral-400 hover:text-purple-400">3. Mova procedimento para skill</a></li>
+      <li><a href="#topico-4" class="inema-toc-link text-neutral-400 hover:text-purple-400">4. Chame a skill direto</a></li>
+      <li><a href="#topico-5" class="inema-toc-link text-neutral-400 hover:text-purple-400">5. Escolha o remédio certo</a></li>
+      <li><a href="#topico-6" class="inema-toc-link text-neutral-400 hover:text-purple-400">6. Aplique suas 3 primeiras mudanças</a></li>
+    </ul>
+  </nav>
+
+  <main id="conteudo" class="inema-prose">
+
+  <!-- ============ TOPICO 1 ============ -->
+  <section id="topico-1" class="mb-16" data-inema-topic="modulo-3-2#topico-1">
+    <div class="flex items-center space-x-4 mb-6">
+      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+      <h2 class="text-2xl font-bold">🔀 Separe auditar de aplicar</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
+      </button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t1-p1">
+      A skill <code class="text-purple-400">audit-ablacao</code> é diagnóstico: ela lê, classifica e propõe, e nunca edita, move, apaga ou commita. Isso não é limitação, é desenho. Aplicar é um <strong class="text-purple-400">pedido separado, em outra sessão</strong> — por dois motivos. Primeiro: diagnóstico feito no mesmo fôlego da mão no teclado sai contaminado pela pressa de mexer; você começa a justificar o corte que já quer dar. Segundo: o relatório precisa continuar existindo <em>intacto</em> depois, para você conferir se o que foi aplicado é mesmo o que foi recomendado. Auditoria que já sai mexendo é auditoria em que você não confia.
+    </p>
+
+    <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🆕</span> Duas palavras antes de seguir</h3>
+      <ul class="space-y-2 text-neutral-300 text-sm">
+        <li><strong class="text-neutral-100">Skill:</strong> uma pasta com um arquivo <code class="text-purple-400">SKILL.md</code> que ensina ao Claude Code um procedimento específico. Ela só é carregada quando a tarefa é aquela — diferente do <code class="text-purple-400">CLAUDE.md</code>, que é lido sempre.</li>
+        <li><strong class="text-neutral-100">Contexto:</strong> a janela de texto que o modelo está "vendo" naquela execução. Tudo que ocupa contexto — inclusive regra que não tem nada a ver com a tarefa — é espaço que sai do trabalho de verdade.</li>
+        <li><strong class="text-neutral-100">Snapshot:</strong> uma cópia congelada do estado atual da sua config, à qual você consegue voltar com um comando. Um commit de git é o snapshot mais barato que existe.</li>
+      </ul>
+    </div>
+
+    <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Nunca corte sem snapshot</h3>
+      <p class="text-neutral-300 text-sm mb-3">
+        Ablação só é método porque é <strong class="text-red-300">reversível</strong>. Se você não consegue voltar em um comando ao estado anterior, você não está fazendo um experimento — está torcendo. E a primeira vez que um corte quebrar alguma coisa sem volta, você abandona o processo inteiro e nunca mais mexe na config.
+      </p>
+      <p class="text-neutral-300 text-sm">
+        Regra dura: <strong class="text-red-300">nenhuma linha sai antes de o commit "antes" existir.</strong> Sem git, no mínimo um <code class="text-red-300">cp -r ~/.claude ~/.claude.bak-AAAA-MM-DD</code>.
+      </p>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t1-p2">
+      Colocar a config sob git é trabalho de trinta segundos e paga em toda a trilha 4, quando você for comparar as versões A, B e C. Faça isso na pasta da config global (<code class="text-purple-400">~/.claude</code>) ou na raiz do projeto, dependendo do escopo que você auditou.
+    </p>
+
+    <div class="bg-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">📦</span> Copiar e rodar: config sob git</h3>
+      <p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> ter um ponto de retorno nomeado antes de qualquer corte.</p>
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300"># escopo global — a pasta de config do Claude Code
+cd ~/.claude
+
+git init -b main            # so na primeira vez
+git add -A
+git commit -m "antes da ablacao"
+
+# escopo projeto — a config que anda com o repo
+# cd ~/projetos/&lt;seu-projeto&gt;
+# git add CLAUDE.md .claude/
+# git commit -m "antes da ablacao"</pre>
+      </div>
+      <div class="bg-dark-700/50 rounded-lg p-4">
+        <p class="text-sm text-neutral-300"><strong class="text-purple-400">Como verificar:</strong> rode <code class="text-purple-400">git status</code>. Se a saída disser <code class="text-purple-400">nothing to commit, working tree clean</code>, seu ponto de retorno existe. Teste a volta antes de precisar dela: <code class="text-purple-400">git diff</code> depois de um corte mostra exatamente o que saiu, e <code class="text-purple-400">git checkout -- CLAUDE.md</code> desfaz.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+        <h4 class="font-bold text-purple-400 mb-4">✓ Sessão de aplicação saudável</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Sessão nova, com o relatório em <code>.md</code> aberto ao lado</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Commit "antes" já feito e <code>git status</code> limpo</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Uma mudança por vez, com o trecho do relatório colado no pedido</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>O relatório permanece intocado — ele é a prova do que foi decidido</span></li>
+        </ul>
+      </div>
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h4 class="font-bold text-red-400 mb-4">✗ Sinais de que vai dar errado</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Já que você está aqui, aplica tudo" na mesma sessão da auditoria</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Config fora do git, "depois eu versiono"</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Dez mudanças num commit só — se algo quebrar, você não sabe qual foi</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Relatório sobrescrito pela própria sessão que aplicou os cortes</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex justify-start mt-6">
+      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ TOPICO 2 ============ -->
+  <section id="topico-2" class="mb-16" data-inema-topic="modulo-3-2#topico-2">
+    <div class="flex items-center space-x-4 mb-6">
+      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+      <h2 class="text-2xl font-bold">🎯 Ataque na ordem certa</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
+      </button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t2-p1">
+      A seção 10 do relatório entrega o <strong class="text-purple-400">Top 10 por impacto ÷ risco</strong> — as mudanças que devolvem mais contexto pelo menor risco de quebrar comportamento. Mas ela não é uma fila para você atacar de cima a baixo no mesmo dia. A ordem prática é por <em>categoria de risco</em>, em quatro ondas, e ela existe para construir confiança no processo antes de você chegar perto do que dá medo.
+    </p>
+
+    <div class="space-y-6 mb-6">
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+          <h4 class="font-semibold text-white mb-2">Onda 1 — Redundâncias e conflitos</h4>
+          <p class="text-sm text-neutral-400 mb-3">Risco quase zero. Ganho imediato.</p>
+          <p class="text-neutral-300 text-sm">
+            A mesma regra escrita em três lugares vira uma só; duas regras que se contradizem viram uma decisão. Você não está removendo comportamento — está removendo <em>cópias</em>. Ninguém perde nada, e a config encolhe visivelmente já no primeiro dia. Bônus: acaba o dia em que uma cópia muda e as outras não.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+          <h4 class="font-semibold text-white mb-2">Onda 2 — Legado / obsoleta</h4>
+          <p class="text-sm text-neutral-400 mb-3">Risco baixo, mas exige uma checagem.</p>
+          <p class="text-neutral-300 text-sm">
+            Instruções datadas: conserto de fraqueza de um modelo que já saiu de cena, exceção com data de 2024, contorno de bug já corrigido. A checagem é simples — o motivo original ainda existe? Se você não consegue nomear o motivo, é forte indício de que ele morreu.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+          <h4 class="font-semibold text-white mb-2">Onda 3 — Microgerenciamento → critério</h4>
+          <p class="text-sm text-neutral-400 mb-3">Risco médio: você troca a forma, não remove a intenção.</p>
+          <p class="text-neutral-300 text-sm">
+            O passo a passo rígido de doze etapas vira "tarefa + guardrails + critério de saída". A intenção sobrevive inteira; o que você devolve é a liberdade de o modelo achar um caminho melhor que o seu. Aqui já vale observar o comportamento por alguns dias antes de dar por boa.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+          <h4 class="font-semibold text-white mb-2">Onda 4 — O que ficou em <code>TEST</code></h4>
+          <p class="text-sm text-neutral-400 mb-3">Risco desconhecido — por isso é a última.</p>
+          <p class="text-neutral-300 text-sm">
+            <code class="text-purple-400">TEST</code> é a decisão que a skill toma quando fica em dúvida: pode ser peso morto, pode estar segurando algo. Essas não se aplicam por convicção, se aplicam por experimento — e o experimento é o plano A/B/C da trilha 4. Adiar essa onda não é covardia, é sequência.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Por que começar pelo risco quase zero</h3>
+      <p class="text-neutral-300 mb-4">
+        A tentação é começar pelo maior corte — aquele bloco de 80 linhas que você sempre achou inútil. É o <strong class="text-purple-400">corte heroico</strong>, e ele é a armadilha clássica: uma coisa quebra, você não sabe qual das 80 linhas era necessária, reverte tudo e conclui que "a config estava certa do jeito que estava".
+      </p>
+      <ul class="space-y-2 text-neutral-300">
+        <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Ondas 1 e 2 te dão dias de evidência de que cortar não quebra — isso é o que compra sua confiança para as ondas 3 e 4</span></li>
+        <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Mudanças pequenas e separadas por commit deixam o culpado óbvio quando algo muda de comportamento</span></li>
+        <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Não estamos maximizando redução — o alvo é <strong class="text-purple-400">qualidade + autonomia + verificabilidade ÷ complexidade</strong></span></li>
+      </ul>
+    </div>
+
+    <div class="overflow-x-auto mb-6">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-dark-600 text-left">
+            <th class="py-3 pr-4 text-neutral-400 font-semibold">Onda</th>
+            <th class="py-3 pr-4 text-neutral-400 font-semibold">Categoria</th>
+            <th class="py-3 pr-4 text-neutral-400 font-semibold">Risco</th>
+            <th class="py-3 pr-4 text-neutral-400 font-semibold">Como confirmar que deu certo</th>
+            <th class="py-3 text-neutral-400 font-semibold">Quando aplicar</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-dark-600">
+          <tr><td class="py-3 pr-4 text-purple-400 font-semibold">1</td><td class="py-3 pr-4 text-neutral-300">Redundância / conflito</td><td class="py-3 pr-4 text-neutral-300">quase zero</td><td class="py-3 pr-4 text-neutral-300">a regra continua existindo — em um lugar só</td><td class="py-3 text-neutral-300">primeira sessão</td></tr>
+          <tr><td class="py-3 pr-4 text-purple-400 font-semibold">2</td><td class="py-3 pr-4 text-neutral-300">Legado / obsoleta</td><td class="py-3 pr-4 text-neutral-300">baixo</td><td class="py-3 pr-4 text-neutral-300">você não consegue nomear o motivo original</td><td class="py-3 text-neutral-300">primeira sessão</td></tr>
+          <tr><td class="py-3 pr-4 text-purple-400 font-semibold">3</td><td class="py-3 pr-4 text-neutral-300">Microgerenciamento → critério</td><td class="py-3 pr-4 text-neutral-300">médio</td><td class="py-3 pr-4 text-neutral-300">a saída continua passando no critério novo</td><td class="py-3 text-neutral-300">depois de dias de uso real</td></tr>
+          <tr><td class="py-3 pr-4 text-purple-400 font-semibold">4</td><td class="py-3 pr-4 text-neutral-300"><code>TEST</code></td><td class="py-3 pr-4 text-neutral-300">desconhecido</td><td class="py-3 pr-4 text-neutral-300">só por experimento A/B/C</td><td class="py-3 text-neutral-300">trilha 4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-start mt-6">
+      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ TOPICO 3 ============ -->
+  <section id="topico-3" class="mb-16" data-inema-topic="modulo-3-2#topico-3">
+    <div class="flex items-center space-x-4 mb-6">
+      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+      <h2 class="text-2xl font-bold">📦 Mova procedimento para skill</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
+      </button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t3-p1">
+      Este é o argumento central do módulo. Regra que vive no <code class="text-purple-400">CLAUDE.md</code> é lida em <strong class="text-purple-400">toda</strong> execução — inclusive nas ~90% de tarefas que não têm nada a ver com ela. A <em>mesma</em> regra dentro de uma skill só custa contexto quando a tarefa é aquela. Isso é <strong class="text-purple-400">load-on-demand</strong>: carregar sob demanda, em vez de sempre. Mover procedimento do <code class="text-purple-400">CLAUDE.md</code> para uma skill é a forma mais barata de emagrecer a config <em>sem perder nada</em> — é exatamente o que o relatório chama de <code class="text-purple-400">MOVE</code> e de <code class="text-purple-400">LOAD-ON-DEMAND</code>.
+    </p>
+
+    <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+      <svg viewBox="0 0 1000 300" class="w-full h-auto" role="img" aria-label="Comparacao de custo de contexto. Em cima, dez execucoes de tarefas diferentes, todas com uma barra roxa larga representando o CLAUDE.md gordo lido integralmente em cada uma. Embaixo, as mesmas dez execucoes com uma barra roxa fina de CLAUDE.md minimo, e apenas uma delas carrega tambem um bloco ciano de skill sob demanda.">
+        <defs>
+          <linearGradient id="m32a-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+          <filter id="m32a-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <pattern id="m32a-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.12"/></pattern>
+        </defs>
+        <rect x="0" y="0" width="1000" height="300" fill="url(#m32a-grid)"/>
+
+        <text x="30" y="34" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="14" font-weight="600">ANTES — procedimento mora no CLAUDE.md: lido nas 10 execuções</text>
+        <g>
+          <rect x="30" y="48" width="920" height="72" rx="12" fill="none" stroke="#a855f7" stroke-width="1.4" opacity="0.35" stroke-dasharray="8 6"/>
+          <g font-family="Inter,sans-serif" font-size="10" fill="#c4b5fd">
+            <g fill="#1a1230" stroke="#a855f7" stroke-width="1.6"><rect x="46" y="62" width="70" height="44" rx="7"/><rect x="136" y="62" width="70" height="44" rx="7"/><rect x="226" y="62" width="70" height="44" rx="7"/><rect x="316" y="62" width="70" height="44" rx="7"/><rect x="406" y="62" width="70" height="44" rx="7"/><rect x="496" y="62" width="70" height="44" rx="7"/><rect x="586" y="62" width="70" height="44" rx="7"/><rect x="676" y="62" width="70" height="44" rx="7"/><rect x="766" y="62" width="70" height="44" rx="7"/><rect x="856" y="62" width="70" height="44" rx="7"/></g>
+            <g fill="#a855f7" opacity="0.75" stroke="none"><rect x="50" y="66" width="62" height="24" rx="4"/><rect x="140" y="66" width="62" height="24" rx="4"/><rect x="230" y="66" width="62" height="24" rx="4"/><rect x="320" y="66" width="62" height="24" rx="4"/><rect x="410" y="66" width="62" height="24" rx="4"/><rect x="500" y="66" width="62" height="24" rx="4"/><rect x="590" y="66" width="62" height="24" rx="4"/><rect x="680" y="66" width="62" height="24" rx="4"/><rect x="770" y="66" width="62" height="24" rx="4"/><rect x="860" y="66" width="62" height="24" rx="4"/></g>
+            <g text-anchor="middle"><text x="81" y="102">exec 1</text><text x="171" y="102">exec 2</text><text x="261" y="102">exec 3</text><text x="351" y="102">exec 4</text><text x="441" y="102">exec 5</text><text x="531" y="102">exec 6</text><text x="621" y="102">exec 7</text><text x="711" y="102">exec 8</text><text x="801" y="102">exec 9</text><text x="891" y="102">exec 10</text></g>
+          </g>
+        </g>
+
+        <text x="30" y="164" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="14" font-weight="600">DEPOIS — procedimento virou skill: carregado só na execução que é daquela tarefa</text>
+        <g>
+          <rect x="30" y="178" width="920" height="80" rx="12" fill="none" stroke="#a855f7" stroke-width="1.4" opacity="0.35" stroke-dasharray="8 6"/>
+          <g font-family="Inter,sans-serif" font-size="10" fill="#c4b5fd">
+            <g fill="#1a1230" stroke="#a855f7" stroke-width="1.6"><rect x="46" y="192" width="70" height="52" rx="7"/><rect x="136" y="192" width="70" height="52" rx="7"/><rect x="226" y="192" width="70" height="52" rx="7"/><rect x="406" y="192" width="70" height="52" rx="7"/><rect x="496" y="192" width="70" height="52" rx="7"/><rect x="586" y="192" width="70" height="52" rx="7"/><rect x="676" y="192" width="70" height="52" rx="7"/><rect x="766" y="192" width="70" height="52" rx="7"/><rect x="856" y="192" width="70" height="52" rx="7"/></g>
+            <g filter="url(#m32a-glow)"><rect x="316" y="192" width="70" height="52" rx="7" fill="#1a1230" stroke="url(#m32a-grad)" stroke-width="2"/></g>
+            <g fill="#a855f7" opacity="0.75" stroke="none"><rect x="50" y="196" width="62" height="7" rx="3"/><rect x="140" y="196" width="62" height="7" rx="3"/><rect x="230" y="196" width="62" height="7" rx="3"/><rect x="320" y="196" width="62" height="7" rx="3"/><rect x="410" y="196" width="62" height="7" rx="3"/><rect x="500" y="196" width="62" height="7" rx="3"/><rect x="590" y="196" width="62" height="7" rx="3"/><rect x="680" y="196" width="62" height="7" rx="3"/><rect x="770" y="196" width="62" height="7" rx="3"/><rect x="860" y="196" width="62" height="7" rx="3"/></g>
+            <rect x="320" y="207" width="62" height="20" rx="4" fill="#38bdf8" opacity="0.65" stroke="none"/>
+            <g text-anchor="middle"><text x="81" y="238">exec 1</text><text x="171" y="238">exec 2</text><text x="261" y="238">exec 3</text><text x="351" y="238" fill="#9ad6ff">exec 4 · skill</text><text x="441" y="238">exec 5</text><text x="531" y="238">exec 6</text><text x="621" y="238">exec 7</text><text x="711" y="238">exec 8</text><text x="801" y="238">exec 9</text><text x="891" y="238">exec 10</text></g>
+          </g>
+        </g>
+
+        <g font-family="Inter,sans-serif" font-size="12">
+          <rect x="30" y="272" width="14" height="10" rx="3" fill="#a855f7" opacity="0.75"/><text x="52" y="281" fill="#c4b5fd">CLAUDE.md (sempre lido)</text>
+          <rect x="270" y="272" width="14" height="10" rx="3" fill="#38bdf8" opacity="0.65"/><text x="292" y="281" fill="#9ad6ff">skill (carregada sob demanda)</text>
+        </g>
+      </svg>
+    </div>
+    <p class="text-sm text-neutral-400 mb-6">
+      <strong class="text-neutral-300">O que olhar:</strong> o bloco roxo não sumiu — ele encolheu e o resto virou o bloco ciano, que aparece <em>uma vez</em> em vez de dez. Nenhuma instrução foi perdida; o que mudou foi <em>quantas vezes</em> você paga por ela. É por isso que <code class="text-purple-400">MOVE</code> costuma render mais que <code class="text-purple-400">REMOVE</code> nas primeiras ondas: você emagrece sem precisar decidir se alguma coisa é dispensável.
+    </p>
+
+    <div class="bg-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🧪</span> Copiar e rodar: criar a skill e recortar o bloco</h3>
+      <p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> tirar um procedimento do <code class="text-purple-400">CLAUDE.md</code> e colocá-lo numa skill que só carrega quando é chamada.</p>
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300"># 1. criar a pasta da skill (global; use .claude/skills/ para so o projeto)
+mkdir -p ~/.claude/skills/&lt;nome-da-skill&gt;
+
+# 2. escrever o SKILL.md — o frontmatter e o bloco YAML entre --- no topo,
+#    que da nome e descricao a skill (e o que o Claude Code le pra saber que ela existe)
+cat &gt; ~/.claude/skills/&lt;nome-da-skill&gt;/SKILL.md &lt;&lt;'EOF'
+---
+name: &lt;nome-da-skill&gt;
+description: &lt;quando usar, em uma frase, com as palavras que voce realmente usa&gt;
+---
+
+# &lt;Nome da skill&gt;
+
+&lt;cole aqui o bloco procedimental que estava no CLAUDE.md, sem mudar nada&gt;
+EOF
+
+# 3. remover o bloco do CLAUDE.md (agora ele vive na skill)
+#    edite o arquivo e apague as linhas movidas — deixe UM ponteiro curto se precisar:
+#    "Procedimento de &lt;assunto&gt;: /&lt;nome-da-skill&gt;"
+
+# 4. registrar o antes/depois
+wc -l ~/.claude/CLAUDE.md
+git -C ~/.claude add -A &amp;&amp; git -C ~/.claude commit -m "move: &lt;assunto&gt; do CLAUDE.md para skill"</pre>
+      </div>
+      <div class="bg-dark-700/50 rounded-lg p-4">
+        <p class="text-sm text-neutral-300"><strong class="text-purple-400">Como verificar:</strong> reinicie a sessão, chame <code class="text-purple-400">/&lt;nome-da-skill&gt;</code> e confirme que o procedimento responde igual ao que respondia antes. Depois rode uma tarefa <em>que não é aquela</em> e confirme que o comportamento também não mudou — é isso que prova que você moveu, e não perdeu.</p>
+        <p class="text-sm text-neutral-400 mt-3"><strong class="text-neutral-300">Cuidado com o ponteiro:</strong> se o "ponteiro curto" no <code class="text-purple-400">CLAUDE.md</code> começar a crescer e reexplicar o procedimento, você recriou o problema. Uma linha, no máximo — ou nenhuma, se você pretende invocar direto (tópico 4).</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+        <h4 class="font-bold text-purple-400 mb-4">✓ Fica no <code>CLAUDE.md</code> — verdade SEMPRE</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Identidade</strong> — o que é este projeto, quem é o público, qual o domínio</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Guardrails</strong> — o que nunca fazer, limites que valem em qualquer tarefa</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Fontes de verdade</strong> — onde moram as chaves, os dados, o arquivo canônico</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Segurança e compliance</strong> — o que não pode vazar, o que não pode ser publicado</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><strong>Convenções internas</strong> que o modelo não tem como inferir sozinho</span></li>
+        </ul>
+      </div>
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h4 class="font-bold text-red-400 mb-4">✗ Sai do <code>CLAUDE.md</code> — vira skill</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Procedimento</strong> — "para fazer X, siga estes passos"</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Formato</strong> — gabarito de saída, estrutura de documento, template</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Receita</strong> — sequência de comandos de deploy, publicação, build</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Integração</strong> — como falar com uma API/ferramenta específica</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Roteamento</strong> — "quando eu pedir X, use a skill Y" (veja o tópico 4)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex justify-start mt-6">
+      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ TOPICO 4 ============ -->
+  <section id="topico-4" class="mb-16" data-inema-topic="modulo-3-2#topico-4">
+    <div class="flex items-center space-x-4 mb-6">
+      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+      <h2 class="text-2xl font-bold">⌨️ Chame a skill direto</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
+      </button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t4-p1">
+      Uma skill normalmente é acionada por <strong class="text-purple-400">gatilho</strong> — o modelo compara a sua frase com o campo <code class="text-purple-400">description</code> do frontmatter e decide se aquela skill se aplica. Isso funciona, mas é uma loteria: se você escreveu "guia" e a descrição diz "landing page", a skill não dispara. Invocação explícita (<code class="text-purple-400">/nome-da-skill</code>) elimina a loteria por completo: você para de depender de a descrição casar com a sua frase.
+    </p>
+
+    <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Invocação explícita mata a regra de roteamento</h3>
+      <p class="text-neutral-300 mb-4">
+        Quando várias skills competem pelo mesmo assunto, o reflexo é escrever no <code class="text-purple-400">CLAUDE.md</code>: <em>"quando eu pedir um guia, use a skill X, não a Y"</em>. Essa linha é ela mesma mais uma linha zumbi — lida em toda execução, existindo só para desempatar um caso raro. Invocação explícita é o desempate, e é de graça: você digita <code class="text-purple-400">/x</code> e acabou a disputa.
+      </p>
+      <ul class="space-y-2 text-neutral-300">
+        <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Cada regra de roteamento removida é contexto devolvido em <strong>todas</strong> as execuções</span></li>
+        <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Se você <em>sabe</em> o que quer, dizer o nome é sempre mais barato e mais preciso que descrever</span></li>
+        <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Gatilho continua útil para quando você <em>não</em> sabe que a skill existe — mas não precisa ser reforçado por regra global</span></li>
+      </ul>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t4-p2">
+      Onde a skill mora também importa. Skill em <code class="text-purple-400">~/.claude/skills/</code> vale para tudo
+      que você faz; skill em <code class="text-purple-400">.claude/skills/</code> dentro do projeto
+      <strong class="text-purple-400">versiona junto com o código</strong>. Isso muda o regime de manutenção: o
+      procedimento anda com o repo, entra no pull request, é revisável por outra pessoa, e — crucialmente — não vaza
+      para os outros projetos. Uma receita de deploy específica do projeto A não tem por que ocupar contexto quando
+      você está trabalhando no projeto B.
+    </p>
+
+    <div class="overflow-x-auto mb-6">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-dark-600 text-left">
+            <th class="py-3 pr-4 text-neutral-400 font-semibold">Onde a instrução mora</th>
+            <th class="py-3 pr-4 text-neutral-400 font-semibold">Custo de contexto</th>
+            <th class="py-3 pr-4 text-neutral-400 font-semibold">Escopo</th>
+            <th class="py-3 text-neutral-400 font-semibold">Revisável em PR</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-dark-600">
+          <tr><td class="py-3 pr-4 text-neutral-300"><code>~/.claude/CLAUDE.md</code></td><td class="py-3 pr-4 text-red-400">toda execução, em todo projeto</td><td class="py-3 pr-4 text-neutral-300">tudo</td><td class="py-3 text-neutral-300">não</td></tr>
+          <tr><td class="py-3 pr-4 text-neutral-300"><code>CLAUDE.md</code> do projeto</td><td class="py-3 pr-4 text-neutral-300">toda execução naquele projeto</td><td class="py-3 pr-4 text-neutral-300">o projeto</td><td class="py-3 text-neutral-300">sim</td></tr>
+          <tr><td class="py-3 pr-4 text-neutral-300"><code>~/.claude/skills/</code></td><td class="py-3 pr-4 text-purple-400">só quando invocada/acionada</td><td class="py-3 pr-4 text-neutral-300">tudo</td><td class="py-3 text-neutral-300">não</td></tr>
+          <tr><td class="py-3 pr-4 text-neutral-300"><code>.claude/skills/</code> do projeto</td><td class="py-3 pr-4 text-purple-400">só quando invocada/acionada</td><td class="py-3 pr-4 text-neutral-300">o projeto</td><td class="py-3 text-purple-400">sim</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-purple-400 mb-4">Conceitos-chave</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Gatilho</div><p class="text-xs text-neutral-400">Descrição casa com sua frase — ou não</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Invocação direta</div><p class="text-xs text-neutral-400"><code>/nome</code> — sem loteria</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Regra zumbi</div><p class="text-xs text-neutral-400">Roteamento no CLAUDE.md é uma delas</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-purple-400 font-semibold text-sm mb-1">Skill de projeto</div><p class="text-xs text-neutral-400">Versiona no repo, não vaza</p></div>
+      </div>
+    </div>
+
+    <div class="flex justify-start mt-6">
+      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ TOPICO 5 ============ -->
+  <section id="topico-5" class="mb-16" data-inema-topic="modulo-3-2#topico-5">
+    <div class="flex items-center space-x-4 mb-6">
+      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+      <h2 class="text-2xl font-bold">💊 Escolha o remédio certo</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
+      </button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t5-p1">
+      Quando o modelo tropeça, o reflexo é despejar mais uma regra no <code class="text-purple-400">CLAUDE.md</code>.
+      No ciclo do Boris existem <strong class="text-purple-400">três remédios</strong>, e escolher o certo é o que
+      impede a config de voltar a engordar: <strong class="text-purple-400">prompt melhor</strong> (a instrução estava
+      obscura) · <strong class="text-purple-400">skill</strong> (falta procedimento repetível) ·
+      <strong class="text-purple-400">MCP</strong> (falta contexto ou acesso que ele não alcança). MCP é o protocolo
+      pelo qual o Claude Code conversa com uma fonte externa — um banco, uma API, um sistema de arquivos remoto — que
+      ele não teria como enxergar sozinho.
+    </p>
+
+    <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+      <svg viewBox="0 0 1000 320" class="w-full h-auto" role="img" aria-label="Arvore de decisao. No topo, uma caixa tropeco. Dela sai uma pergunta: a instrucao estava clara? Se nao, ramo para prompt melhor. Se sim, segunda pergunta: ele tinha acesso a informacao? Se nao, ramo para MCP. Se sim, terceira pergunta: e um procedimento que se repete? Se sim, ramo destacado para skill. Se nao, ramo para nao conserte ainda, observe de novo.">
+        <defs>
+          <linearGradient id="m32b-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+          <filter id="m32b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <pattern id="m32b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.12"/></pattern>
+          <marker id="m32b-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"/></marker>
+          <marker id="m32b-ahc" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"/></marker>
+        </defs>
+        <rect x="0" y="0" width="1000" height="320" fill="url(#m32b-grid)"/>
+
+        <g font-family="Inter,sans-serif">
+          <rect x="410" y="18" width="180" height="42" rx="12" fill="#1a1230" stroke="#a855f7" stroke-width="2"/>
+          <text x="500" y="44" text-anchor="middle" fill="#e9d5ff" font-size="14" font-weight="600">o modelo tropeçou</text>
+
+          <path d="M500,60 L500,88" stroke="#c084fc" stroke-width="1.8" marker-end="url(#m32b-ah)" fill="none"/>
+          <rect x="360" y="88" width="280" height="38" rx="10" fill="#131a26" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="500" y="112" text-anchor="middle" fill="#9ad6ff" font-size="13">a instrução estava clara?</text>
+
+          <path d="M360,107 L200,107 L200,150" stroke="#c084fc" stroke-width="1.6" fill="none" marker-end="url(#m32b-ah)" opacity="0.8"/>
+          <text x="272" y="99" text-anchor="middle" fill="#c4b5fd" font-size="11">não</text>
+          <rect x="110" y="150" width="180" height="46" rx="12" fill="#1a1230" stroke="#a855f7" stroke-width="2"/>
+          <text x="200" y="171" text-anchor="middle" fill="#e9d5ff" font-size="13" font-weight="600">prompt melhor</text>
+          <text x="200" y="188" text-anchor="middle" fill="#c4b5fd" font-size="10.5">reescreva o pedido, não a config</text>
+
+          <path d="M500,126 L500,152" stroke="#c084fc" stroke-width="1.8" marker-end="url(#m32b-ah)" fill="none"/>
+          <text x="520" y="144" fill="#c4b5fd" font-size="11">sim</text>
+          <rect x="360" y="152" width="280" height="38" rx="10" fill="#131a26" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="500" y="176" text-anchor="middle" fill="#9ad6ff" font-size="13">ele tinha acesso à informação?</text>
+
+          <path d="M640,171 L800,171 L800,214" stroke="#c084fc" stroke-width="1.6" fill="none" marker-end="url(#m32b-ah)" opacity="0.8"/>
+          <text x="726" y="163" text-anchor="middle" fill="#c4b5fd" font-size="11">não</text>
+          <rect x="710" y="214" width="180" height="46" rx="12" fill="#1a1230" stroke="#a855f7" stroke-width="2"/>
+          <text x="800" y="235" text-anchor="middle" fill="#e9d5ff" font-size="13" font-weight="600">MCP</text>
+          <text x="800" y="252" text-anchor="middle" fill="#c4b5fd" font-size="10.5">dê acesso, não instrução</text>
+
+          <path d="M500,190 L500,214" stroke="#c084fc" stroke-width="1.8" marker-end="url(#m32b-ah)" fill="none"/>
+          <text x="520" y="208" fill="#c4b5fd" font-size="11">sim</text>
+          <rect x="360" y="214" width="280" height="38" rx="10" fill="#131a26" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="500" y="238" text-anchor="middle" fill="#9ad6ff" font-size="13">é procedimento que se repete?</text>
+
+          <path d="M500,252 L500,272" stroke="#c084fc" stroke-width="1.8" marker-end="url(#m32b-ah)" fill="none"/>
+          <text x="520" y="268" fill="#c4b5fd" font-size="11">sim</text>
+          <g filter="url(#m32b-glow)"><rect x="380" y="272" width="240" height="42" rx="12" fill="#1a1230" stroke="url(#m32b-grad)" stroke-width="2"/></g>
+          <text x="500" y="290" text-anchor="middle" fill="#f3e8ff" font-size="13.5" font-weight="600">skill</text>
+          <text x="500" y="306" text-anchor="middle" fill="#c4b5fd" font-size="10.5">procedimento com fronteira, nome e escopo</text>
+
+          <path d="M360,233 L200,233 L200,258" stroke="#38bdf8" stroke-width="1.6" fill="none" marker-end="url(#m32b-ahc)" opacity="0.8"/>
+          <text x="272" y="225" text-anchor="middle" fill="#9ad6ff" font-size="11">não</text>
+          <rect x="90" y="258" width="220" height="46" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="200" y="279" text-anchor="middle" fill="#9ad6ff" font-size="13" font-weight="600">não conserte ainda</text>
+          <text x="200" y="296" text-anchor="middle" fill="#9ad6ff" font-size="10.5">espere a falha se repetir</text>
+        </g>
+      </svg>
+    </div>
+    <p class="text-sm text-neutral-400 mb-6">
+      <strong class="text-neutral-300">O que olhar:</strong> nenhum dos quatro caminhos termina em "escreva mais uma
+      linha no <code class="text-purple-400">CLAUDE.md</code>". E repare no ramo ciano à esquerda: falha que aconteceu
+      <em>uma vez</em> não é remédio nenhum — a regra de reintrodução manda esperar a mesma falha se repetir antes de
+      devolver qualquer instrução. Metade das linhas zumbis de uma config nasceu de um tropeço único.
+    </p>
+
+    <div class="space-y-4 mb-6">
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h4 class="font-semibold text-purple-400 mb-2">Tropeço → prompt melhor</h4>
+        <p class="text-neutral-300 text-sm">
+          Você pediu "melhora esse texto" e recebeu uma reescrita completa que perdeu o seu tom. O modelo não errou:
+          "melhorar" não significa nada específico. O conserto é no pedido — "corrija gramática e corte redundância,
+          preservando as escolhas de palavra" — não na config. Instrução obscura consertada com regra global vira uma
+          regra global obscura.
+        </p>
+      </div>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h4 class="font-semibold text-purple-400 mb-2">Tropeço → skill</h4>
+        <p class="text-neutral-300 text-sm">
+          Toda vez que você publica um projeto, precisa lembrar o modelo da mesma sequência: guia em
+          <code class="text-purple-400">guia/</code>, nunca na raiz; nome do repo = nome da pasta; Pages via Actions.
+          É a terceira vez que você reexplica. Isso é procedimento repetível com contorno claro — vira skill, e você
+          chama <code class="text-purple-400">/publicar</code> quando precisa.
+        </p>
+      </div>
+      <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+        <h4 class="font-semibold text-purple-400 mb-2">Tropeço → MCP</h4>
+        <p class="text-neutral-300 text-sm">
+          Você pede uma análise dos pedidos do último trimestre e o modelo inventa números plausíveis. Nenhuma regra
+          resolve isso, porque o problema não é comportamento — é que os dados estão num banco que ele não alcança.
+          O remédio é dar acesso (um servidor MCP para o banco), não escrever "não invente dados" no
+          <code class="text-purple-400">CLAUDE.md</code>.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🧹</span> Skill é fácil de auditar — e de aposentar</h3>
+      <p class="text-neutral-300 text-sm mb-3">
+        Uma skill tem <strong class="text-neutral-100">fronteira, nome e escopo</strong>. Isso significa que ela é uma
+        unidade que você consegue segurar na mão: dá para renomear a pasta, rodar uma semana sem ela e medir se alguma
+        coisa piorou. É ablação em escala de uma unidade inteira.
+      </p>
+      <p class="text-neutral-300 text-sm">
+        Desativar "aquele parágrafo do meio do <code class="text-purple-400">CLAUDE.md</code>" é bem mais difícil: ele
+        não tem nome, não tem fronteira clara, você não sabe quais tarefas dependiam dele, e nada acusa quando ele
+        some. Por isso a mesma instrução, dentro de uma skill, é <em>mais barata de manter</em> — não só mais barata
+        de rodar.
+      </p>
+    </div>
+
+    <!-- CHECAGEM LEVE -->
+    <div data-inema-check="modulo-3-2#q1" class="inema-check mt-8 bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6">
+      <p class="font-medium mb-4">Checagem rápida (não bloqueia nada): pela terceira semana seguida, você reexplica ao modelo a mesma sequência de 8 passos para publicar um projeto. Qual é o remédio certo?</p>
+      <div class="inema-check-options space-y-2">
+        <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Escrever os 8 passos no <code>CLAUDE.md</code>, para ele nunca mais esquecer</button>
+        <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Criar uma skill com os 8 passos e chamá-la direto quando for publicar</button>
+        <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Instalar um MCP de deploy, porque falta acesso à ferramenta de publicação</button>
+      </div>
+      <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="flex justify-start mt-6">
+      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ TOPICO 6 ============ -->
+  <section id="topico-6" class="mb-16" data-inema-topic="modulo-3-2#topico-6">
+    <div class="flex items-center space-x-4 mb-6">
+      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+      <h2 class="text-2xl font-bold">🛠️ Aplique suas 3 primeiras mudanças</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
+      </button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t6-p1">
+      O exercício deste módulo é curto e concreto: aplicar as <strong class="text-purple-400">3 primeiras mudanças do
+      Top 10</strong> do seu relatório, numa <strong class="text-purple-400">sessão nova</strong>, com a config sob git —
+      e pelo menos uma delas sendo um <code class="text-purple-400">MOVE</code> de bloco procedimental do
+      <code class="text-purple-400">CLAUDE.md</code> para uma skill. Uma mudança por commit. Registre o antes e o
+      depois em duas métricas: número de linhas e número de regras.
+    </p>
+
+    <div class="bg-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">📏</span> Copiar e rodar: medir antes e depois</h3>
+      <p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> ter número, não impressão. "Ficou mais enxuto" não é registro.</p>
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300"># ANTES de aplicar qualquer coisa
+wc -l ~/.claude/CLAUDE.md
+grep -c '^[-*] ' ~/.claude/CLAUDE.md    # aproximacao do numero de regras (bullets)
+git -C ~/.claude log --oneline -1       # confirma o commit "antes da ablacao"
+
+# ... aplique UMA mudanca, commite, repita ...
+
+# DEPOIS das 3 mudancas
+wc -l ~/.claude/CLAUDE.md
+grep -c '^[-*] ' ~/.claude/CLAUDE.md
+git -C ~/.claude diff --stat "antes da ablacao"..HEAD
+ls ~/.claude/skills/                    # a skill nova esta la?</pre>
+      </div>
+      <div class="bg-dark-700/50 rounded-lg p-4">
+        <p class="text-sm text-neutral-300"><strong class="text-purple-400">Como verificar:</strong>
+        <code class="text-purple-400">git diff --stat</code> te dá a conta exata de linhas removidas e adicionadas —
+        e num <code class="text-purple-400">MOVE</code> bem feito você vê linhas <em>saindo</em> do
+        <code class="text-purple-400">CLAUDE.md</code> e <em>entrando</em> no <code class="text-purple-400">SKILL.md</code>,
+        quase na mesma quantidade. Isso é o sinal de que você moveu, e não apagou por engano.</p>
+      </div>
+    </div>
+
+    <div class="bg-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">📋</span> Copiar e colar: o pedido de aplicação</h3>
+      <p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> pedir <em>uma</em> mudança específica, com o trecho do relatório colado — nunca "aplica o relatório".</p>
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">Sessao de APLICACAO (a auditoria ja foi feita e esta salva em
+relatorio-ablacao.md — nao rode auditoria de novo, nao releia tudo).
+
+Aplique EXATAMENTE UMA mudanca, esta:
+
+&lt;cole aqui o trecho do relatorio&gt;
+
+Regras desta sessao:
+- Nao aplique nada alem do que esta no trecho acima.
+- Nao "aproveite pra melhorar" outras partes do arquivo.
+- Se for um MOVE: crie ~/.claude/skills/&lt;nome&gt;/SKILL.md com frontmatter
+  (name, description) e mova o bloco INTEGRAL, sem reescrever o conteudo.
+- Remova do CLAUDE.md exatamente as linhas movidas.
+- No fim, mostre: (a) o diff, (b) wc -l do CLAUDE.md antes e depois,
+  (c) uma frase dizendo o que EU devo testar pra confirmar que nada mudou.
+- Nao commite: eu commito depois de ler o diff.</pre>
+      </div>
+      <div class="bg-dark-700/50 rounded-lg p-4">
+        <p class="text-sm text-neutral-300"><strong class="text-purple-400">Por que "não commite":</strong>
+        o commit é o seu ponto de decisão. Ler o diff antes de commitar é o único momento em que você compara o que
+        <em>pediu</em> com o que <em>aconteceu</em> — e é exatamente aí que aparece a reescrita silenciosa de um bloco
+        que você mandou mover sem mudar.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+        <h4 class="font-bold text-purple-400 mb-4">✓ Critério de saída deste módulo</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Commit (ou snapshot) <strong>"antes"</strong> e <strong>"depois"</strong> existem e são localizáveis</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span><code>CLAUDE.md</code> menor — com o número, não com a impressão</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>A skill nova responde à invocação direta <code>/&lt;nome&gt;</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>O comportamento da tarefa correspondente <strong>não mudou</strong></span></li>
+        </ul>
+      </div>
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h4 class="font-bold text-red-400 mb-4">✗ Não conta como concluído se</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm">
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>As 3 mudanças foram para um commit só</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>O bloco movido foi "melhorado" no caminho — aí você mudou duas coisas de uma vez</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>A skill existe mas você nunca a invocou para conferir que responde</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você mediu "parece mais leve" em vez de <code>wc -l</code></span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex justify-start mt-6">
+      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ RESUMO ============ -->
+  <section class="mb-12">
+    <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+      <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do Módulo</h2>
+      <div class="space-y-4 mb-8">
+        <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Auditar ≠ aplicar</strong><span class="text-neutral-400"> — aplique em outra sessão, com o relatório intacto e a config sob git. Nenhuma linha sai antes do commit "antes".</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Quatro ondas</strong><span class="text-neutral-400"> — redundância/conflito, legado, microgerenciamento→critério, e por último o que ficou em <code>TEST</code>. Começar pelo risco quase zero evita o corte heroico que faz você desistir.</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white"><code>MOVE</code> é a ferramenta principal</strong><span class="text-neutral-400"> — regra no <code>CLAUDE.md</code> é lida em toda execução; a mesma regra numa skill só custa contexto quando a tarefa é aquela.</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Invocação direta mata regra de roteamento</strong><span class="text-neutral-400"> — <code>/nome-da-skill</code> desempata sem custar uma linha global. Skill de projeto versiona no repo e não vaza.</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Três remédios</strong><span class="text-neutral-400"> — prompt melhor, skill ou MCP. Nenhum deles é "mais uma regra no <code>CLAUDE.md</code>"; e falha que aconteceu uma vez ainda não é remédio nenhum.</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">O que sobra no <code>CLAUDE.md</code></strong><span class="text-neutral-400"> — só o que é verdade sempre: identidade, guardrails, fontes de verdade, segurança. Todo o resto é skill.</span></div></div>
+      </div>
+      <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+        <h3 class="font-semibold text-purple-400 mb-2">Próximo Módulo:</h3>
+        <p class="text-neutral-300">4.1 — O plano de ablação A/B/C: provar por teste, em tarefas reais, que a versão mínima não perdeu qualidade.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+        <a href="../trilha4/modulo-4-1.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Próximo Módulo →</a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+</div>
+</div>
+
+<footer class="border-t border-dark-600 py-8 mt-16">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+    <p>Auditoria de Ablação — INEMA · 2026</p>
+    <p>
+      <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a>
+      <span class="text-neutral-600">-</span>
+      <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a>
+    </p>
+    <p class="text-xs">Método e visão: Boris Cherny (Anthropic) — palestra na Y Combinator sobre o corte de 80% do prompt de sistema do Claude Code.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTopic(button) {
+    const topicItem = button.closest('.topic-item');
+    const explanation = topicItem.querySelector('.topic-explanation');
+    const moduleCard = button.closest('.bg-dark-800') || document;
+    moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) { exp.classList.remove('active'); const b = exp.closest('.topic-item').querySelector('button'); if (b) b.setAttribute('aria-expanded','false'); } });
+    explanation.classList.toggle('active');
+    button.setAttribute('aria-expanded', explanation.classList.contains('active') ? 'true' : 'false');
+  }
+  function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const htmlEl = document.documentElement;
+  if (htmlEl.classList.contains('dark')) themeToggleLightIcon.classList.remove('hidden'); else themeToggleDarkIcon.classList.remove('hidden');
+  themeToggle.addEventListener('click', () => {
+    themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+    htmlEl.classList.toggle('dark');
+    const dark = htmlEl.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { const p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = dark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+  });
+</script>
+<script src="../../assets/learn.js"></script>
+<script>
+  if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.INEMA && INEMA.registerCheck) {
+      INEMA.registerCheck('modulo-3-2#q1', {
+        answer: 1,
+        explain: {
+          0: 'Nao. Os 8 passos so importam quando voce esta publicando — algo que talvez aconteca em 5% das suas execucoes. No CLAUDE.md eles seriam lidos nos outros 95% tambem, queimando contexto a toa. Isso e exatamente o caso classico de MOVE.',
+          1: 'Isso. Procedimento repetivel com contorno claro e a definicao de skill: custa contexto so quando a tarefa e aquela, tem fronteira e nome, da pra invocar direto (/publicar) e da pra aposentar depois medindo o efeito.',
+          2: 'Nao. MCP resolve falta de ACESSO — dados ou sistemas que o modelo nao alcanca. Aqui ele alcanca tudo: o que falta e o procedimento escrito num lugar que carregue sob demanda. Instalar MCP nao resolveria o esquecimento da sequencia.'
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

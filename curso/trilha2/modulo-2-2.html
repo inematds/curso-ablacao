@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="ablacao">
+  <title>Módulo 2.2 — De microgerenciamento a critério e verificação | Auditoria de Ablação</title>
+  <script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+  })();
+  </script>
+  <script type="application/json" data-inema-manifest>
+  {
+    "course": "ablacao",
+    "tracks": [
+      { "n": "1", "title": "Por que apagar", "modules": [
+        { "id": "1-1", "title": "Configuracao envelhece", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O metodo de ablacao", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" }
+      ]},
+      { "n": "2", "title": "Como diagnosticar", "modules": [
+        { "id": "2-1", "title": "A taxonomia: o que cada linha e", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "De microgerenciamento a criterio", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" }
+      ]},
+      { "n": "3", "title": "Auditar de verdade", "modules": [
+        { "id": "3-1", "title": "Rodando a skill audit-ablacao", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Do relatorio aos cortes", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" }
+      ]},
+      { "n": "4", "title": "Provar e manter", "modules": [
+        { "id": "4-1", "title": "O plano de ablacao A/B/C", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O ciclo continuo", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" }
+      ]}
+    ]
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/learn.css">
+  <link rel="stylesheet" href="../../assets/curso.css">
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+<a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700">Pular para o conteudo</a>
+
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-14 gap-2">
+      <div class="flex items-center space-x-3 flex-shrink-0">
+        <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+          <span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Auditoria de Ablação</span>
+        </a>
+        <span class="text-neutral-600 hidden sm:inline">|</span>
+        <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline">INEMA.CLUB</a>
+        <span class="text-neutral-600 hidden sm:inline">-</span>
+        <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline">PRO</a>
+      </div>
+      <div class="flex items-center space-x-1">
+        <a href="../trilha1/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Por que apagar</span></a>
+        <a href="index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnosticar</span></a>
+        <a href="../trilha3/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Auditar</span></a>
+        <a href="../trilha4/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Provar e manter</span></a>
+        <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" title="Minha jornada">
+          <span aria-hidden="true">◷</span><span class="hidden xl:inline">Jornada</span><span class="inema-journey-badge hidden" aria-hidden="true"></span>
+        </button>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" aria-label="Alternar tema claro/escuro">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4" aria-label="Trilha de navegacao">
+  <div class="flex items-center space-x-2 text-sm text-neutral-400">
+    <a href="../../index.html" class="hover:text-blue-400">Início</a><span>/</span>
+    <a href="index.html" class="hover:text-blue-400">Trilha 2</a><span>/</span>
+    <span class="text-blue-400">Módulo 2.2</span>
+  </div>
+</nav>
+
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-2" data-inema-track="2">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.2</span>
+    <h1 class="text-3xl sm:text-4xl font-bold mb-4">🎯 De microgerenciamento a critério e verificação</h1>
+    <p class="text-lg text-neutral-400 max-w-3xl">
+      Pare de roteirizar “faça A, depois B, depois C”. Escreva <strong class="text-blue-400">objetivo + guardrails +
+      critérios de saída + verificação</strong> — e deixe o modelo escolher o caminho. A verificação é a alavanca de
+      maior impacto e é justamente o que quase todo mundo esquece de colocar na config.
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div>
+      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+    </div>
+    <div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="flex items-center justify-between">
+        <span class="text-sm text-neutral-300 font-semibold">Progresso deste módulo</span>
+        <div data-inema-meter="modulo:2-2" class="inema-meter text-sm" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do modulo 2.2">
+          <span class="inema-meter-pct text-blue-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+
+  <nav data-inema-toc aria-label="Indice da pagina" class="hidden lg:block sticky top-24 self-start">
+    <p class="text-sm text-neutral-400 mb-3">Seção <span class="inema-toc-pos">1</span> de <span class="inema-toc-total">6</span></p>
+    <ul class="space-y-1 text-sm">
+      <li><a href="#topico-1" class="inema-toc-link text-neutral-400 hover:text-blue-400">1. Reconheça a especificação excessiva</a></li>
+      <li><a href="#topico-2" class="inema-toc-link text-neutral-400 hover:text-blue-400">2. Converta receita em critério</a></li>
+      <li><a href="#topico-3" class="inema-toc-link text-neutral-400 hover:text-blue-400">3. Use o template de 6 campos</a></li>
+      <li><a href="#topico-4" class="inema-toc-link text-neutral-400 hover:text-blue-400">4. Instale a verificação</a></li>
+      <li><a href="#topico-5" class="inema-toc-link text-neutral-400 hover:text-blue-400">5. Mire acima do teto</a></li>
+      <li><a href="#topico-6" class="inema-toc-link text-neutral-400 hover:text-blue-400">6. Reescreva a sua pior instrução</a></li>
+    </ul>
+  </nav>
+
+  <main id="conteudo" class="inema-prose">
+
+  <!-- ============ TOPICO 1 ============ -->
+  <section id="topico-1" class="mb-16" data-inema-topic="modulo-2-2#topico-1">
+    <div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+      <h2 class="text-2xl font-bold">🔍 Reconheça a especificação excessiva</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t1-p1">
+      Boris Cherny descreve a <strong class="text-blue-400">especificação excessiva</strong> — escrever a sequência exata
+      de movimentos que o modelo deve fazer — como um dos erros mais comuns que ele vê. E o detalhe incômodo: é
+      <em>mais</em> frequente em quem tem anos ou décadas de engenharia, não menos. Quanto mais experiente o autor da
+      config, mais roteirizada ela tende a ser.
+    </p>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t1-p2">
+      O motivo é histórico. Software se construía projetando o sistema inteiro de antemão, escrevendo uma suíte enorme
+      de testes unitários e tratando uma re-arquitetura como projeto de meses ou anos. Esse reflexo — decidir tudo antes,
+      no papel — virou o jeito de escrever <code class="text-blue-400">CLAUDE.md</code>. Com os modelos antigos funcionava:
+      eles precisavam da mão guiando cada passo. Hoje o roteiro faz o contrário do que você quer: <strong>ele impede o
+      modelo de achar um caminho melhor do que o que você imaginou.</strong>
+    </p>
+
+    <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🆕</span> Quatro palavras que vão aparecer o módulo inteiro</h3>
+      <ul class="space-y-2 text-neutral-300 text-sm">
+        <li><strong class="text-neutral-100">Guardrail:</strong> um limite que não pode ser cruzado — “nunca commite sem rodar os testes”, “não toque em <code>node_modules/</code>”. Diz o que é proibido, não como fazer.</li>
+        <li><strong class="text-neutral-100">Critério de saída:</strong> a frase que permite ao modelo saber que terminou. “Pronto quando o build passa e o arquivo existe” é critério; “pronto quando ficar bom” não é.</li>
+        <li><strong class="text-neutral-100">Verificação:</strong> a forma concreta de o modelo <em>conferir sozinho</em> se o critério de saída foi atingido — um comando, um teste, uma comparação de arquivo, um screenshot.</li>
+        <li><strong class="text-neutral-100">Autonomia:</strong> a permissão explícita para o modelo escolher a estratégia de execução, desde que respeite os guardrails e atinja o critério.</li>
+      </ul>
+    </div>
+
+    <div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+      <svg viewBox="0 0 1000 260" class="w-full h-auto" role="img" aria-label="Comparacao lado a lado. A esquerda, um trilho rigido com oito passos numerados em fila unica, com uma unica saida no fim e um caminho melhor bloqueado por uma barreira. A direita, um campo aberto delimitado por duas cercas rotuladas guardrail, com tres rotas diferentes atravessando ate um portao unico rotulado criterio de saida, destacado com brilho.">
+        <defs>
+          <linearGradient id="m22-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+          <filter id="m22-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <pattern id="m22-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#3b82f6" opacity="0.12"/></pattern>
+          <marker id="m22-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"/></marker>
+        </defs>
+        <rect x="0" y="0" width="1000" height="260" fill="url(#m22-grid)"/>
+        <path d="M500,20 L500,240" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="9 9" opacity="0.4"/>
+
+        <text x="245" y="36" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="13" font-weight="600">RECEITA: TRILHO RÍGIDO</text>
+        <rect x="40" y="96" width="410" height="34" rx="6" fill="#0e1622" stroke="#60a5fa" stroke-width="1.6" opacity="0.5"/>
+        <g font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#bfdbfe">
+          <circle cx="70" cy="113" r="13" fill="#0e1622" stroke="#60a5fa" stroke-width="1.8"/><text x="70" y="117" text-anchor="middle">1</text><circle cx="118" cy="113" r="13" fill="#0e1622" stroke="#60a5fa" stroke-width="1.8"/><text x="118" y="117" text-anchor="middle">2</text>
+          <circle cx="166" cy="113" r="13" fill="#0e1622" stroke="#60a5fa" stroke-width="1.8"/><text x="166" y="117" text-anchor="middle">3</text><circle cx="214" cy="113" r="13" fill="#0e1622" stroke="#60a5fa" stroke-width="1.8"/><text x="214" y="117" text-anchor="middle">4</text>
+          <circle cx="262" cy="113" r="13" fill="#0e1622" stroke="#60a5fa" stroke-width="1.8"/><text x="262" y="117" text-anchor="middle">5</text><circle cx="310" cy="113" r="13" fill="#0e1622" stroke="#60a5fa" stroke-width="1.8"/><text x="310" y="117" text-anchor="middle">6</text>
+          <circle cx="358" cy="113" r="13" fill="#0e1622" stroke="#60a5fa" stroke-width="1.8"/><text x="358" y="117" text-anchor="middle">7</text><circle cx="406" cy="113" r="13" fill="#0e1622" stroke="#60a5fa" stroke-width="1.8"/><text x="406" y="117" text-anchor="middle">8</text>
+        </g>
+        <path d="M120,150 C200,196 320,196 400,152" fill="none" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="6 6" opacity="0.55"/>
+        <path d="M236,172 L284,196" stroke="#f87171" stroke-width="2.4"/><path d="M284,172 L236,196" stroke="#f87171" stroke-width="2.4"/>
+        <text x="245" y="224" text-anchor="middle" fill="#93c5fd" font-family="Inter,sans-serif" font-size="12">o caminho melhor fica bloqueado</text>
+
+        <text x="750" y="36" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="13" font-weight="600">CRITÉRIO: CAMPO ABERTO</text>
+        <path d="M556,66 L900,66" stroke="#60a5fa" stroke-width="2.2"/><path d="M556,196 L900,196" stroke="#60a5fa" stroke-width="2.2"/>
+        <text x="600" y="58" fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" font-weight="600">guardrail</text><text x="600" y="212" fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" font-weight="600">guardrail</text>
+        <path d="M566,131 C650,86 760,96 890,124" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="0.8" marker-end="url(#m22-ah)"/>
+        <path d="M566,131 C660,131 780,131 890,131" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="0.55" marker-end="url(#m22-ah)"/>
+        <path d="M566,131 C650,178 760,176 890,138" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="0.55" marker-end="url(#m22-ah)"/>
+        <g filter="url(#m22-glow)"><rect x="896" y="102" width="86" height="58" rx="10" fill="#0e1622" stroke="url(#m22-grad)" stroke-width="2.2"/></g>
+        <text x="939" y="126" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">critério</text><text x="939" y="144" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700">de saída</text>
+        <text x="740" y="240" text-anchor="middle" fill="#93c5fd" font-family="Inter,sans-serif" font-size="12">três rotas, um único portão</text>
+      </svg>
+    </div>
+    <p class="text-sm text-neutral-400 mb-6">
+      <strong class="text-neutral-300">O que olhar:</strong> à esquerda existe uma rota só, e ela é a rota que <em>você</em>
+      imaginou. Se houver um caminho melhor, o trilho o proíbe — e o modelo obedece. À direita nada foi roteirizado: as
+      cercas são os guardrails (o que não pode), o portão é o critério de saída (quando acabou), e o miolo é livre.
+      As três setas mostram o ganho concreto: o modelo pode escolher a rota mais curta para o problema real de hoje, que
+      não é necessariamente a que você escreveu meses atrás.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h4 class="font-bold text-red-400 mb-4">✗ Cheiros de especificação excessiva</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>“Primeiro rode <code>git status</code>, depois <code>git diff</code>, depois leia o arquivo, depois…”</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Numeração de 8 a 12 passos para uma tarefa que cabe em duas frases</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>“Use a ferramenta X, nunca a Y” sem dizer <em>por quê</em> (o porquê é que envelhece)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Exceções empilhadas: “exceto se…, mas se…, a não ser quando…”</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Instrução que ensina o modelo a <em>pensar</em> (“analise cuidadosamente antes de responder”)</span></li>
+        </ul></div>
+      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+        <h4 class="font-bold text-emerald-400 mb-4">✓ O que sobrevive à auditoria</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm"><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“O deploy acontece por push no git; o webhook cuida do resto.” — contexto que o modelo não infere</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“Nunca imprima o valor de uma API key.” — guardrail de segurança</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“As keys ficam em <code>~/projetos/wifi/.env</code>.” — fonte de verdade, caminho concreto</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“Pronto quando <code>npm run build</code> sai com código 0.” — critério verificável</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“Escolha a estratégia de execução.” — autonomia declarada</span></li>
+        </ul></div>
+    </div>
+
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-4">Conceitos-chave</h3><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Especificação excessiva</div><p class="text-xs text-neutral-400">A sequência exata de movimentos</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Reflexo antigo</div><p class="text-xs text-neutral-400">Projetar tudo antes, no papel</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Custo real</div><p class="text-xs text-neutral-400">Bloqueia o caminho melhor</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Experiência atrapalha</div><p class="text-xs text-neutral-400">Mais comum em veteranos</p></div>
+      </div></div>
+
+    <div class="flex justify-start mt-6"><button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button></div>
+  </section>
+
+  <!-- ============ TOPICO 2 ============ -->
+  <section id="topico-2" class="mb-16" data-inema-topic="modulo-2-2#topico-2">
+    <div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+      <h2 class="text-2xl font-bold">🔄 Converta receita em critério</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t2-p1">
+      Existe uma conversão canônica, e ela cabe numa linha. Toda instrução na forma
+      <em>“faça A, depois B, depois C”</em> vira:
+      <strong class="text-blue-400">“Produza X. Respeite Y. O resultado deve atingir Z. Verifique usando W. Escolha a
+      estratégia.”</strong> Cinco slots. X é o objetivo, Y são os guardrails, Z é o critério de saída, W é a verificação,
+      e a última frase é a autonomia.
+    </p>
+
+    <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-8">
+      <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🎯</span> A frase-molde</h3>
+      <p class="text-neutral-100 text-lg mb-3">Produza <strong>X</strong>. Respeite <strong>Y</strong>. O resultado deve atingir <strong>Z</strong>. Verifique usando <strong>W</strong>. Escolha a estratégia.</p>
+      <p class="text-neutral-300 text-sm">
+        Se você não consegue preencher <strong>W</strong>, pare: você ainda não tem uma instrução, tem um desejo.
+        A ausência de W é o defeito mais comum das configs que a auditoria encontra.
+      </p>
+    </div>
+
+    <h3 class="text-xl font-semibold text-neutral-100 mb-4">Um caso real: regra de publicação roteirizada</h3>
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t2-p2">
+      Abaixo, uma regra de publicação escrita do jeito que quase todo <code class="text-blue-400">CLAUDE.md</code> real
+      escreve — oito passos, ordem fixa, um comando por linha. Ela funciona, mas prende o modelo a uma sequência que já
+      não é a melhor (e que quebra no primeiro projeto que tem um passo a mais).
+    </p>
+
+    <div class="bg-dark-800 rounded-xl border border-red-500/30 p-6 mb-4">
+      <h4 class="font-bold text-red-400 mb-3">✗ ANTES — 8 passos, 14 linhas</h4>
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">## Publicação
+
+1. Rode `git status` e verifique se há mudanças.
+2. Rode `git diff` e leia tudo o que mudou.
+3. Rode `git log -5` para ver o estilo das mensagens anteriores.
+4. Rode `git config user.email` e confira se é o autor certo.
+5. Se estiver errado, rode `git config user.email <email>`.
+6. Faça `git add` só dos arquivos que você editou (nunca `git add .`).
+7. Escreva a mensagem de commit no padrão `tipo: descrição`.
+8. Rode `git push` e depois confira no dashboard se o deploy subiu.</pre>
+      </div>
+    </div>
+
+    <div class="bg-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+      <h4 class="font-bold text-emerald-400 mb-3">✓ DEPOIS — 4 linhas de critério</h4>
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">## Publicação
+
+Objetivo: publicar = commit + push no `origin`. O deploy é automático; não é sua responsabilidade.
+Guardrails: nunca `git add .`; o autor do commit acompanha a conta de destino do repo (default `inematds`).
+Critério de saída: o commit está em `origin` e a mensagem segue `tipo: descrição`.
+Verificação: `git log origin/main -1` mostra o seu commit com o autor esperado.</pre>
+      </div>
+      <div class="bg-dark-700/50 rounded-lg p-4 mt-4">
+        <p class="text-sm text-neutral-300">
+          <strong class="text-blue-400">O que mudou de verdade:</strong> os passos 1–3 sumiram porque o modelo já sabe
+          inspecionar um repositório — eram microgerenciamento puro. Os passos 4–5 viraram <em>um guardrail</em> (a regra,
+          não o procedimento). Os passos 6–7 viraram guardrail e critério. E o passo 8 — “confira no dashboard” — virou
+          uma <strong>verificação executável</strong>: um comando que dá a resposta sem depender de ninguém abrir um site.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> O teste do bisturi</h3><p class="text-neutral-300">
+        Para cada passo numerado da instrução, pergunte: <em>“isso é uma regra que vale sempre, ou é um movimento que o
+        modelo escolheria sozinho?”</em> Regra vira guardrail. Movimento vira nada — apaga. O que sobra costuma ser
+        20–30% do original, e é exatamente a parte que o modelo não conseguia adivinhar.
+      </p>
+    </div>
+
+    <div class="flex justify-start mt-6">
+      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ TOPICO 3 ============ -->
+  <section id="topico-3" class="mb-16" data-inema-topic="modulo-2-2#topico-3">
+    <div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+      <h2 class="text-2xl font-bold">🧱 Use o template de 6 campos</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t3-p1">
+      A frase-molde do tópico anterior, esticada, vira um template de seis campos:
+      <strong class="text-blue-400">Objetivo · Contexto · Guardrails · Critérios de qualidade · Verificação · Autonomia</strong>.
+      Não é burocracia: cada campo existe porque a ausência dele produz um tipo específico de falha. Vale para prompts
+      avulsos, para blocos do <code class="text-blue-400">CLAUDE.md</code> e para o corpo de uma skill.
+    </p>
+
+    <div class="space-y-6 mb-8">
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Objetivo — o resultado, não o caminho</h4><p class="text-sm text-neutral-400 mb-3">Uma frase dizendo o que deve existir no final.</p>
+          <p class="text-neutral-300 text-sm"><strong class="text-red-400">Erro típico:</strong> descrever a atividade (“revisar o código”) em vez do resultado (“um relatório com os bugs de correção encontrados no diff”).</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Contexto — só o que ele não descobre sozinho</h4><p class="text-sm text-neutral-400 mb-3">Caminhos, nomes de sistemas, fontes de verdade, convenções internas.</p>
+          <p class="text-neutral-300 text-sm"><strong class="text-red-400">Erro típico:</strong> despejar o histórico do projeto. Contexto é endereço, não biografia. Se o modelo pode ler o arquivo, diga onde ele está em vez de resumi-lo.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Guardrails — o proibido, em forma negativa</h4><p class="text-sm text-neutral-400 mb-3">Segurança, compliance, contratos de interface, o que nunca pode ser tocado.</p>
+          <p class="text-neutral-300 text-sm"><strong class="text-red-400">Erro típico:</strong> disfarçar procedimento de guardrail. “Sempre rode o lint antes do build” não é um limite — é um passo. Limite é “não faça commit com o lint quebrado”.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Critérios de qualidade — o que significa “ficou bom”</h4><p class="text-sm text-neutral-400 mb-3">De preferência contáveis: número máximo de linhas, formato de saída, cobertura, tom.</p>
+          <p class="text-neutral-300 text-sm"><strong class="text-red-400">Erro típico:</strong> adjetivos sozinhos — “claro”, “profissional”, “bem escrito”. Adjetivo sem âncora não decide nada e o modelo preenche com o palpite dele.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">5</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Verificação — como ele confere sozinho</h4><p class="text-sm text-neutral-400 mb-3">Um comando, um teste, uma comparação, uma checagem de arquivo. Com condição de parada.</p>
+          <p class="text-neutral-300 text-sm"><strong class="text-red-400">Erro típico:</strong> o campo simplesmente não existe. É o campo mais ausente e o de maior impacto — o tópico 4 é inteiro sobre ele.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">6</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Autonomia — a permissão explícita</h4><p class="text-sm text-neutral-400 mb-3">“Escolha a estratégia de execução.” Uma linha, e ela muda o comportamento.</p>
+          <p class="text-neutral-300 text-sm"><strong class="text-red-400">Erro típico:</strong> achar que é redundante. Sem essa linha, uma config cheia de regras antigas ainda empurra o modelo para o modo “siga o roteiro”.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">📋</span> Template pronto para colar</h3>
+      <p class="text-sm text-neutral-400 mb-4">Copie, troque o que está entre <code class="text-blue-400">&lt; &gt;</code> e apague os campos que não se aplicam — menos o de Verificação, que nunca sai.</p>
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">## &lt;nome da tarefa&gt;
+
+**Objetivo:** &lt;o resultado que deve existir no final, em uma frase&gt;
+
+**Contexto:** &lt;caminhos, sistemas e convenções que o modelo não descobre sozinho&gt;
+
+**Guardrails:**
+- &lt;o que nunca pode acontecer&gt;
+- &lt;limite de segurança / compliance / interface&gt;
+
+**Critérios de qualidade:**
+- &lt;algo contável: tamanho, formato, cobertura&gt;
+- &lt;algo observável: tom, estrutura, nomes&gt;
+
+**Verificação:** &lt;comando, teste ou comparação que prova o critério&gt;.
+Repita produzir → verificar até &lt;condição de parada explícita&gt;.
+
+**Autonomia:** escolha a estratégia de execução; não peça confirmação
+para decisões cobertas pelos guardrails acima.</pre>
+      </div>
+    </div>
+
+    <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica: o template é uma régua, não um formulário</h3><p class="text-neutral-300">
+        Você não precisa dos seis títulos literais na config. Precisa que os seis <em>existam</em> em algum lugar. Use o
+        template para <strong>auditar</strong> uma instrução: leia-a e marque quais dos seis campos ela cobre. Instrução
+        que só cobre “o caminho” e nenhum dos seis é candidata direta a <code class="text-blue-400">REMOVE</code> ou
+        <code class="text-blue-400">SIMPLIFY</code> na taxonomia do módulo 2.1.
+      </p>
+    </div>
+
+    <div class="flex justify-start mt-6">
+      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ TOPICO 4 ============ -->
+  <section id="topico-4" class="mb-16" data-inema-topic="modulo-2-2#topico-4">
+    <div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+      <h2 class="text-2xl font-bold">🔬 Instale a verificação (a alavanca)</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t4-p1">
+      Perguntaram a Boris qual habilidade importa agora que “prompt engineering” perdeu força como cargo. A resposta:
+      dar ao modelo uma tarefa que pareça um pouco difícil demais, e <strong class="text-blue-400">tornar possível que
+      ele verifique o próprio trabalho ao longo do processo</strong>. Ele chamou a verificação de “a coisa mais
+      importante que as pessoas não acertam”. Traduzindo para este curso: um prompt curto com um jeito real de conferir
+      ganha de um prompt gigante sem nenhum.
+    </p>
+
+    <h3 class="text-xl font-semibold text-neutral-100 mb-4">O exemplo do Electron → Swift</h3>
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t4-p2">
+      Boris quis saber como seria o app desktop do Claude — feito em Electron — se virasse app nativo. Conectou um runner
+      de macOS (uma máquina virtual Mac), criou um repositório vazio e deu <em>uma única instrução</em>: reescreva o app
+      Electron em Swift, rode o original na VM, tire screenshots, compare pixel a pixel com a versão Swift e não pare até
+      terminar. Na data da palestra a tarefa rodava havia mais de duas semanas, tendo criado de milhares a dezenas de
+      milhares de agentes. O prompt não tinha técnica nenhuma. Tinha um <strong class="text-blue-400">ciclo de verificação
+      completo</strong>.
+    </p>
+
+    <div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+      <svg viewBox="0 0 1000 250" class="w-full h-auto" role="img" aria-label="Ciclo de quatro caixas em linha: produzir, observar, comparar e uma quarta caixa destacada com brilho chamada condicao de parada. Setas ligam uma a outra da esquerda para a direita, e uma seta ciano curva volta da comparacao ate produzir, indicando repeticao enquanto a condicao de parada nao e atingida.">
+        <defs>
+          <linearGradient id="m22b-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+          <filter id="m22b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <pattern id="m22b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#3b82f6" opacity="0.12"/></pattern>
+          <marker id="m22b-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"/></marker>
+        </defs>
+        <rect x="0" y="0" width="1000" height="250" fill="url(#m22b-grid)"/>
+        <text x="500" y="34" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="13" font-weight="600">O CICLO QUE FAZ UM PROMPT CURTO TRABALHAR POR SEMANAS</text>
+
+        <rect x="50" y="80" width="180" height="70" rx="12" fill="#0e1622" stroke="#60a5fa" stroke-width="2"/>
+        <text x="140" y="110" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="14" font-weight="700">produzir</text><text x="140" y="132" text-anchor="middle" fill="#93c5fd" font-family="Inter,sans-serif" font-size="11">reescrever em Swift</text>
+        <path d="M232,115 L288,115" stroke="#60a5fa" stroke-width="2" marker-end="url(#m22b-ah)"/>
+        <rect x="290" y="80" width="180" height="70" rx="12" fill="#0e1622" stroke="#60a5fa" stroke-width="2"/>
+        <text x="380" y="110" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="14" font-weight="700">observar</text><text x="380" y="132" text-anchor="middle" fill="#93c5fd" font-family="Inter,sans-serif" font-size="11">rodar o original na VM</text>
+        <path d="M472,115 L528,115" stroke="#60a5fa" stroke-width="2" marker-end="url(#m22b-ah)"/>
+        <rect x="530" y="80" width="180" height="70" rx="12" fill="#0e1622" stroke="#60a5fa" stroke-width="2"/>
+        <text x="620" y="110" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="14" font-weight="700">comparar</text><text x="620" y="132" text-anchor="middle" fill="#93c5fd" font-family="Inter,sans-serif" font-size="11">pixel a pixel</text>
+        <path d="M712,115 L768,115" stroke="#60a5fa" stroke-width="2" marker-end="url(#m22b-ah)"/>
+        <g filter="url(#m22b-glow)"><rect x="770" y="80" width="185" height="70" rx="12" fill="#0e1622" stroke="url(#m22b-grad)" stroke-width="2.4"/></g>
+        <text x="862" y="110" text-anchor="middle" fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="700">condição de parada</text><text x="862" y="132" text-anchor="middle" fill="#93c5fd" font-family="Inter,sans-serif" font-size="11">“não pare até terminar”</text>
+        <path d="M620,152 C620,214 240,220 140,158" fill="none" stroke="#38bdf8" stroke-width="2.2" marker-end="url(#m22b-ah)"/>
+        <text x="400" y="212" text-anchor="middle" fill="#7dd3fc" font-family="Inter,sans-serif" font-size="12.5" font-weight="600">enquanto não bate, volta e produz de novo</text>
+        <text x="500" y="240" text-anchor="middle" fill="#bfdbfe" font-family="Inter,sans-serif" font-size="12">sem a volta em ciano, o modelo entrega a primeira tentativa e para</text>
+      </svg>
+    </div>
+    <p class="text-sm text-neutral-400 mb-6">
+      <strong class="text-neutral-300">O que olhar:</strong> a seta ciano de retorno. As três primeiras caixas quase todo
+      mundo escreve; é a volta e a caixa em destaque que faltam. Sem condição de parada explícita, o ciclo não é ciclo —
+      é uma linha reta que termina na primeira entrega. E repare que <em>observar</em> é a caixa que exige um recurso do
+      mundo real (a VM, o comando, o arquivo). Verificação sem observação externa é só o modelo relendo a si mesmo.
+    </p>
+
+    <h3 class="text-xl font-semibold text-neutral-100 mb-4">Quatro verificações objetivas, em contextos diferentes</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6"><h4 class="font-bold text-blue-400 mb-2">1. Teste que roda</h4>
+        <p class="text-neutral-300 text-sm">“Pronto quando <code>pytest tests/test_parser.py</code> passa inteiro. Se falhar, corrija e rode de novo.” Observação externa: o resultado do teste. Parada: zero falhas.</p></div>
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6"><h4 class="font-bold text-blue-400 mb-2">2. Comando cujo exit code prova</h4>
+        <p class="text-neutral-300 text-sm">“Rode <code>npm run build</code>; só considere concluído com código de saída 0.” Observação externa: o código de saída. Parada: 0. Não há espaço para interpretação.</p></div>
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6"><h4 class="font-bold text-blue-400 mb-2">3. Comparação de arquivo</h4>
+        <p class="text-neutral-300 text-sm">“Gere o CSV e rode <code>diff saida.csv esperado.csv</code>; repita até o diff sair vazio.” Observação externa: o arquivo de referência. Parada: diff vazio.</p></div>
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6"><h4 class="font-bold text-blue-400 mb-2">4. Screenshot / comparação visual</h4>
+        <p class="text-neutral-300 text-sm">“Abra a página, tire screenshot, compare com <code>referencia.png</code>; corrija até a diferença ficar abaixo de 2%.” Observação externa: a imagem renderizada. Parada: o limiar.</p></div>
+    </div>
+
+    <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Por que “revise antes de entregar” NÃO é verificação</h3>
+      <p class="text-neutral-300 mb-3">
+        É a linha mais comum em configs reais e ela não verifica nada. Faltam as duas peças que fazem o mecanismo
+        funcionar:
+      </p>
+      <ul class="space-y-2 text-neutral-300 text-sm">
+        <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Não tem observação externa.</strong> O modelo relê o próprio texto no mesmo contexto que o produziu — o raciocínio que gerou o erro continua ali, empurrando para o “está bom”.</span></li>
+        <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Não tem condição de parada.</strong> “Revise” acontece uma vez e acabou. Não existe critério que diga se a revisão foi suficiente, então nunca há uma segunda volta.</span></li>
+      </ul>
+      <p class="text-neutral-400 text-sm mt-3">
+        Conserto: troque por “rode <code>&lt;comando&gt;</code>; enquanto ele reprovar, corrija e rode de novo”. Mesmo
+        tamanho de frase, mecanismo completamente diferente.
+      </p>
+    </div>
+
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-4">Conceitos-chave</h3><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Produzir</div><p class="text-xs text-neutral-400">Gerar a saída</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Observar</div><p class="text-xs text-neutral-400">Olhar algo fora do próprio texto</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Comparar</div><p class="text-xs text-neutral-400">Confrontar saída e referência</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Condição de parada</div><p class="text-xs text-neutral-400">O que encerra o ciclo</p></div>
+      </div></div>
+
+    <div class="flex justify-start mt-6"><button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button></div>
+  </section>
+
+  <!-- ============ TOPICO 5 ============ -->
+  <section id="topico-5" class="mb-16" data-inema-topic="modulo-2-2#topico-5">
+    <div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+      <h2 class="text-2xl font-bold">🚀 Mire acima do teto</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t5-p1">
+      A recomendação de Boris é mirar mais alto do que parece confortável: dê ao modelo uma tarefa um pouco mais difícil
+      do que você acha que ele aguenta. O motivo é simples — <strong class="text-blue-400">o teto muda a cada
+      lançamento</strong>. A sua estimativa de “o que ele consegue” foi calibrada numa geração anterior e você não
+      percebeu que ela ficou desatualizada, porque ninguém te avisa quando o teto sobe.
+    </p>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t5-p2">
+      A consequência direta para a auditoria: <strong>reteste os seus fracassos antigos a cada versão nova.</strong>
+      Aquela regra que você escreveu porque “ele sempre erra isso” pode estar protegendo contra uma falha que não existe
+      mais. Ela continua custando contexto em toda execução, e o motivo dela desapareceu sem aviso. É exatamente o
+      mecanismo do módulo 1.1: instrução é o conserto da fraqueza de um modelo específico.
+    </p>
+
+    <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+      <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🧬</span> Ciência empírica, não teórica</h3>
+      <p class="text-neutral-100 text-lg mb-3">Trabalhar com um modelo se parece mais com conhecer uma criatura viva do que com configurar um sistema.</p>
+      <p class="text-neutral-300">
+        Cada geração se comporta de um jeito e tem uma personalidade ligeiramente diferente. Você passa um tempo
+        aprendendo como ela funciona e depois ajusta o <strong class="text-blue-400">harness</strong> — o conjunto de
+        prompts, ferramentas e regras ao redor do modelo — em cima do que observou. Note a ordem: <em>observar primeiro,
+        escrever a regra depois</em>. O contrário disso é teoria, e teoria sobre modelo envelhece em semanas.
+      </p>
+    </div>
+
+    <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> A régua do colega de trabalho</h3><p class="text-neutral-300">
+        O nível certo de instrução é o mesmo que você usaria orientando um colega competente: contexto, objetivo, os
+        limites que ele não tem como adivinhar, e como saber que terminou. Você não escreveria para um colega “abra o
+        editor, clique em arquivo, digite o nome”. Se a sua instrução não passaria no teste de ser lida em voz alta para
+        uma pessoa sem soar ofensiva, ela é microgerenciamento.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+        <h4 class="font-bold text-emerald-400 mb-4">✓ Postura empírica</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm"><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Pede uma tarefa acima do que espera e observa onde trava</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guarda os fracassos antigos e reroda a cada modelo novo</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Corrige a dificuldade <em>específica</em> observada — nada além dela</span></li>
+          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escolhe o remédio certo: prompt melhor, skill ou MCP</span></li>
+        </ul></div>
+      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+        <h4 class="font-bold text-red-400 mb-4">✗ Postura teórica</h4>
+        <ul class="space-y-3 text-neutral-300 text-sm"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assume o teto da geração passada e nunca testa de novo</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Escreve regras preventivas para falhas que nunca viu acontecer</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Corrige “na área” — três parágrafos novos por um erro pontual</span></li>
+          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Procura o truque secreto em influenciador de rede social</span></li>
+        </ul></div>
+    </div>
+
+    <div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔁</span> Não existe truque secreto — existe um ciclo</h3>
+      <p class="text-neutral-300 mb-4">
+        Perguntaram a Boris o que separa o 1% dos melhores usuários de Claude Code. A resposta foi: pare de procurar um
+        truque. O método é este, e ele é público:
+      </p>
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">1. tarefa difícil demais
+2. meios de verificar o trabalho
+3. observar onde ele trava
+4. corrigir AQUILO  →  prompt melhor  (instrução obscura)
+                    →  skill          (falta procedimento repetível)
+                    →  MCP            (falta contexto que ele não alcança)
+5. repetir</pre>
+      </div>
+      <p class="text-sm text-neutral-400 mt-4">
+        O passo 4 é onde a maioria erra: diante de um tropeço, o reflexo é sempre “mais uma regra no
+        <code class="text-blue-400">CLAUDE.md</code>”. Três causas, três remédios diferentes — e só um deles é escrever texto.
+      </p>
+    </div>
+
+    <div class="flex justify-start mt-6">
+      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ TOPICO 6 ============ -->
+  <section id="topico-6" class="mb-16" data-inema-topic="modulo-2-2#topico-6">
+    <div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+      <h2 class="text-2xl font-bold">✍️ Reescreva a sua pior instrução</h2>
+      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
+        <span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+    </div>
+
+    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t6-p1">
+      Hora de aplicar. Abra a sua configuração — <code class="text-blue-400">~/.claude/CLAUDE.md</code>, o
+      <code class="text-blue-400">CLAUDE.md</code> de um projeto ou o corpo de uma skill sua — e ache a instrução mais
+      “receita de bolo” que existe lá: a mais numerada, a mais longa, a que descreve movimentos. Você vai escrever
+      <strong class="text-blue-400">duas versões</strong> dela, e a segunda obrigatoriamente com verificação objetiva.
+    </p>
+
+    <div class="space-y-6 mb-8">
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">a</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Versão 50% menor</h4>
+          <p class="text-neutral-300 text-sm">Mesma estrutura, metade do texto. Corte o que o modelo já faz sozinho e funda passos que sempre andam juntos. Nenhuma regra real pode desaparecer nessa versão — é um corte de gordura, não de músculo.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">b</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Versão mínima, com o template de 6 campos</h4>
+          <p class="text-neutral-300 text-sm">Reescrita do zero na forma Objetivo · Contexto · Guardrails · Critérios · Verificação · Autonomia. A verificação precisa ser um comando, um teste, uma comparação ou uma checagem de arquivo — algo que produza um resultado observável.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🧪</span> Prompt pronto para colar no Claude Code</h3>
+      <p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> fazer o próprio Claude Code produzir as duas versões lado a lado, sem deixá-lo aplicar nada no arquivo.</p>
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">Leia &lt;caminho do seu CLAUDE.md ou da sua skill&gt; e localize o bloco
+"&lt;titulo ou primeira linha do bloco mais roteirizado&gt;".
+
+NÃO edite nenhum arquivo. Só produza texto na resposta.
+
+Devolva três blocos em markdown:
+
+1. ORIGINAL — o trecho exatamente como está hoje, com a contagem de linhas.
+
+2. VERSÃO 50% MENOR — o mesmo trecho com metade das linhas. Corte só o que
+   você faria sozinho sem a instrução. Liste embaixo, em uma linha cada,
+   o que foi cortado e por quê.
+
+3. VERSÃO MÍNIMA — reescreva usando os campos Objetivo, Contexto, Guardrails,
+   Critérios de qualidade, Verificação e Autonomia. A Verificação tem que ser
+   um comando, um teste, uma comparação de arquivo ou uma checagem de existência
+   — nada de "revise antes de entregar" — e tem que trazer uma condição de parada.
+
+No fim, responda em uma frase: um colega que não conhece este projeto
+conseguiria executar a Verificação da versão mínima sem me perguntar nada?
+Se a resposta for não, reescreva a Verificação.</pre>
+      </div>
+      <div class="bg-dark-700/50 rounded-lg p-4">
+        <p class="text-sm text-neutral-300">
+          <strong class="text-blue-400">Critério de saída deste exercício:</strong> as duas versões existem escritas ao
+          lado da original, e a verificação da versão mínima é <strong>executável por um terceiro</strong> sem perguntar
+          nada a você. Se ela depende de um contexto que só mora na sua cabeça, ela ainda não é verificação.
+        </p>
+        <p class="text-sm text-neutral-400 mt-3">
+          <strong class="text-neutral-300">Como conferir isso na prática:</strong> mande a versão mínima para alguém (ou
+          cole numa sessão nova, sem histórico) e peça só para executar a linha de Verificação. Se vier uma pergunta de
+          volta, reescreva. Guarde as três versões — elas viram entrada direta do plano A/B/C da Trilha 4.
+        </p>
+      </div>
+    </div>
+
+    <!-- CHECAGEM LEVE -->
+    <div data-inema-check="modulo-2-2#q1" class="inema-check mt-8 bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6">
+      <p class="font-medium mb-4">Checagem rápida (não bloqueia nada): sua instrução mínima termina com “antes de finalizar, revise o resultado com atenção e corrija o que estiver ruim”. Isso conta como verificação?</p>
+      <div class="inema-check-options space-y-2"><button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Conta — é uma instrução explícita de revisão, que é o que a verificação pede</button>
+        <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Não conta — falta observação externa e condição de parada</button>
+        <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Conta só se você repetir a frase em mais de um lugar da config</button>
+      </div>
+      <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-4">Conceitos-chave</h3><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Duas versões</div><p class="text-xs text-neutral-400">50% menor e mínima</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Lado a lado</div><p class="text-xs text-neutral-400">A original fica visível</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Teste do terceiro</div><p class="text-xs text-neutral-400">Executável sem te perguntar</p></div>
+        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Entrada do A/B/C</div><p class="text-xs text-neutral-400">As três versões viram teste</p></div>
+      </div></div>
+
+    <div class="flex justify-start mt-6"><button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
+        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
+      </button></div>
+  </section>
+
+  <!-- ============ RESUMO ============ -->
+  <section class="mb-12">
+    <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+      <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do Módulo</h2>
+      <div class="space-y-4 mb-8">
+        <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Especificação excessiva é o erro mais comum</strong><span class="text-neutral-400"> — e mais frequente em quem tem mais anos de engenharia. O roteiro bloqueia o caminho melhor.</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">A conversão canônica</strong><span class="text-neutral-400"> — “Produza X. Respeite Y. O resultado deve atingir Z. Verifique usando W. Escolha a estratégia.”</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Seis campos</strong><span class="text-neutral-400"> — Objetivo · Contexto · Guardrails · Critérios · Verificação · Autonomia. Use como régua para auditar, não como formulário.</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Verificação é a alavanca</strong><span class="text-neutral-400"> — produzir → observar → comparar → condição de parada. Sem observação externa e sem parada, não é verificação.</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Mire acima do teto</strong><span class="text-neutral-400"> — e reteste seus fracassos antigos a cada modelo novo; o motivo da regra pode ter desaparecido.</span></div></div>
+        <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Sem truque secreto</strong><span class="text-neutral-400"> — tarefa difícil → meios de verificar → observar onde trava → corrigir aquilo → repetir.</span></div></div>
+      </div>
+      <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+        <h3 class="font-semibold text-blue-400 mb-2">Próximo Módulo:</h3>
+        <p class="text-neutral-300">3.1 — Rodando a skill <code class="text-blue-400">audit-ablacao</code>: instalar, escolher o escopo e ler o relatório de 10 seções sabendo o que cada uma cobra de você.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
+        <a href="../trilha3/modulo-3-1.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Próximo Módulo →</a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+</div>
+</div>
+
+<footer class="border-t border-dark-600 py-8 mt-16">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+    <p>Auditoria de Ablação — INEMA · 2026</p>
+    <p>
+      <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a>
+      <span class="text-neutral-600">-</span>
+      <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a>
+    </p>
+    <p class="text-xs">Método e visão: Boris Cherny (Anthropic) — palestra na Y Combinator sobre o corte de 80% do prompt de sistema do Claude Code.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTopic(button) {
+    const topicItem = button.closest('.topic-item');
+    const explanation = topicItem.querySelector('.topic-explanation');
+    const moduleCard = button.closest('.bg-dark-800') || document;
+    moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) { exp.classList.remove('active'); const b = exp.closest('.topic-item').querySelector('button'); if (b) b.setAttribute('aria-expanded','false'); } });
+    explanation.classList.toggle('active');
+    button.setAttribute('aria-expanded', explanation.classList.contains('active') ? 'true' : 'false');
+  }
+  function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const htmlEl = document.documentElement;
+  if (htmlEl.classList.contains('dark')) themeToggleLightIcon.classList.remove('hidden'); else themeToggleDarkIcon.classList.remove('hidden');
+  themeToggle.addEventListener('click', () => {
+    themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+    htmlEl.classList.toggle('dark');
+    const dark = htmlEl.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { const p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = dark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+  });
+</script>
+<script src="../../assets/learn.js"></script>
+<script>
+  if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.INEMA && INEMA.registerCheck) {
+      INEMA.registerCheck('modulo-2-2#q1', {
+        answer: 1,
+        explain: {
+          0: 'Não. Pedir revisão é uma instrução, mas não é um mecanismo: o modelo relê o próprio texto no mesmo contexto que o produziu, e nada define quando a revisão foi suficiente. É a linha mais comum das configs reais e a que menos entrega.',
+          1: 'Isso. Verificação precisa de observação externa (um comando, um teste, um arquivo de referência, um screenshot) e de condição de parada ("repita até o diff sair vazio"). Sem essas duas peças, a frase é só um lembrete educado.',
+          2: 'Não. Repetir a mesma frase em vários lugares só multiplica a redundância — que é justamente uma das categorias que a auditoria marca para corte. Quantidade não transforma um lembrete em verificação.'
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>
