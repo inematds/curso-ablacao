@@ -110,9 +110,7 @@
     <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.2</span>
     <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔧 Do relatório aos cortes: skill é a unidade certa</h1>
     <p class="text-lg text-neutral-400 max-w-3xl">
-      O relatório aponta. Este módulo é sobre <strong class="text-purple-400">aplicar</strong> — na ordem certa, com
-      volta garantida, e usando a ferramenta que emagrece a config sem perder nada:
-      <strong class="text-purple-400">mover procedimento do <code>CLAUDE.md</code> para uma skill</strong>.
+      O relatório aponta. Este módulo é sobre <strong class="text-purple-400">aplicar</strong> — na ordem certa, com volta garantida, e usando a ferramenta que emagrece a config sem perder nada: <strong class="text-purple-400">mover procedimento do <code>CLAUDE.md</code> para uma skill</strong>.
     </p>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
       <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
@@ -376,8 +374,7 @@ git commit -m "antes da ablacao"
         </g>
 
         <g font-family="Inter,sans-serif" font-size="12">
-          <rect x="30" y="272" width="14" height="10" rx="3" fill="#a855f7" opacity="0.75"/><text x="52" y="281" fill="#c4b5fd">CLAUDE.md (sempre lido)</text>
-          <rect x="270" y="272" width="14" height="10" rx="3" fill="#38bdf8" opacity="0.65"/><text x="292" y="281" fill="#9ad6ff">skill (carregada sob demanda)</text>
+          <rect x="30" y="272" width="14" height="10" rx="3" fill="#a855f7" opacity="0.75"/><text x="52" y="281" fill="#c4b5fd">CLAUDE.md (sempre lido)</text><rect x="270" y="272" width="14" height="10" rx="3" fill="#38bdf8" opacity="0.65"/><text x="292" y="281" fill="#9ad6ff">skill (carregada sob demanda)</text>
         </g>
       </svg>
     </div>
@@ -476,12 +473,7 @@ git -C ~/.claude add -A &amp;&amp; git -C ~/.claude commit -m "move: &lt;assunto
     </div>
 
     <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t4-p2">
-      Onde a skill mora também importa. Skill em <code class="text-purple-400">~/.claude/skills/</code> vale para tudo
-      que você faz; skill em <code class="text-purple-400">.claude/skills/</code> dentro do projeto
-      <strong class="text-purple-400">versiona junto com o código</strong>. Isso muda o regime de manutenção: o
-      procedimento anda com o repo, entra no pull request, é revisável por outra pessoa, e — crucialmente — não vaza
-      para os outros projetos. Uma receita de deploy específica do projeto A não tem por que ocupar contexto quando
-      você está trabalhando no projeto B.
+      Onde a skill mora também importa. Skill em <code class="text-purple-400">~/.claude/skills/</code> vale para tudo que você faz; skill em <code class="text-purple-400">.claude/skills/</code> dentro do projeto <strong class="text-purple-400">versiona junto com o código</strong>. Isso muda o regime de manutenção: o procedimento anda com o repo, entra no pull request, é revisável por outra pessoa, e — crucialmente — não vaza para os outros projetos. Uma receita de deploy específica do projeto A não tem por que ocupar contexto quando você está trabalhando no projeto B.
     </p>
 
     <div class="overflow-x-auto mb-6">
@@ -531,13 +523,7 @@ git -C ~/.claude add -A &amp;&amp; git -C ~/.claude commit -m "move: &lt;assunto
     </div>
 
     <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t5-p1">
-      Quando o modelo tropeça, o reflexo é despejar mais uma regra no <code class="text-purple-400">CLAUDE.md</code>.
-      No ciclo do Boris existem <strong class="text-purple-400">três remédios</strong>, e escolher o certo é o que
-      impede a config de voltar a engordar: <strong class="text-purple-400">prompt melhor</strong> (a instrução estava
-      obscura) · <strong class="text-purple-400">skill</strong> (falta procedimento repetível) ·
-      <strong class="text-purple-400">MCP</strong> (falta contexto ou acesso que ele não alcança). MCP é o protocolo
-      pelo qual o Claude Code conversa com uma fonte externa — um banco, uma API, um sistema de arquivos remoto — que
-      ele não teria como enxergar sozinho.
+      Quando o modelo tropeça, o reflexo é despejar mais uma regra no <code class="text-purple-400">CLAUDE.md</code>. No ciclo do Boris existem <strong class="text-purple-400">três remédios</strong>, e escolher o certo é o que impede a config de voltar a engordar: <strong class="text-purple-400">prompt melhor</strong> (a instrução estava obscura) · <strong class="text-purple-400">skill</strong> (falta procedimento repetível) · <strong class="text-purple-400">MCP</strong> (falta contexto ou acesso que ele não alcança). MCP é o protocolo pelo qual o Claude Code conversa com uma fonte externa — um banco, uma API, um sistema de arquivos remoto — que ele não teria como enxergar sozinho.
     </p>
 
     <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
@@ -552,82 +538,42 @@ git -C ~/.claude add -A &amp;&amp; git -C ~/.claude commit -m "move: &lt;assunto
         <rect x="0" y="0" width="1000" height="320" fill="url(#m32b-grid)"/>
 
         <g font-family="Inter,sans-serif">
-          <rect x="410" y="18" width="180" height="42" rx="12" fill="#1a1230" stroke="#a855f7" stroke-width="2"/>
-          <text x="500" y="44" text-anchor="middle" fill="#e9d5ff" font-size="14" font-weight="600">o modelo tropeçou</text>
-
-          <path d="M500,60 L500,88" stroke="#c084fc" stroke-width="1.8" marker-end="url(#m32b-ah)" fill="none"/>
-          <rect x="360" y="88" width="280" height="38" rx="10" fill="#131a26" stroke="#38bdf8" stroke-width="1.6"/>
-          <text x="500" y="112" text-anchor="middle" fill="#9ad6ff" font-size="13">a instrução estava clara?</text>
-
-          <path d="M360,107 L200,107 L200,150" stroke="#c084fc" stroke-width="1.6" fill="none" marker-end="url(#m32b-ah)" opacity="0.8"/>
-          <text x="272" y="99" text-anchor="middle" fill="#c4b5fd" font-size="11">não</text>
-          <rect x="110" y="150" width="180" height="46" rx="12" fill="#1a1230" stroke="#a855f7" stroke-width="2"/>
-          <text x="200" y="171" text-anchor="middle" fill="#e9d5ff" font-size="13" font-weight="600">prompt melhor</text>
-          <text x="200" y="188" text-anchor="middle" fill="#c4b5fd" font-size="10.5">reescreva o pedido, não a config</text>
-
-          <path d="M500,126 L500,152" stroke="#c084fc" stroke-width="1.8" marker-end="url(#m32b-ah)" fill="none"/>
-          <text x="520" y="144" fill="#c4b5fd" font-size="11">sim</text>
-          <rect x="360" y="152" width="280" height="38" rx="10" fill="#131a26" stroke="#38bdf8" stroke-width="1.6"/>
-          <text x="500" y="176" text-anchor="middle" fill="#9ad6ff" font-size="13">ele tinha acesso à informação?</text>
-
-          <path d="M640,171 L800,171 L800,214" stroke="#c084fc" stroke-width="1.6" fill="none" marker-end="url(#m32b-ah)" opacity="0.8"/>
-          <text x="726" y="163" text-anchor="middle" fill="#c4b5fd" font-size="11">não</text>
-          <rect x="710" y="214" width="180" height="46" rx="12" fill="#1a1230" stroke="#a855f7" stroke-width="2"/>
-          <text x="800" y="235" text-anchor="middle" fill="#e9d5ff" font-size="13" font-weight="600">MCP</text>
-          <text x="800" y="252" text-anchor="middle" fill="#c4b5fd" font-size="10.5">dê acesso, não instrução</text>
-
-          <path d="M500,190 L500,214" stroke="#c084fc" stroke-width="1.8" marker-end="url(#m32b-ah)" fill="none"/>
-          <text x="520" y="208" fill="#c4b5fd" font-size="11">sim</text>
-          <rect x="360" y="214" width="280" height="38" rx="10" fill="#131a26" stroke="#38bdf8" stroke-width="1.6"/>
-          <text x="500" y="238" text-anchor="middle" fill="#9ad6ff" font-size="13">é procedimento que se repete?</text>
-
-          <path d="M500,252 L500,272" stroke="#c084fc" stroke-width="1.8" marker-end="url(#m32b-ah)" fill="none"/>
-          <text x="520" y="268" fill="#c4b5fd" font-size="11">sim</text>
-          <g filter="url(#m32b-glow)"><rect x="380" y="272" width="240" height="42" rx="12" fill="#1a1230" stroke="url(#m32b-grad)" stroke-width="2"/></g>
-          <text x="500" y="290" text-anchor="middle" fill="#f3e8ff" font-size="13.5" font-weight="600">skill</text>
-          <text x="500" y="306" text-anchor="middle" fill="#c4b5fd" font-size="10.5">procedimento com fronteira, nome e escopo</text>
-
+          <g fill="none" stroke="#c084fc" stroke-width="1.8" marker-end="url(#m32b-ah)"><path d="M500,60 L500,88"/><path d="M500,126 L500,152"/><path d="M500,190 L500,214"/><path d="M500,252 L500,272"/><path d="M360,107 L200,107 L200,150" stroke-width="1.6" opacity="0.8"/><path d="M640,171 L800,171 L800,214" stroke-width="1.6" opacity="0.8"/></g>
           <path d="M360,233 L200,233 L200,258" stroke="#38bdf8" stroke-width="1.6" fill="none" marker-end="url(#m32b-ahc)" opacity="0.8"/>
-          <text x="272" y="225" text-anchor="middle" fill="#9ad6ff" font-size="11">não</text>
+          <g fill="#131a26" stroke="#38bdf8" stroke-width="1.6"><rect x="360" y="88" width="280" height="38" rx="10"/><rect x="360" y="152" width="280" height="38" rx="10"/><rect x="360" y="214" width="280" height="38" rx="10"/></g>
+          <g fill="#1a1230" stroke="#a855f7" stroke-width="2"><rect x="410" y="18" width="180" height="42" rx="12"/><rect x="110" y="150" width="180" height="46" rx="12"/><rect x="710" y="214" width="180" height="46" rx="12"/></g>
           <rect x="90" y="258" width="220" height="46" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.6"/>
-          <text x="200" y="279" text-anchor="middle" fill="#9ad6ff" font-size="13" font-weight="600">não conserte ainda</text>
-          <text x="200" y="296" text-anchor="middle" fill="#9ad6ff" font-size="10.5">espere a falha se repetir</text>
+          <g filter="url(#m32b-glow)"><rect x="380" y="272" width="240" height="42" rx="12" fill="#1a1230" stroke="url(#m32b-grad)" stroke-width="2"/></g>
+          <g text-anchor="middle" font-size="13" fill="#9ad6ff"><text x="500" y="112">a instrução estava clara?</text><text x="500" y="176">ele tinha acesso à informação?</text><text x="500" y="238">é procedimento que se repete?</text></g>
+          <g text-anchor="middle" fill="#e9d5ff" font-size="13" font-weight="600"><text x="500" y="44" font-size="14">o modelo tropeçou</text><text x="200" y="171">prompt melhor</text><text x="800" y="235">MCP</text></g>
+          <g text-anchor="middle" fill="#c4b5fd" font-size="10.5"><text x="200" y="188">reescreva o pedido, não a config</text><text x="800" y="252">dê acesso, não instrução</text><text x="500" y="306">procedimento com fronteira, nome e escopo</text></g>
+          <text x="500" y="290" text-anchor="middle" fill="#f3e8ff" font-size="13.5" font-weight="600">skill</text>
+          <g text-anchor="middle" fill="#9ad6ff"><text x="200" y="279" font-size="13" font-weight="600">não conserte ainda</text><text x="200" y="296" font-size="10.5">espere a falha se repetir</text><text x="272" y="225" font-size="11">não</text></g>
+          <g fill="#c4b5fd" font-size="11"><text x="272" y="99" text-anchor="middle">não</text><text x="726" y="163" text-anchor="middle">não</text><text x="520" y="144">sim</text><text x="520" y="208">sim</text><text x="520" y="268">sim</text></g>
         </g>
       </svg>
     </div>
     <p class="text-sm text-neutral-400 mb-6">
-      <strong class="text-neutral-300">O que olhar:</strong> nenhum dos quatro caminhos termina em "escreva mais uma
-      linha no <code class="text-purple-400">CLAUDE.md</code>". E repare no ramo ciano à esquerda: falha que aconteceu
-      <em>uma vez</em> não é remédio nenhum — a regra de reintrodução manda esperar a mesma falha se repetir antes de
-      devolver qualquer instrução. Metade das linhas zumbis de uma config nasceu de um tropeço único.
+      <strong class="text-neutral-300">O que olhar:</strong> nenhum dos quatro caminhos termina em "escreva mais uma linha no <code class="text-purple-400">CLAUDE.md</code>". E repare no ramo ciano à esquerda: falha que aconteceu <em>uma vez</em> não é remédio nenhum — a regra de reintrodução manda esperar a mesma falha se repetir antes de devolver qualquer instrução. Metade das linhas zumbis de uma config nasceu de um tropeço único.
     </p>
 
     <div class="space-y-4 mb-6">
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
         <h4 class="font-semibold text-purple-400 mb-2">Tropeço → prompt melhor</h4>
         <p class="text-neutral-300 text-sm">
-          Você pediu "melhora esse texto" e recebeu uma reescrita completa que perdeu o seu tom. O modelo não errou:
-          "melhorar" não significa nada específico. O conserto é no pedido — "corrija gramática e corte redundância,
-          preservando as escolhas de palavra" — não na config. Instrução obscura consertada com regra global vira uma
-          regra global obscura.
+          Você pediu "melhora esse texto" e recebeu uma reescrita completa que perdeu o seu tom. O modelo não errou: "melhorar" não significa nada específico. O conserto é no pedido — "corrija gramática e corte redundância, preservando as escolhas de palavra" — não na config. Instrução obscura consertada com regra global vira uma regra global obscura.
         </p>
       </div>
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
         <h4 class="font-semibold text-purple-400 mb-2">Tropeço → skill</h4>
         <p class="text-neutral-300 text-sm">
-          Toda vez que você publica um projeto, precisa lembrar o modelo da mesma sequência: guia em
-          <code class="text-purple-400">guia/</code>, nunca na raiz; nome do repo = nome da pasta; Pages via Actions.
-          É a terceira vez que você reexplica. Isso é procedimento repetível com contorno claro — vira skill, e você
-          chama <code class="text-purple-400">/publicar</code> quando precisa.
+          Toda vez que você publica um projeto, precisa lembrar o modelo da mesma sequência: guia em <code class="text-purple-400">guia/</code>, nunca na raiz; nome do repo = nome da pasta; Pages via Actions. É a terceira vez que você reexplica. Isso é procedimento repetível com contorno claro — vira skill, e você chama <code class="text-purple-400">/publicar</code> quando precisa.
         </p>
       </div>
       <div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
         <h4 class="font-semibold text-purple-400 mb-2">Tropeço → MCP</h4>
         <p class="text-neutral-300 text-sm">
-          Você pede uma análise dos pedidos do último trimestre e o modelo inventa números plausíveis. Nenhuma regra
-          resolve isso, porque o problema não é comportamento — é que os dados estão num banco que ele não alcança.
-          O remédio é dar acesso (um servidor MCP para o banco), não escrever "não invente dados" no
-          <code class="text-purple-400">CLAUDE.md</code>.
+          Você pede uma análise dos pedidos do último trimestre e o modelo inventa números plausíveis. Nenhuma regra resolve isso, porque o problema não é comportamento — é que os dados estão num banco que ele não alcança. O remédio é dar acesso (um servidor MCP para o banco), não escrever "não invente dados" no <code class="text-purple-400">CLAUDE.md</code>.
         </p>
       </div>
     </div>
@@ -635,15 +581,10 @@ git -C ~/.claude add -A &amp;&amp; git -C ~/.claude commit -m "move: &lt;assunto
     <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
       <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🧹</span> Skill é fácil de auditar — e de aposentar</h3>
       <p class="text-neutral-300 text-sm mb-3">
-        Uma skill tem <strong class="text-neutral-100">fronteira, nome e escopo</strong>. Isso significa que ela é uma
-        unidade que você consegue segurar na mão: dá para renomear a pasta, rodar uma semana sem ela e medir se alguma
-        coisa piorou. É ablação em escala de uma unidade inteira.
+        Uma skill tem <strong class="text-neutral-100">fronteira, nome e escopo</strong>. Isso significa que ela é uma unidade que você consegue segurar na mão: dá para renomear a pasta, rodar uma semana sem ela e medir se alguma coisa piorou. É ablação em escala de uma unidade inteira.
       </p>
       <p class="text-neutral-300 text-sm">
-        Desativar "aquele parágrafo do meio do <code class="text-purple-400">CLAUDE.md</code>" é bem mais difícil: ele
-        não tem nome, não tem fronteira clara, você não sabe quais tarefas dependiam dele, e nada acusa quando ele
-        some. Por isso a mesma instrução, dentro de uma skill, é <em>mais barata de manter</em> — não só mais barata
-        de rodar.
+        Desativar "aquele parágrafo do meio do <code class="text-purple-400">CLAUDE.md</code>" é bem mais difícil: ele não tem nome, não tem fronteira clara, você não sabe quais tarefas dependiam dele, e nada acusa quando ele some. Por isso a mesma instrução, dentro de uma skill, é <em>mais barata de manter</em> — não só mais barata de rodar.
       </p>
     </div>
 
@@ -676,11 +617,7 @@ git -C ~/.claude add -A &amp;&amp; git -C ~/.claude commit -m "move: &lt;assunto
     </div>
 
     <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-2-t6-p1">
-      O exercício deste módulo é curto e concreto: aplicar as <strong class="text-purple-400">3 primeiras mudanças do
-      Top 10</strong> do seu relatório, numa <strong class="text-purple-400">sessão nova</strong>, com a config sob git —
-      e pelo menos uma delas sendo um <code class="text-purple-400">MOVE</code> de bloco procedimental do
-      <code class="text-purple-400">CLAUDE.md</code> para uma skill. Uma mudança por commit. Registre o antes e o
-      depois em duas métricas: número de linhas e número de regras.
+      O exercício deste módulo é curto e concreto: aplicar as <strong class="text-purple-400">3 primeiras mudanças do Top 10</strong> do seu relatório, numa <strong class="text-purple-400">sessão nova</strong>, com a config sob git — e pelo menos uma delas sendo um <code class="text-purple-400">MOVE</code> de bloco procedimental do <code class="text-purple-400">CLAUDE.md</code> para uma skill. Uma mudança por commit. Registre o antes e o depois em duas métricas: número de linhas e número de regras.
     </p>
 
     <div class="bg-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
@@ -701,11 +638,7 @@ git -C ~/.claude diff --stat "antes da ablacao"..HEAD
 ls ~/.claude/skills/                    # a skill nova esta la?</pre>
       </div>
       <div class="bg-dark-700/50 rounded-lg p-4">
-        <p class="text-sm text-neutral-300"><strong class="text-purple-400">Como verificar:</strong>
-        <code class="text-purple-400">git diff --stat</code> te dá a conta exata de linhas removidas e adicionadas —
-        e num <code class="text-purple-400">MOVE</code> bem feito você vê linhas <em>saindo</em> do
-        <code class="text-purple-400">CLAUDE.md</code> e <em>entrando</em> no <code class="text-purple-400">SKILL.md</code>,
-        quase na mesma quantidade. Isso é o sinal de que você moveu, e não apagou por engano.</p>
+        <p class="text-sm text-neutral-300"><strong class="text-purple-400">Como verificar:</strong> <code class="text-purple-400">git diff --stat</code> te dá a conta exata de linhas removidas e adicionadas — e num <code class="text-purple-400">MOVE</code> bem feito você vê linhas <em>saindo</em> do <code class="text-purple-400">CLAUDE.md</code> e <em>entrando</em> no <code class="text-purple-400">SKILL.md</code>, quase na mesma quantidade. Isso é o sinal de que você moveu, e não apagou por engano.</p>
       </div>
     </div>
 
@@ -731,10 +664,7 @@ Regras desta sessao:
 - Nao commite: eu commito depois de ler o diff.</pre>
       </div>
       <div class="bg-dark-700/50 rounded-lg p-4">
-        <p class="text-sm text-neutral-300"><strong class="text-purple-400">Por que "não commite":</strong>
-        o commit é o seu ponto de decisão. Ler o diff antes de commitar é o único momento em que você compara o que
-        <em>pediu</em> com o que <em>aconteceu</em> — e é exatamente aí que aparece a reescrita silenciosa de um bloco
-        que você mandou mover sem mudar.</p>
+        <p class="text-sm text-neutral-300"><strong class="text-purple-400">Por que "não commite":</strong> o commit é o seu ponto de decisão. Ler o diff antes de commitar é o único momento em que você compara o que <em>pediu</em> com o que <em>aconteceu</em> — e é exatamente aí que aparece a reescrita silenciosa de um bloco que você mandou mover sem mudar.</p>
       </div>
     </div>
 

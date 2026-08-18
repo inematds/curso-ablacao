@@ -269,8 +269,7 @@
     </p>
 
     <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-8">
-      <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🎯</span> A frase-molde</h3>
-      <p class="text-neutral-100 text-lg mb-3">Produza <strong>X</strong>. Respeite <strong>Y</strong>. O resultado deve atingir <strong>Z</strong>. Verifique usando <strong>W</strong>. Escolha a estratégia.</p>
+      <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🎯</span> A frase-molde</h3><p class="text-neutral-100 text-lg mb-3">Produza <strong>X</strong>. Respeite <strong>Y</strong>. O resultado deve atingir <strong>Z</strong>. Verifique usando <strong>W</strong>. Escolha a estratégia.</p>
       <p class="text-neutral-300 text-sm">
         Se você não consegue preencher <strong>W</strong>, pare: você ainda não tem uma instrução, tem um desejo.
         A ausência de W é o defeito mais comum das configs que a auditoria encontra.
@@ -286,8 +285,7 @@
 
     <div class="bg-dark-800 rounded-xl border border-red-500/30 p-6 mb-4">
       <h4 class="font-bold text-red-400 mb-3">✗ ANTES — 8 passos, 14 linhas</h4>
-      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
-<pre class="text-sm text-neutral-300">## Publicação
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto"><pre class="text-sm text-neutral-300">## Publicação
 
 1. Rode `git status` e verifique se há mudanças.
 2. Rode `git diff` e leia tudo o que mudou.
@@ -296,20 +294,17 @@
 5. Se estiver errado, rode `git config user.email <email>`.
 6. Faça `git add` só dos arquivos que você editou (nunca `git add .`).
 7. Escreva a mensagem de commit no padrão `tipo: descrição`.
-8. Rode `git push` e depois confira no dashboard se o deploy subiu.</pre>
-      </div>
+8. Rode `git push` e depois confira no dashboard se o deploy subiu.</pre></div>
     </div>
 
     <div class="bg-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
       <h4 class="font-bold text-emerald-400 mb-3">✓ DEPOIS — 4 linhas de critério</h4>
-      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
-<pre class="text-sm text-neutral-300">## Publicação
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto"><pre class="text-sm text-neutral-300">## Publicação
 
 Objetivo: publicar = commit + push no `origin`. O deploy é automático; não é sua responsabilidade.
 Guardrails: nunca `git add .`; o autor do commit acompanha a conta de destino do repo (default `inematds`).
 Critério de saída: o commit está em `origin` e a mensagem segue `tipo: descrição`.
-Verificação: `git log origin/main -1` mostra o seu commit com o autor esperado.</pre>
-      </div>
+Verificação: `git log origin/main -1` mostra o seu commit com o autor esperado.</pre></div>
       <div class="bg-dark-700/50 rounded-lg p-4 mt-4">
         <p class="text-sm text-neutral-300">
           <strong class="text-blue-400">O que mudou de verdade:</strong> os passos 1–3 sumiram porque o modelo já sabe
@@ -385,8 +380,7 @@ Verificação: `git log origin/main -1` mostra o seu commit com o autor esperado
 
     <div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">📋</span> Template pronto para colar</h3>
       <p class="text-sm text-neutral-400 mb-4">Copie, troque o que está entre <code class="text-blue-400">&lt; &gt;</code> e apague os campos que não se aplicam — menos o de Verificação, que nunca sai.</p>
-      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
-<pre class="text-sm text-neutral-300">## &lt;nome da tarefa&gt;
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto"><pre class="text-sm text-neutral-300">## &lt;nome da tarefa&gt;
 
 **Objetivo:** &lt;o resultado que deve existir no final, em uma frase&gt;
 
@@ -404,8 +398,7 @@ Verificação: `git log origin/main -1` mostra o seu commit com o autor esperado
 Repita produzir → verificar até &lt;condição de parada explícita&gt;.
 
 **Autonomia:** escolha a estratégia de execução; não peça confirmação
-para decisões cobertas pelos guardrails acima.</pre>
-      </div>
+para decisões cobertas pelos guardrails acima.</pre></div>
     </div>
 
     <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica: o template é uma régua, não um formulário</h3><p class="text-neutral-300">
@@ -510,12 +503,25 @@ para decisões cobertas pelos guardrails acima.</pre>
       </p>
     </div>
 
-    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-4">Conceitos-chave</h3><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Produzir</div><p class="text-xs text-neutral-400">Gerar a saída</p></div>
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Observar</div><p class="text-xs text-neutral-400">Olhar algo fora do próprio texto</p></div>
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Comparar</div><p class="text-xs text-neutral-400">Confrontar saída e referência</p></div>
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Condição de parada</div><p class="text-xs text-neutral-400">O que encerra o ciclo</p></div>
-      </div></div>
+    <h3 class="text-xl font-semibold text-neutral-100 mb-4">Os quatro momentos, em ordem</h3>
+    <div class="space-y-6 mb-6">
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Produzir</h4><p class="text-neutral-300 text-sm">Gerar a saída. É o único momento que toda config já tem.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Observar</h4><p class="text-neutral-300 text-sm">Olhar algo <em>fora</em> do próprio texto: rodar um comando, abrir um arquivo, tirar um screenshot.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Comparar</h4><p class="text-neutral-300 text-sm">Confrontar a saída com a referência e produzir um veredito — passou ou não passou.</p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Condição de parada</h4><p class="text-neutral-300 text-sm">A frase que encerra o ciclo. “Não pare até terminar”, “até o diff sair vazio”, “até o exit code ser 0”.</p>
+        </div>
+      </div>
+    </div>
 
     <div class="flex justify-start mt-6"><button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors">
         <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
@@ -544,9 +550,7 @@ para decisões cobertas pelos guardrails acima.</pre>
       mecanismo do módulo 1.1: instrução é o conserto da fraqueza de um modelo específico.
     </p>
 
-    <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🧬</span> Ciência empírica, não teórica</h3>
-      <p class="text-neutral-100 text-lg mb-3">Trabalhar com um modelo se parece mais com conhecer uma criatura viva do que com configurar um sistema.</p>
+    <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🧬</span> Ciência empírica, não teórica</h3><p class="text-neutral-100 text-lg mb-3">Trabalhar com um modelo se parece mais com conhecer uma criatura viva do que com configurar um sistema.</p>
       <p class="text-neutral-300">
         Cada geração se comporta de um jeito e tem uma personalidade ligeiramente diferente. Você passa um tempo
         aprendendo como ela funciona e depois ajusta o <strong class="text-blue-400">harness</strong> — o conjunto de
@@ -584,15 +588,13 @@ para decisões cobertas pelos guardrails acima.</pre>
         Perguntaram a Boris o que separa o 1% dos melhores usuários de Claude Code. A resposta foi: pare de procurar um
         truque. O método é este, e ele é público:
       </p>
-      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
-<pre class="text-sm text-neutral-300">1. tarefa difícil demais
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto"><pre class="text-sm text-neutral-300">1. tarefa difícil demais
 2. meios de verificar o trabalho
 3. observar onde ele trava
 4. corrigir AQUILO  →  prompt melhor  (instrução obscura)
                     →  skill          (falta procedimento repetível)
                     →  MCP            (falta contexto que ele não alcança)
-5. repetir</pre>
-      </div>
+5. repetir</pre></div>
       <p class="text-sm text-neutral-400 mt-4">
         O passo 4 é onde a maioria erra: diante de um tropeço, o reflexo é sempre “mais uma regra no
         <code class="text-blue-400">CLAUDE.md</code>”. Três causas, três remédios diferentes — e só um deles é escrever texto.
@@ -637,8 +639,7 @@ para decisões cobertas pelos guardrails acima.</pre>
 
     <div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🧪</span> Prompt pronto para colar no Claude Code</h3>
       <p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> fazer o próprio Claude Code produzir as duas versões lado a lado, sem deixá-lo aplicar nada no arquivo.</p>
-      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
-<pre class="text-sm text-neutral-300">Leia &lt;caminho do seu CLAUDE.md ou da sua skill&gt; e localize o bloco
+      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto"><pre class="text-sm text-neutral-300">Leia &lt;caminho do seu CLAUDE.md ou da sua skill&gt; e localize o bloco
 "&lt;titulo ou primeira linha do bloco mais roteirizado&gt;".
 
 NÃO edite nenhum arquivo. Só produza texto na resposta.
@@ -658,8 +659,7 @@ Devolva três blocos em markdown:
 
 No fim, responda em uma frase: um colega que não conhece este projeto
 conseguiria executar a Verificação da versão mínima sem me perguntar nada?
-Se a resposta for não, reescreva a Verificação.</pre>
-      </div>
+Se a resposta for não, reescreva a Verificação.</pre></div>
       <div class="bg-dark-700/50 rounded-lg p-4">
         <p class="text-sm text-neutral-300">
           <strong class="text-blue-400">Critério de saída deste exercício:</strong> as duas versões existem escritas ao
