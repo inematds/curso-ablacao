@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ablacao" name="inema-course"/>
+<title>Ruta 1 — Por qué borrar | Auditoría de ablación</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+  })();
+  </script>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "ablacao",
+    "tracks": [
+      { "n": "1", "title": "Por que apagar", "modules": [
+        { "id": "1-1", "title": "Configuracao envelhece", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O metodo de ablacao", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" }
+      ]},
+      { "n": "2", "title": "Como diagnosticar", "modules": [
+        { "id": "2-1", "title": "A taxonomia: o que cada linha e", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "De microgerenciamento a criterio", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" }
+      ]},
+      { "n": "3", "title": "Auditar de verdade", "modules": [
+        { "id": "3-1", "title": "Rodando a skill audit-ablacao", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Do relatorio aos cortes", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" }
+      ]},
+      { "n": "4", "title": "Provar e manter", "modules": [
+        { "id": "4-1", "title": "O plano de ablacao A/B/C", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O ciclo continuo", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" }
+      ]}
+    ]
+  }
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="../../../assets/curso.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/curso-ablacao/curso/trilha1/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/en/curso/trilha1/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/es/curso/trilha1/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="./" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Auditoría por ablación</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1">
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Por qué borrar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnosticar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Auditar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Probar y mantener</span></a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Mi recorrido" type="button">
+<span aria-hidden="true">◷</span><span class="hidden xl:inline">Recorrido</span><span aria-hidden="true" class="inema-journey-badge hidden"></span>
+</button>
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main id="conteudo">
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="1">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">TRILHA 1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧬 Por qué eliminar</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+      Tu configuración no quedó mal: ella <strong class="text-emerald-400">envejeció</strong>. Cada instrucción que
+      escribiste es la solución a la debilidad de un modelo específico; y cuando llega el siguiente modelo, que ya no tiene
+      esa debilidad, la instrucción se convierte en peso muerto que pagas con contexto cada vez. Esta ruta responde
+      <em>por qué borrar</em> y presenta el método que Anthropic usó para recortar más del 80% de su propio prompt.
+    </p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 mb-6 overflow-hidden">
+<svg aria-label="Diagrama: a la izquierda, una pila gruesa de instrucciones acumuladas entra en una caja central llamada ablación; a la derecha salen dos cosas: una configuración mínima y breve, y un bloque más pequeño con lo que se preservó: seguridad, permisos e interfaz. El resto se descarta." class="w-full h-auto" role="img" viewbox="0 0 1000 250">
+<defs>
+<lineargradient id="t1-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="t1-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="t1-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="t1-arrow" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="4.5"><path d="M0,0 L9,4.5 L0,9 z" fill="#34d399"></path></marker>
+<marker id="t1-arrow-sky" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="4.5"><path d="M0,0 L9,4.5 L0,9 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#t1-grid)" height="250" width="1000" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e2018" height="150" opacity="0.9" rx="12" stroke="#34d399" stroke-width="1.6" width="210" x="30" y="42"></rect>
+<text fill="#a7f3d0" font-size="13" font-weight="600" text-anchor="middle" x="135" y="34">configuración acumulada</text>
+<g opacity="0.35" stroke="#34d399" stroke-linecap="round" stroke-width="6">
+<path d="M56,70 L214,70"></path><path d="M56,90 L214,90"></path><path d="M56,110 L196,110"></path>
+<path d="M56,130 L214,130"></path><path d="M56,150 L182,150"></path><path d="M56,170 L206,170"></path>
+</g>
+<text fill="#9ad6ff" font-size="12" text-anchor="middle" x="135" y="212">300 líneas, 3 años de arreglos</text>
+</g>
+<path d="M248,117 L358,117" fill="none" marker-end="url(#t1-arrow)" stroke="#34d399" stroke-width="2"></path>
+<g filter="url(#t1-glow)">
+<rect fill="#0e2018" height="112" rx="14" stroke="url(#t1-grad)" stroke-width="2.2" width="200" x="366" y="62"></rect>
+</g>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<text fill="#34d399" font-size="17" font-weight="600" x="466" y="110">ablación</text>
+<text fill="#a7f3d0" font-size="12" x="466" y="134">borrar para medir</text>
+<text fill="#9ad6ff" font-size="12" x="466" y="196">nada vuelve sin que la falla se repita</text>
+</g>
+<path d="M574,96 L688,72" fill="none" marker-end="url(#t1-arrow)" stroke="#34d399" stroke-width="2"></path>
+<path d="M574,140 L688,164" fill="none" marker-end="url(#t1-arrow-sky)" stroke="#38bdf8" stroke-width="2"></path>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e2018" height="70" rx="12" stroke="#34d399" stroke-width="1.8" width="270" x="696" y="40"></rect>
+<text fill="#34d399" font-size="14" font-weight="600" text-anchor="middle" x="831" y="66">configuración mínima</text>
+<g opacity="0.45" stroke="#34d399" stroke-linecap="round" stroke-width="5">
+<path d="M726,86 L862,86"></path><path d="M726,98 L806,98"></path>
+</g>
+<rect fill="#0e2018" height="82" rx="12" stroke="#38bdf8" stroke-width="1.8" width="270" x="696" y="130"></rect>
+<text fill="#38bdf8" font-size="14" font-weight="600" text-anchor="middle" x="831" y="156">lo que se preservó</text>
+<text fill="#9ad6ff" font-size="12" text-anchor="middle" x="831" y="178">seguridad · permisos</text>
+<text fill="#9ad6ff" font-size="12" text-anchor="middle" x="831" y="196">análisis estático · interfaz</text>
+</g>
+</svg>
+</div>
+<p class="text-xs text-neutral-400 mt-3 max-w-3xl">
+<strong class="text-neutral-300">Qué observar:</strong> la ablación no es una limpieza que lo tira todo: es un embudo con
+      <em>dos</em> salidas. Se obtiene una configuración corta (lo que el modelo ya hace por sí solo hoy, lo eliminas) y un bloque conservado
+      (seguridad, permisos, análisis estático e interfaz: cosas que el modelo <em>no hay forma de inferirlo</em>). La flecha de vuelta no está ahí por casualidad: una instrucción solo se devuelve después de que un fallo real se repita.
+    </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mt-8">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">2</div><div class="text-xs text-neutral-400">Módulos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">12</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~1h25</div><div class="text-xs text-neutral-400">Duración</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Básico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+</div>
+<div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-300 font-semibold">Progreso de la ruta</span>
+<div aria-label="Progreso de la ruta 1" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-sm" data-inema-meter="trilha:1" role="progressbar">
+<span class="inema-meter-pct text-emerald-400 font-bold">0%</span> <span class="inema-meter-count text-neutral-400 ml-2">0 de 0</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- ===================== MAPA DA TRILHA ===================== -->
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa de la ruta</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-1">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.1</span><span class="text-xs text-neutral-500">~40 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🧬 La configuración envejece</h3>
+<p class="text-xs text-neutral-400">80% del prompt a la basura</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5 transition-all" href="#modulo-1-2">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.2</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400 transition-colors">🧪 El método de ablación</h3>
+<p class="text-xs text-neutral-400">Borra y luego demuéstralo</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Contenido detallado</h2>
+<!-- ===================== MODULO 1.1 ===================== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-1" data-inema-track="1" id="modulo-1-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.1</span><span class="text-xs text-neutral-500">~40 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧬 La configuración envejece</h3>
+<p class="text-neutral-400 text-sm">Cada instrucción que escribes corrige la debilidad de UN modelo específico, y se convierte en peso muerto cuando el siguiente modelo ya no tiene esa debilidad.</p>
+<div class="mt-4 flex items-center justify-between max-w-sm">
+<span class="text-xs text-neutral-500">Progreso del módulo</span>
+<div aria-label="Progreso del módulo 1.1" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-sm" data-inema-meter="modulo:1-1" role="progressbar">
+<span class="inema-meter-pct text-emerald-400 font-bold">0%</span> <span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span>
+</div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">📉</span>
+<div><span class="font-medium">Entiende qué eliminó Anthropic</span><span class="text-neutral-500 text-sm ml-2">- más del 80% del prompt</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Boris Cherny, del equipo de Claude Code, contó en una charla en Y Combinator —un día después del lanzamiento de Opus 5— que el equipo eliminó <strong>más del 80% del prompt del sistema</strong> del producto. No fue una reescritura ni un ajuste fino: fue un recorte.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Si quien escribió el harness descarta cuatro quintas partes de su propio prompt cuando cambia el modelo, no hay motivo para que tu configuración personal —escrita para modelos que ya quedaron obsoletos— esté en mejor estado que la suya.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Harness = todo lo que rodea al modelo (prompt del sistema, herramientas, prompts de herramientas). El harness nunca está listo: se reescribe con cada generación de modelos, y reducirlo también forma parte del trabajo.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🧯</span>
+<div><span class="font-medium">Mira por qué una instrucción es una solución fechada</span><span class="text-neutral-500 text-sm ml-2">- extintor para un fuego apagado</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">La mayor parte del prompt antiguo existía para corregir comportamientos de un modelo específico: “no inventes archivos”, “lee antes de editar”, “no hagas un resumen al final”. El modelo de hoy ya hace eso por sí solo: la instrucción se convirtió en un extintor apuntando a un fuego que ya se apagó.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">No escribiste esa línea porque fuera una buena práctica eterna. La escribiste porque, un día de 2024, el modelo se equivocó. La línea es un registro histórico de un error — y nadie vuelve a revisar el registro después.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Cada instrucción tiene una fecha de origen y un modelo objetivo. Al auditar, pregúntate sobre cada línea: «¿Qué error evitaba y de cuándo es ese error?». Si no sabes responder, es una firme candidata a eliminar.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🛡️</span>
+<div><span class="font-medium">Descubre qué sobrevivió al recorte</span><span class="text-neutral-500 text-sm ml-2">- lo que el modelo no infiere</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">El 20% que quedó no es aleatorio. Quedó <strong>seguridad</strong>, <strong>permisos</strong>, <strong>análisis estático</strong> e <strong>interfaz</strong> — reglas sobre el mundo fuera del modelo, que ningún entrenamiento puede adivinar.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Esta es la línea divisoria práctica de toda la auditoría. Las instrucciones sobre <em>cómo pensar</em> termina; instrucción sobre <em>lo que es verdad en tu entorno</em> se queda. Sin este criterio, recortar es una apuesta.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Nunca recortes por reflejo: identidad del proyecto, rutas y fuentes de verdad, branding, cumplimiento, contratos de interfaz y convenciones internas. El modelo es bueno razonando, pero no leyendo tu mente.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">💸</span>
+<div><span class="font-medium">Calcula el costo de una línea zombi</span><span class="text-neutral-500 text-sm ml-2">- pagas en cada ejecución</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Una línea inútil no es neutra. Cuesta tres cosas al mismo tiempo: <strong>contexto consumido</strong> en cada ejecución, <strong>autonomía reducida</strong> (el modelo obedece un camino peor que el que elegiría) y una <strong>regla que nadie se atreve a borrar</strong> porque nadie sabe ya qué protege.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">El costo es compuesto: 40 líneas obsoletas no cuestan 40 líneas una sola vez, sino 40 líneas multiplicadas por el número de ejecuciones del año — y un poco de comportamiento inconsistente en cada una.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">La instrucción es una deuda con intereses. De ahí la regla del curso: cada línea es <em>culpable de complejidad hasta que demuestre su utilidad</em> — la carga de la prueba recae en la línea, no en quien quiere borrarla.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-1-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🔬</span>
+<div><span class="font-medium">Reconoce los 6 síntomas de sedimentos</span><span class="text-neutral-500 text-sm ml-2">- el diagnóstico rápido</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-5">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Seis señales de que la config acumuló sedimento: <strong>CLAUDE.md de 300 líneas</strong>; <strong>la misma regla repetida en 3 skills</strong>; <strong>habilidad que enseña al modelo a pensar</strong>; <strong>paso a paso de 12 etapas</strong>; <strong>reglas que se contradicen</strong>; e <strong>ninguna verificación</strong> diciendo cómo comprobar el resultado.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Cada síntoma apunta a un diagnóstico distinto: el tamaño sugiere legado, la repetición sugiere redundancia, un guion largo sugiere microgestión y las contradicciones sugieren que nadie revisa. Es el filtro de 5 minutos antes de la auditoría formal.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">El sexto síntoma es el más engañoso: una configuración llena de órdenes y sin <em>ninguno</em> el criterio de verificación le dice al modelo cómo actuar, pero nunca cómo saber si acertó. Esta es la única categoría que normalmente falta — y que deberías <em>añadir</em>.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-1-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🧾</span>
+<div><span class="font-medium">Encuentra 3 instrucciones heredadas en tu configuración</span><span class="text-neutral-500 text-sm ml-2">- ejercicio de inventario</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-1-6">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Abre tu <code class="text-emerald-400">~/.claude/CLAUDE.md</code> (y/o el de un proyecto) y marca a mano tres instrucciones que existen para corregir un comportamiento antiguo. Para cada una, anota qué intenta evitar y de qué época/modelo surgió.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Leer sobre el recorte del 80% no cambia nada; encontrar tus propias tres líneas inútiles sí. Aquí es donde la config real del alumno entra en el curso: atraviesa las cuatro rutas.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Criterio de salida: puedes señalar las tres líneas y responder, para cada una, «qué evita» y «cuándo surgió». Aún no borres nada: este módulo es solo el inventario.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-1')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-1.html">Ver completo</a>
+</div>
+</div>
+<!-- ===================== MODULO 1.2 ===================== -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="1-2" data-inema-track="1" id="modulo-1-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.2</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧪 El método de ablación</h3>
+<p class="text-neutral-400 text-sm">La ablación es borrar para medir. Reconstruye basándote en evidencia, nunca en predicciones.</p>
+<div class="mt-4 flex items-center justify-between max-w-sm">
+<span class="text-xs text-neutral-500">Progreso del módulo</span>
+<div aria-label="Progreso del módulo 1.2" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-sm" data-inema-meter="modulo:1-2" role="progressbar">
+<span class="inema-meter-pct text-emerald-400 font-bold">0%</span> <span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span>
+</div>
+</div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t1-2-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🔎</span>
+<div><span class="font-medium">Entiende qué significa la ablación</span><span class="text-neutral-500 text-sm ml-2">- eliminar para medir</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-2-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Ablación es un término tomado de la investigación: tú <strong>elimina un componente</strong> del sistema y observa qué cambia en el resultado. Si nada empeora, el componente no estaba contribuyendo: eliminarlo es la medida.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Es lo contrario de lo que hacemos por instinto: agregar instrucciones hasta que funcione. Agregar no demuestra nada, porque el sistema también funcionaría sin ellas. Solo quitarlas permite distinguir lo que actúa de lo que solo ocupa espacio.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Ablación ≠ limpieza. Limpiar es borrar lo que parece feo; la ablación es borrar y <em>medir</em>. Sin observaciones después del recorte, solo eliminaste un archivo.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-2-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🗓️</span>
+<div><span class="font-medium">Márcalo cuando lo borres</span><span class="text-neutral-500 text-sm ml-2">- ~6 meses o un modelo nuevo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-2-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">El consejo es directo: cada <strong>~6 meses</strong> y cada <strong>gran lanzamiento de modelo</strong>, elimina el <code class="text-emerald-400">CLAUDE.md</code>, las skills y los hooks, y mira qué hace el modelo sin ellos.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">El desencadenante debe depender del calendario, no del estado de ánimo. Nadie se despierta con ganas de auditar su propia configuración; sin una fecha marcada, el sedimento solo crece hasta convertirse en un problema visible.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Un modelo nuevo es la mejor oportunidad: es justo cuando la mayor cantidad de instrucciones antiguas acaba de quedar obsoleta de una sola vez. Borrar tiene que hacerse en git: reversible, no heroico.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-2-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🪜</span>
+<div><span class="font-medium">Sigue las 4 etapas de la reconstrucción</span><span class="text-neutral-500 text-sm ml-2">- borrar, usar, observar, devolver</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-2-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">El ciclo tiene cuatro pasos, en este orden: <strong>1) borrar</strong> → <strong>2) usar en trabajo real</strong> (no en una prueba de juguete) → <strong>3) observa dónde tropieza</strong> → <strong>4) devolver una instrucción solo después de ver que el mismo fallo se repite</strong>.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">La etapa 2 es la que todos se saltan. Si pruebas con una tarea artificial, el modelo acierta y llegas a una conclusión equivocada; el sedimento solo aparece en las tareas tediosas y específicas de tu día a día.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Eres pésimo prediciendo qué línea necesita el modelo; por eso la evidencia va antes de la instrucción, y no al revés. Registra en un diario (<code class="text-emerald-400">ablacao-diario.md</code>): aciertos, tropiezos, ¿se repitió?</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-2-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🧰</span>
+<div><span class="font-medium">Establece tu línea de base</span><span class="text-neutral-500 text-sm ml-2">- CLAUDE_CODE_SIMPLE=1</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-2-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Dos herramientas establecen la línea de base del «modelo sin modificar»: la <strong>flag de prompt del sistema</strong> al iniciar y <code class="text-emerald-400">CLAUDE_CODE_SIMPLE=1</code>, que elimina todos los prompts, incluidos los de las herramientas.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Sin una línea de base no tienes con qué comparar. Y aquí hay un hallazgo contraintuitivo: <strong>sin prompts, el modelo se vuelve ligeramente más inteligente</strong> — los prompts existen en buena medida para que el producto se comporte como la persona espera, no para que el modelo piense mejor.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Línea de base = misma tarea, config vacía. Si la versión con config no supera la línea de base en un trabajo real, la config está cobrando sin aportar nada.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-2-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🎯</span>
+<div><span class="font-medium">Retira tus evaluaciones en el momento adecuado</span><span class="text-neutral-500 text-sm ml-2">- de 1 a 3 generaciones</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-2-5">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Eval es la prueba con la que mides al agente. Y también envejece: una eval útil sobrevive de <strong>1 a 3 generaciones de modelo</strong> antes de saturarse — todos pasan por eso, ya no distingue nada.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Una batería de evals saturadas da una sensación cómoda de seguridad y no detecta ninguna regresión. Es el mismo peso muerto que CLAUDE.md, pero en la capa de pruebas.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">Crea evals donde tú <em>viste</em> que el modelo tropiece; retira las que llevan dos generaciones en 100%. Una buena eval todavía puede reprobar a alguien.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t1-2-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">♻️</span>
+<div><span class="font-medium">Aplica la regla de reintroducción</span><span class="text-neutral-500 text-sm ml-2">- las 4 condiciones</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t1-2-6">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-emerald-400 font-semibold">Qué es:</span><p class="text-neutral-300 text-sm">Una instrucción solo vuelve si se cumplen las cuatro condiciones: <strong>1)</strong> hubo un fallo real en un trabajo real; <strong>2)</strong> se repitió la misma clase de falla; <strong>3)</strong> una instrucción específica lo resuelve; <strong>4)</strong> entra en la forma más breve posible.</p></div>
+<div><span class="text-emerald-400 font-semibold">Por qué aprender:</span><p class="text-neutral-300 text-sm">Sin este filtro, la config vuelve a su tamaño original en dos semanas. La condición 2 es el filtro que más líneas ahorra: un fallo aislado suele ser una variación normal, no un patrón.</p></div>
+<div><span class="text-emerald-400 font-semibold">Conceptos clave:</span><p class="text-neutral-300 text-sm">La condición 4 es cualitativa: prefiere una frase de criterio («el build tiene que pasar antes del commit») a un procedimiento de 12 pasos. El criterio preserva la autonomía; el procedimiento la destruye.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-1-2')">Ver en modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors" href="modulo-1-2.html">Ver completo</a>
+</div>
+</div>
+<!-- Navegacao -->
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../../index.html">← Volver al inicio</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="../trilha2/index.html">Próxima ruta: Cómo diagnosticar →</a>
+</div>
+</div>
+</main>
+<!-- MODAIS -->
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-1" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.1</span><span class="font-semibold">La configuración envejece</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-1-1.html" title="Módulo 1.1"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-2" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-emerald-400 font-bold">1.2</span><span class="font-semibold">El método de ablación</span></div>
+<button aria-label="Cerrar" class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-1-2.html" title="Módulo 1.2"></iframe>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Auditoría por ablación — INEMA · 2026</p>
+<p>
+<a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a>
+</p>
+<p class="text-xs">Método y visión: Boris Cherny (Anthropic) — charla en Y Combinator sobre el recorte del 80% del prompt del sistema de Claude Code.</p>
+</div>
+</footer>
+<script>
+  function toggleTopic(button) {
+    const topicItem = button.closest('.topic-item');
+    const explanation = topicItem.querySelector('.topic-explanation');
+    const moduleCard = button.closest('.bg-dark-800') || document;
+    moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) { exp.classList.remove('active'); const b = exp.closest('.topic-item').querySelector('button'); if (b) b.setAttribute('aria-expanded','false'); } });
+    explanation.classList.toggle('active');
+    button.setAttribute('aria-expanded', explanation.classList.contains('active') ? 'true' : 'false');
+  }
+  function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const htmlEl = document.documentElement;
+  if (htmlEl.classList.contains('dark')) themeToggleLightIcon.classList.remove('hidden'); else themeToggleDarkIcon.classList.remove('hidden');
+  themeToggle.addEventListener('click', () => {
+    themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+    htmlEl.classList.toggle('dark');
+    const dark = htmlEl.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { const p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = dark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+  });
+</script>
+<script src="../../../assets/learn.js"></script>
+<script>
+  if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+</script>
+</body>
+</html>

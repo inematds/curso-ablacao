@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+
+<html class="dark" lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="ablacao">
-  <title>Trilha 3 — Auditar de verdade | Auditoria de Ablação</title>
-  <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ablacao" name="inema-course"/>
+<title>Trilha 3 — Auditar de verdade | Auditoria de Ablação</title>
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -35,7 +36,7 @@
     } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
   })();
   </script>
-  <script type="application/json" data-inema-manifest>
+<script data-inema-manifest="" type="application/json">
   {
     "course": "ablacao",
     "tracks": [
@@ -58,391 +59,349 @@
     ]
   }
   </script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-  <link rel="stylesheet" href="../../assets/curso.css">
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-
-<a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700">Pular para o conteudo</a>
-
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<link href="../../assets/curso.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/curso-ablacao/curso/trilha3/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/en/curso/trilha3/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/es/curso/trilha3/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="./" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha3/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha3/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700" href="#conteudo">Pular para o conteudo</a>
 <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-14 gap-2">
-      <div class="flex items-center space-x-3 flex-shrink-0">
-        <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-          <span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Auditoria de Ablação</span>
-        </a>
-        <span class="text-neutral-600 hidden sm:inline">|</span>
-        <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline">INEMA.CLUB</a>
-        <span class="text-neutral-600 hidden sm:inline">-</span>
-        <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline">PRO</a>
-      </div>
-      <div class="flex items-center space-x-1">
-        <a href="../trilha1/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Por que apagar</span></a>
-        <a href="../trilha2/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnosticar</span></a>
-        <a href="index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Auditar</span></a>
-        <a href="../trilha4/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Provar e manter</span></a>
-        <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" title="Minha jornada">
-          <span aria-hidden="true">◷</span><span class="hidden xl:inline">Jornada</span><span class="inema-journey-badge hidden" aria-hidden="true"></span>
-        </button>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" aria-label="Alternar tema claro/escuro">
-          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-        </button>
-      </div>
-    </div>
-  </div>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Auditoria de Ablação</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1">
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Por que apagar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnosticar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Auditar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Provar e manter</span></a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Minha jornada" type="button">
+<span aria-hidden="true">◷</span><span class="hidden xl:inline">Jornada</span><span aria-hidden="true" class="inema-journey-badge hidden"></span>
+</button>
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
 </nav>
-
 <main id="conteudo">
-
 <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="3">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">TRILHA 3</span>
-    <h1 class="text-3xl sm:text-4xl font-bold mb-4">🩺 Auditar de verdade</h1>
-    <p class="text-lg text-neutral-400 max-w-3xl">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">TRILHA 3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🩺 Auditar de verdade</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
       Até aqui você aprendeu a classificar linha por linha no papel. Agora a pergunta é operacional:
       como rodar a auditoria na sua própria config e transformar o relatório em cortes seguros?
       A skill lê e diagnostica; quem aplica é você, em outra sessão, com a config sob git.
     </p>
-
-    <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 mb-6 overflow-hidden">
-      <svg viewBox="0 0 1000 320" class="w-full h-auto" role="img" aria-label="Fluxo da auditoria: à esquerda, três arquivos de configuração — CLAUDE.md, skills e hooks — entram na skill de diagnóstico; no centro, a skill produz um relatório de dez seções, destacado com brilho; à direita, uma mão humana aplica as mudanças, ligada por uma seta tracejada que sai do escopo da skill, indicando que aplicar não é feito pela skill.">
-        <defs>
-          <linearGradient id="t3-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
-          <filter id="t3-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          <pattern id="t3-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.12"/></pattern>
-          <marker id="t3-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker>
-          <marker id="t3-arrow-cy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/></marker>
-        </defs>
-        <rect x="0" y="0" width="1000" height="320" fill="url(#t3-grid)"/>
-
-        <rect x="36" y="40" width="238" height="238" rx="14" fill="none" stroke="#a855f7" stroke-width="1.2" opacity="0.35"/>
-        <rect x="600" y="40" width="364" height="238" rx="14" fill="none" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="7 7" opacity="0.5"/>
-
-        <g font-family="Inter,sans-serif" font-weight="600">
-          <text x="155" y="30" text-anchor="middle" fill="#9ca3af" font-size="11" font-weight="400">entra na leitura</text>
-          <text x="782" y="30" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="400">fora do escopo da skill</text>
-
-          <rect x="66" y="66" width="180" height="42" rx="9" fill="#1a1230" stroke="#c084fc" stroke-width="2"/>
-          <text x="156" y="92" text-anchor="middle" fill="#e9d5ff" font-size="13">CLAUDE.md</text>
-
-          <rect x="66" y="134" width="180" height="42" rx="9" fill="#1a1230" stroke="#c084fc" stroke-width="2"/>
-          <text x="156" y="160" text-anchor="middle" fill="#e9d5ff" font-size="13">skills</text>
-
-          <rect x="66" y="202" width="180" height="42" rx="9" fill="#1a1230" stroke="#c084fc" stroke-width="2"/>
-          <text x="156" y="228" text-anchor="middle" fill="#e9d5ff" font-size="13">hooks + settings.json</text>
-
-          <path d="M250,87 C300,87 300,150 336,157" stroke="#c084fc" stroke-width="1.8" fill="none" opacity="0.75" marker-end="url(#t3-arrow)"/>
-          <path d="M250,155 L336,157" stroke="#c084fc" stroke-width="1.8" fill="none" opacity="0.75" marker-end="url(#t3-arrow)"/>
-          <path d="M250,223 C300,223 300,164 336,158" stroke="#c084fc" stroke-width="1.8" fill="none" opacity="0.75" marker-end="url(#t3-arrow)"/>
-
-          <g filter="url(#t3-glow)"><rect x="348" y="104" width="216" height="108" rx="12" fill="#1a1230" stroke="url(#t3-grad)" stroke-width="2.4"/></g>
-          <text x="456" y="140" text-anchor="middle" fill="#c084fc" font-size="14">relatório</text>
-          <text x="456" y="164" text-anchor="middle" fill="#c084fc" font-size="14">de 10 seções</text>
-          <text x="456" y="192" text-anchor="middle" fill="#9ca3af" font-size="10.5" font-weight="400">só leitura — nada é escrito</text>
-          <text x="456" y="240" text-anchor="middle" fill="#9ca3af" font-size="10.5" font-weight="400">termina no Top 10 por impacto ÷ risco</text>
-
-          <path d="M566,158 L640,158" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="8 8" fill="none" marker-end="url(#t3-arrow-cy)"/>
-          <text x="603" y="146" text-anchor="middle" fill="#38bdf8" font-size="10" font-weight="400">você decide</text>
-
-          <rect x="654" y="76" width="286" height="46" rx="9" fill="#1a1230" stroke="#38bdf8" stroke-width="1.6"/>
-          <text x="797" y="104" text-anchor="middle" fill="#bae6fd" font-size="12.5">🙋 escolher o Top 10</text>
-
-          <rect x="654" y="136" width="286" height="46" rx="9" fill="#1a1230" stroke="#38bdf8" stroke-width="1.6"/>
-          <text x="797" y="164" text-anchor="middle" fill="#bae6fd" font-size="12.5">✋ aplicar em outra sessão</text>
-
-          <rect x="654" y="196" width="286" height="46" rx="9" fill="#1a1230" stroke="#38bdf8" stroke-width="1.6"/>
-          <text x="797" y="224" text-anchor="middle" fill="#bae6fd" font-size="12.5">📤 mover procedimento para skill</text>
-        </g>
-      </svg>
-    </div>
-    <p class="text-xs text-neutral-400 mt-3 max-w-3xl mb-8">
-      <strong class="text-neutral-300">O que olhar:</strong> a linha cheia (roxa) é o que a skill faz sozinha — ler config e emitir
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 mb-6 overflow-hidden">
+<svg aria-label="Fluxo da auditoria: à esquerda, três arquivos de configuração — CLAUDE.md, skills e hooks — entram na skill de diagnóstico; no centro, a skill produz um relatório de dez seções, destacado com brilho; à direita, uma mão humana aplica as mudanças, ligada por uma seta tracejada que sai do escopo da skill, indicando que aplicar não é feito pela skill." class="w-full h-auto" role="img" viewbox="0 0 1000 320">
+<defs>
+<lineargradient id="t3-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="t3-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="t3-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="t3-arrow" markerheight="7" markerwidth="7" orient="auto" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"></path></marker>
+<marker id="t3-arrow-cy" markerheight="7" markerwidth="7" orient="auto" refx="9" refy="5" viewbox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#t3-grid)" height="320" width="1000" x="0" y="0"></rect>
+<rect fill="none" height="238" opacity="0.35" rx="14" stroke="#a855f7" stroke-width="1.2" width="238" x="36" y="40"></rect>
+<rect fill="none" height="238" opacity="0.5" rx="14" stroke="#38bdf8" stroke-dasharray="7 7" stroke-width="1.2" width="364" x="600" y="40"></rect>
+<g font-family="Inter,sans-serif" font-weight="600">
+<text fill="#9ca3af" font-size="11" font-weight="400" text-anchor="middle" x="155" y="30">entra na leitura</text>
+<text fill="#38bdf8" font-size="11" font-weight="400" text-anchor="middle" x="782" y="30">fora do escopo da skill</text>
+<rect fill="#1a1230" height="42" rx="9" stroke="#c084fc" stroke-width="2" width="180" x="66" y="66"></rect>
+<text fill="#e9d5ff" font-size="13" text-anchor="middle" x="156" y="92">CLAUDE.md</text>
+<rect fill="#1a1230" height="42" rx="9" stroke="#c084fc" stroke-width="2" width="180" x="66" y="134"></rect>
+<text fill="#e9d5ff" font-size="13" text-anchor="middle" x="156" y="160">skills</text>
+<rect fill="#1a1230" height="42" rx="9" stroke="#c084fc" stroke-width="2" width="180" x="66" y="202"></rect>
+<text fill="#e9d5ff" font-size="13" text-anchor="middle" x="156" y="228">hooks + settings.json</text>
+<path d="M250,87 C300,87 300,150 336,157" fill="none" marker-end="url(#t3-arrow)" opacity="0.75" stroke="#c084fc" stroke-width="1.8"></path>
+<path d="M250,155 L336,157" fill="none" marker-end="url(#t3-arrow)" opacity="0.75" stroke="#c084fc" stroke-width="1.8"></path>
+<path d="M250,223 C300,223 300,164 336,158" fill="none" marker-end="url(#t3-arrow)" opacity="0.75" stroke="#c084fc" stroke-width="1.8"></path>
+<g filter="url(#t3-glow)"><rect fill="#1a1230" height="108" rx="12" stroke="url(#t3-grad)" stroke-width="2.4" width="216" x="348" y="104"></rect></g>
+<text fill="#c084fc" font-size="14" text-anchor="middle" x="456" y="140">relatório</text>
+<text fill="#c084fc" font-size="14" text-anchor="middle" x="456" y="164">de 10 seções</text>
+<text fill="#9ca3af" font-size="10.5" font-weight="400" text-anchor="middle" x="456" y="192">só leitura — nada é escrito</text>
+<text fill="#9ca3af" font-size="10.5" font-weight="400" text-anchor="middle" x="456" y="240">termina no Top 10 por impacto ÷ risco</text>
+<path d="M566,158 L640,158" fill="none" marker-end="url(#t3-arrow-cy)" stroke="#38bdf8" stroke-dasharray="8 8" stroke-width="1.8"></path>
+<text fill="#38bdf8" font-size="10" font-weight="400" text-anchor="middle" x="603" y="146">você decide</text>
+<rect fill="#1a1230" height="46" rx="9" stroke="#38bdf8" stroke-width="1.6" width="286" x="654" y="76"></rect>
+<text fill="#bae6fd" font-size="12.5" text-anchor="middle" x="797" y="104">🙋 escolher o Top 10</text>
+<rect fill="#1a1230" height="46" rx="9" stroke="#38bdf8" stroke-width="1.6" width="286" x="654" y="136"></rect>
+<text fill="#bae6fd" font-size="12.5" text-anchor="middle" x="797" y="164">✋ aplicar em outra sessão</text>
+<rect fill="#1a1230" height="46" rx="9" stroke="#38bdf8" stroke-width="1.6" width="286" x="654" y="196"></rect>
+<text fill="#bae6fd" font-size="12.5" text-anchor="middle" x="797" y="224">📤 mover procedimento para skill</text>
+</g>
+</svg>
+</div>
+<p class="text-xs text-neutral-400 mt-3 max-w-3xl mb-8">
+<strong class="text-neutral-300">O que olhar:</strong> a linha cheia (roxa) é o que a skill faz sozinha — ler config e emitir
       relatório. A linha tracejada (ciano) atravessa uma fronteira: tudo que está à direita é decisão humana, feita em
       outra sessão. Auditoria que já sai mexendo é auditoria em que você não confia.
     </p>
-
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
-      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">2</div><div class="text-xs text-neutral-400">Módulos</div></div>
-      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">12</div><div class="text-xs text-neutral-400">Tópicos</div></div>
-      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~1h40</div><div class="text-xs text-neutral-400">Duração</div></div>
-      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div>
-    </div>
-
-    <div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
-      <div class="flex items-center justify-between">
-        <span class="text-sm text-neutral-300 font-semibold">Progresso da trilha</span>
-        <div data-inema-meter="trilha:3" class="inema-meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha 3"><span class="inema-meter-pct">0%</span> <span class="inema-meter-count">0 de 0</span></div>
-      </div>
-    </div>
-  </div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">2</div><div class="text-xs text-neutral-400">Módulos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">12</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~1h40</div><div class="text-xs text-neutral-400">Duração</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div>
+</div>
+<div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-300 font-semibold">Progresso da trilha</span>
+<div aria-label="Progresso da trilha 3" aria-valuemax="100" aria-valuemin="0" class="inema-meter" data-inema-meter="trilha:3" role="progressbar"><span class="inema-meter-pct">0%</span> <span class="inema-meter-count">0 de 0</span></div>
+</div>
+</div>
+</div>
 </header>
-
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-  <section class="mb-12">
-    <h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <a href="#modulo-3-1" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
-        <div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.1</span><span class="text-xs text-neutral-500">~50 min</span></div>
-        <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🩺 Rodando a skill audit-ablacao</h3>
-        <p class="text-xs text-neutral-400">Diagnóstico que não toca em nada</p>
-      </a>
-      <a href="#modulo-3-2" class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all">
-        <div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.2</span><span class="text-xs text-neutral-500">~50 min</span></div>
-        <h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🔧 Do relatório aos cortes</h3>
-        <p class="text-xs text-neutral-400">Procedimento sai do CLAUDE.md</p>
-      </a>
-    </div>
-  </section>
-
-  <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
-
-  <!-- MODULO 3.1 -->
-  <div id="modulo-3-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="3-1" data-inema-track="3">
-    <div class="p-6 border-b border-dark-600">
-      <div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.1</span><span class="text-xs text-neutral-500">~50 min</span></div>
-      <h3 class="text-2xl font-bold mb-2">🩺 Rodando a skill audit-ablacao</h3>
-      <p class="text-neutral-400 text-sm">Instalar e rodar a skill na própria config, e ler o relatório de 10 seções sabendo o que cada uma cobra de você.</p>
-    </div>
-    <div class="mx-6 mt-4"><div data-inema-meter="modulo:3-1" class="inema-meter text-xs" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do modulo 3.1"><span class="inema-meter-pct text-purple-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span></div></div>
-    <div class="divide-y divide-dark-600 mt-4">
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-          <span class="text-lg">🚫</span><div><span class="font-medium">Saiba o que a skill faz e o que ela nunca faz</span><span class="text-neutral-500 text-sm ml-2">- lê e classifica, não mexe</span></div>
-        </button>
-        <div id="t3-1-1" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A skill lê seu <code>CLAUDE.md</code> (projeto e global), suas skills, seus hooks e o <code>settings.json</code>, classifica cada instrução e propõe uma versão mínima. Ela nunca edita, move, apaga, sobrescreve config nem commita.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Porque a fronteira é o que torna a auditoria confiável. Ferramenta que já sai mexendo você não deixa rodar no global — e aí nunca audita nada. Sabendo que é só leitura, dá para rodar sem medo, inclusive antes de ter git na config.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Diagnóstico ≠ tratamento. Aplicar é um pedido separado, de propósito. E não confunda com <code>memory-audit</code>: aquela cuida da memória guardada da sessão, esta cuida da configuração do agente.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-          <span class="text-lg">📦</span><div><span class="font-medium">Instale a skill</span><span class="text-neutral-500 text-sm ml-2">- global ou por projeto</span></div>
-        </button>
-        <div id="t3-1-2" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">São dois destinos possíveis: <code>~/.claude/skills/audit-ablacao/SKILL.md</code>, que vale para todos os projetos, ou <code>.claude/skills/audit-ablacao/SKILL.md</code> dentro do repositório, que vale só ali. Em ambos os casos é um <code>cp</code> do <code>SKILL.md</code> e um reinício da sessão para o Claude Code carregar.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A escolha do destino já é uma decisão de arquitetura de config. Skill dentro do projeto versiona junto com o código, entra no PR, é revisável e não vaza para os outros projetos. Skill global fica disponível em qualquer sessão, mas custa um slot na lista de skills que todo projeto vê.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">A raiz do repositório já contém o <code>SKILL.md</code> instalável — é o motivo de o guia ficar em <code>guia/</code> e não na raiz. Se a skill não aparecer, quase sempre falta reiniciar a sessão.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-          <span class="text-lg">🎚️</span><div><span class="font-medium">Escolha o escopo certo</span><span class="text-neutral-500 text-sm ml-2">- global, um projeto ou um conjunto de skills</span></div>
-        </button>
-        <div id="t3-1-3" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Três escopos com gatilhos distintos. Global (<code>~/.claude/</code>): a cada ~6 meses ou em lançamento grande de modelo. Um projeto: quando o <code>CLAUDE.md</code> dele passa de ~150 linhas. Um conjunto de skills: quando 3 ou mais brigam pelo mesmo gatilho.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Escopo grande demais produz relatório que você não consegue aplicar; escopo pequeno demais esconde a redundância, que quase sempre está entre o global e o projeto. Auditar tudo de uma vez é a forma mais comum de não cortar nada.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Os gatilhos são sinais mensuráveis, não sensação: número de linhas, número de skills em conflito, lançamento de modelo. Sinal objetivo é o que impede a auditoria de virar tarefa que nunca chega.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-          <span class="text-lg">📄</span><div><span class="font-medium">Leia o relatório de 10 seções</span><span class="text-neutral-500 text-sm ml-2">- do resumo ao Top 10</span></div>
-        </button>
-        <div id="t3-1-4" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Resumo executivo, métricas, problemas por arquivo, candidatas à remoção, redundâncias e conflitos, skills, <code>CLAUDE.md</code> mínimo proposto, skills propostas, plano de teste de ablação (versões A/B/C) e Top 10 mudanças por impacto ÷ risco.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada seção cobra uma coisa diferente de você. Métricas e problemas por arquivo são leitura; candidatas à remoção e conflitos exigem veredito seu; o <code>CLAUDE.md</code> mínimo é proposta, não sentença; o Top 10 é a única seção que vira plano de trabalho imediato.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Impacto ÷ risco ordena o Top 10 porque o objetivo não é reduzir o máximo, e sim maximizar qualidade + autonomia + verificabilidade ÷ complexidade. Corte de alto impacto e alto risco entra depois, com teste.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-5" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-          <span class="text-lg">🧩</span><div><span class="font-medium">Audite skill por skill</span><span class="text-neutral-500 text-sm ml-2">- sete vereditos possíveis</span></div>
-        </button>
-        <div id="t3-1-5" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada skill recebe um de sete vereditos: <code>KEEP</code>, <code>SIMPLIFY</code>, <code>MERGE</code>, <code>SPLIT</code>, <code>LOAD-ON-DEMAND</code>, <code>CONVERT-TO-CONTEXT</code> ou <code>DELETE-CANDIDATE</code>. É um eixo separado do veredito por linha do <code>CLAUDE.md</code>.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Skill tem fronteira, nome e escopo — é fácil de auditar e de aposentar, ao contrário de "aquele parágrafo do meio do <code>CLAUDE.md</code>". Por isso a skill é a unidade certa de conserto: dá para desativar uma e medir o efeito.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm"><code>MERGE</code> resolve skills que brigam pelo mesmo gatilho; <code>SPLIT</code> resolve skill que faz coisas demais; <code>CONVERT-TO-CONTEXT</code> é para o que era informação disfarçada de procedimento; <code>LOAD-ON-DEMAND</code> tira o custo de contexto das execuções que não usam aquilo.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-1-6" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-          <span class="text-lg">✅</span><div><span class="font-medium">Rode e confira 3 remoções</span><span class="text-neutral-500 text-sm ml-2">- exercício prático do módulo</span></div>
-        </button>
-        <div id="t3-1-6" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Rodar <code>/audit-ablacao</code> no escopo escolhido, pegar as três primeiras candidatas à remoção, abrir o arquivo citado, conferir o trecho no lugar e dar veredito próprio: concordo, discordo, ou mando para <code>TEST</code>.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o hábito que separa auditoria de fé cega. Conferir o trecho no arquivo original pega os dois erros mais comuns do relatório: citação fora de contexto e linha que parece redundante mas guarda um detalhe que só existe ali.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Na dúvida, <code>TEST</code> — nunca <code>REMOVE</code>. E a auditoria preserva de propósito o que o modelo não consegue inferir: identidade do projeto, caminhos e fontes de verdade, branding, segurança, compliance, integrações e contratos de interface.</p></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-      <button onclick="openModal('modal-3-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-      <a href="modulo-3-1.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
-    </div>
-  </div>
-
-  <!-- MODULO 3.2 -->
-  <div id="modulo-3-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="3-2" data-inema-track="3">
-    <div class="p-6 border-b border-dark-600">
-      <div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.2</span><span class="text-xs text-neutral-500">~50 min</span></div>
-      <h3 class="text-2xl font-bold mb-2">🔧 Do relatório aos cortes: skill é a unidade certa</h3>
-      <p class="text-neutral-400 text-sm">Transformar o Top 10 em mudanças aplicadas com segurança, movendo procedimento do CLAUDE.md para skills carregadas sob demanda.</p>
-    </div>
-    <div class="mx-6 mt-4"><div data-inema-meter="modulo:3-2" class="inema-meter text-xs" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do modulo 3.2"><span class="inema-meter-pct text-purple-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span></div></div>
-    <div class="divide-y divide-dark-600 mt-4">
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-2-1" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-          <span class="text-lg">🧷</span><div><span class="font-medium">Separe auditar de aplicar</span><span class="text-neutral-500 text-sm ml-2">- outra sessão, config sob git</span></div>
-        </button>
-        <div id="t3-2-1" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O relatório sai numa sessão; os cortes entram em outra. Antes de aplicar qualquer coisa, a config precisa estar sob controle de versão — commit limpo antes, commit do corte depois, para que reverter seja um comando e não uma arqueologia.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Aplicar na mesma sessão que auditou contamina o julgamento: o modelo já está com o relatório inteiro no contexto e tende a defender as próprias conclusões. Sessão nova lê a config como ela está, não como o relatório disse que estava.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Reversibilidade é pré-condição de coragem. Com git na config, um corte agressivo custa um <code>git revert</code>; sem git, custa lembrar o que estava escrito — e ninguém lembra.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-2-2" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-          <span class="text-lg">🪜</span><div><span class="font-medium">Ataque na ordem certa</span><span class="text-neutral-500 text-sm ml-2">- redundância primeiro, TEST por último</span></div>
-        </button>
-        <div id="t3-2-2" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Primeiro as redundâncias e os conflitos — a mesma regra em três lugares, duas regras que se contradizem. Depois o microgerenciamento e o legado datado. Por último o que ficou marcado como <code>TEST</code>, que só sai depois de medição.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Redundância e conflito são os cortes de maior impacto e menor risco: apagar a cópia não muda o comportamento, porque a regra continua existindo em um lugar. Começar por eles dá redução real sem arriscar nada — e limpa o terreno para julgar o resto.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Conflito é pior que redundância: com duas regras contraditórias, o modelo escolhe uma e você não sabe qual. Resolver conflito é decisão sua sobre qual regra vale, não corte automático.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-2-3" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-          <span class="text-lg">📤</span><div><span class="font-medium">Mova procedimento para skill</span><span class="text-neutral-500 text-sm ml-2">- MOVE e LOAD-ON-DEMAND na prática</span></div>
-        </button>
-        <div id="t3-2-3" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Regra que vive no <code>CLAUDE.md</code> é lida em toda execução, inclusive nas 90% que não têm nada a ver com ela. A mesma regra dentro de uma skill só custa contexto quando a tarefa é aquela. Isso é exatamente o <code>MOVE</code> e o <code>LOAD-ON-DEMAND</code> do relatório.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a forma mais barata de emagrecer a config sem perder nada — nenhuma instrução é descartada, ela só muda de lugar. Para quem tem medo de apagar, mover é o corte que dá para fazer no primeiro dia.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O critério de partição: o <code>CLAUDE.md</code> fica só com o que é verdade <em>sempre</em> — identidade, guardrails, fontes de verdade, segurança. Todo o resto (procedimento, formato, receita, integração) vira skill.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-2-4" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-          <span class="text-lg">⌨️</span><div><span class="font-medium">Chame a skill direto</span><span class="text-neutral-500 text-sm ml-2">- fim da loteria do gatilho</span></div>
-        </button>
-        <div id="t3-2-4" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Invocar por <code>/nome-da-skill</code> em vez de torcer para a descrição casar com a sua frase. Quando várias skills competem pelo mesmo assunto, a invocação explícita é o desempate.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Isso mata uma categoria inteira de linha inchada: a regra de roteamento no <code>CLAUDE.md</code> ("quando o usuário pedir X, use a skill Y"). Se você chama direto, a regra de roteamento não precisa existir — e ela era lida em toda execução.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Gatilho por descrição é probabilístico; invocação explícita é determinística. Trocar um pelo outro reduz contexto e aumenta previsibilidade ao mesmo tempo — raro ganhar nas duas pontas.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-2-5" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
-          <span class="text-lg">💊</span><div><span class="font-medium">Escolha o remédio certo</span><span class="text-neutral-500 text-sm ml-2">- prompt, skill ou MCP</span></div>
-        </button>
-        <div id="t3-2-5" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Quando o modelo tropeça, há três remédios. Prompt melhor: a instrução estava obscura. Skill: falta um procedimento repetível. MCP: falta contexto que ele não alcança sozinho.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Escolher errado engorda o <code>CLAUDE.md</code>. O reflexo mais comum é despejar mais uma regra global para um problema que era falta de ferramenta ou falta de procedimento — e a regra fica lá para sempre, sendo relida em toda execução.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O diagnóstico vem da falha observada, não do palpite: se o modelo não sabia de algo, é contexto/MCP; se sabia mas fez fora de ordem, é procedimento/skill; se entendeu errado o pedido, é prompt.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-item">
-        <button onclick="toggleTopic(this)" aria-expanded="false" aria-controls="t3-2-6" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
-          <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
-          <span class="text-lg">🛠️</span><div><span class="font-medium">Aplique suas 3 primeiras mudanças</span><span class="text-neutral-500 text-sm ml-2">- antes/depois em linhas e regras</span></div>
-        </button>
-        <div id="t3-2-6" class="topic-explanation px-6 pb-4">
-          <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
-            <div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O exercício de fechamento da trilha: tirar três itens do Top 10, aplicar numa sessão separada e registrar o antes/depois em dois números — linhas do <code>CLAUDE.md</code> e quantidade de regras — mais uma frase sobre o comportamento observado.</p></div>
-            <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem registro, você não sabe se a config emagreceu ou se você só reorganizou. E o critério de sucesso não é a redução: é comportamento inalterado com menos linhas. Se algo quebrou, o corte errado é identificável porque foram só três.</p></div>
-            <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Três de cada vez é lote pequeno de propósito — é o que mantém a causa identificável. Depois vem o uso em trabalho real por alguns dias, que é onde a Trilha 4 pega o assunto com o plano A/B/C.</p></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
-      <button onclick="openModal('modal-3-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
-      <a href="modulo-3-2.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Ver Completo</a>
-    </div>
-  </div>
-
-  <div class="flex flex-col sm:flex-row gap-4 mt-12">
-    <a href="../trilha2/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Trilha anterior: Como diagnosticar</a>
-    <a href="../trilha4/index.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Próxima trilha: Provar e manter →</a>
-  </div>
-
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-1">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.1</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🩺 Rodando a skill audit-ablacao</h3>
+<p class="text-xs text-neutral-400">Diagnóstico que não toca em nada</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-2">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.2</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🔧 Do relatório aos cortes</h3>
+<p class="text-xs text-neutral-400">Procedimento sai do CLAUDE.md</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+<!-- MODULO 3.1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="3-1" data-inema-track="3" id="modulo-3-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.1</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🩺 Rodando a skill audit-ablacao</h3>
+<p class="text-neutral-400 text-sm">Instalar e rodar a skill na própria config, e ler o relatório de 10 seções sabendo o que cada uma cobra de você.</p>
+</div>
+<div class="mx-6 mt-4"><div aria-label="Progresso do modulo 3.1" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-xs" data-inema-meter="modulo:3-1" role="progressbar"><span class="inema-meter-pct text-purple-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span></div></div>
+<div class="divide-y divide-dark-600 mt-4">
+<div class="topic-item">
+<button aria-controls="t3-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🚫</span><div><span class="font-medium">Saiba o que a skill faz e o que ela nunca faz</span><span class="text-neutral-500 text-sm ml-2">- lê e classifica, não mexe</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">A skill lê seu <code>CLAUDE.md</code> (projeto e global), suas skills, seus hooks e o <code>settings.json</code>, classifica cada instrução e propõe uma versão mínima. Ela nunca edita, move, apaga, sobrescreve config nem commita.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Porque a fronteira é o que torna a auditoria confiável. Ferramenta que já sai mexendo você não deixa rodar no global — e aí nunca audita nada. Sabendo que é só leitura, dá para rodar sem medo, inclusive antes de ter git na config.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Diagnóstico ≠ tratamento. Aplicar é um pedido separado, de propósito. E não confunda com <code>memory-audit</code>: aquela cuida da memória guardada da sessão, esta cuida da configuração do agente.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📦</span><div><span class="font-medium">Instale a skill</span><span class="text-neutral-500 text-sm ml-2">- global ou por projeto</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">São dois destinos possíveis: <code>~/.claude/skills/audit-ablacao/SKILL.md</code>, que vale para todos os projetos, ou <code>.claude/skills/audit-ablacao/SKILL.md</code> dentro do repositório, que vale só ali. Em ambos os casos é um <code>cp</code> do <code>SKILL.md</code> e um reinício da sessão para o Claude Code carregar.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A escolha do destino já é uma decisão de arquitetura de config. Skill dentro do projeto versiona junto com o código, entra no PR, é revisável e não vaza para os outros projetos. Skill global fica disponível em qualquer sessão, mas custa um slot na lista de skills que todo projeto vê.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">A raiz do repositório já contém o <code>SKILL.md</code> instalável — é o motivo de o guia ficar em <code>guia/</code> e não na raiz. Se a skill não aparecer, quase sempre falta reiniciar a sessão.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🎚️</span><div><span class="font-medium">Escolha o escopo certo</span><span class="text-neutral-500 text-sm ml-2">- global, um projeto ou um conjunto de skills</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Três escopos com gatilhos distintos. Global (<code>~/.claude/</code>): a cada ~6 meses ou em lançamento grande de modelo. Um projeto: quando o <code>CLAUDE.md</code> dele passa de ~150 linhas. Um conjunto de skills: quando 3 ou mais brigam pelo mesmo gatilho.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Escopo grande demais produz relatório que você não consegue aplicar; escopo pequeno demais esconde a redundância, que quase sempre está entre o global e o projeto. Auditar tudo de uma vez é a forma mais comum de não cortar nada.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Os gatilhos são sinais mensuráveis, não sensação: número de linhas, número de skills em conflito, lançamento de modelo. Sinal objetivo é o que impede a auditoria de virar tarefa que nunca chega.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">📄</span><div><span class="font-medium">Leia o relatório de 10 seções</span><span class="text-neutral-500 text-sm ml-2">- do resumo ao Top 10</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Resumo executivo, métricas, problemas por arquivo, candidatas à remoção, redundâncias e conflitos, skills, <code>CLAUDE.md</code> mínimo proposto, skills propostas, plano de teste de ablação (versões A/B/C) e Top 10 mudanças por impacto ÷ risco.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada seção cobra uma coisa diferente de você. Métricas e problemas por arquivo são leitura; candidatas à remoção e conflitos exigem veredito seu; o <code>CLAUDE.md</code> mínimo é proposta, não sentença; o Top 10 é a única seção que vira plano de trabalho imediato.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Impacto ÷ risco ordena o Top 10 porque o objetivo não é reduzir o máximo, e sim maximizar qualidade + autonomia + verificabilidade ÷ complexidade. Corte de alto impacto e alto risco entra depois, com teste.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🧩</span><div><span class="font-medium">Audite skill por skill</span><span class="text-neutral-500 text-sm ml-2">- sete vereditos possíveis</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-5">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Cada skill recebe um de sete vereditos: <code>KEEP</code>, <code>SIMPLIFY</code>, <code>MERGE</code>, <code>SPLIT</code>, <code>LOAD-ON-DEMAND</code>, <code>CONVERT-TO-CONTEXT</code> ou <code>DELETE-CANDIDATE</code>. É um eixo separado do veredito por linha do <code>CLAUDE.md</code>.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Skill tem fronteira, nome e escopo — é fácil de auditar e de aposentar, ao contrário de "aquele parágrafo do meio do <code>CLAUDE.md</code>". Por isso a skill é a unidade certa de conserto: dá para desativar uma e medir o efeito.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm"><code>MERGE</code> resolve skills que brigam pelo mesmo gatilho; <code>SPLIT</code> resolve skill que faz coisas demais; <code>CONVERT-TO-CONTEXT</code> é para o que era informação disfarçada de procedimento; <code>LOAD-ON-DEMAND</code> tira o custo de contexto das execuções que não usam aquilo.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-1-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">✅</span><div><span class="font-medium">Rode e confira 3 remoções</span><span class="text-neutral-500 text-sm ml-2">- exercício prático do módulo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-1-6">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Rodar <code>/audit-ablacao</code> no escopo escolhido, pegar as três primeiras candidatas à remoção, abrir o arquivo citado, conferir o trecho no lugar e dar veredito próprio: concordo, discordo, ou mando para <code>TEST</code>.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o hábito que separa auditoria de fé cega. Conferir o trecho no arquivo original pega os dois erros mais comuns do relatório: citação fora de contexto e linha que parece redundante mas guarda um detalhe que só existe ali.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Na dúvida, <code>TEST</code> — nunca <code>REMOVE</code>. E a auditoria preserva de propósito o que o modelo não consegue inferir: identidade do projeto, caminhos e fontes de verdade, branding, segurança, compliance, integrações e contratos de interface.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-1')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-1.html">Ver Completo</a>
+</div>
+</div>
+<!-- MODULO 3.2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="3-2" data-inema-track="3" id="modulo-3-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.2</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🔧 Do relatório aos cortes: skill é a unidade certa</h3>
+<p class="text-neutral-400 text-sm">Transformar o Top 10 em mudanças aplicadas com segurança, movendo procedimento do CLAUDE.md para skills carregadas sob demanda.</p>
+</div>
+<div class="mx-6 mt-4"><div aria-label="Progresso do modulo 3.2" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-xs" data-inema-meter="modulo:3-2" role="progressbar"><span class="inema-meter-pct text-purple-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span></div></div>
+<div class="divide-y divide-dark-600 mt-4">
+<div class="topic-item">
+<button aria-controls="t3-2-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🧷</span><div><span class="font-medium">Separe auditar de aplicar</span><span class="text-neutral-500 text-sm ml-2">- outra sessão, config sob git</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-2-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O relatório sai numa sessão; os cortes entram em outra. Antes de aplicar qualquer coisa, a config precisa estar sob controle de versão — commit limpo antes, commit do corte depois, para que reverter seja um comando e não uma arqueologia.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Aplicar na mesma sessão que auditou contamina o julgamento: o modelo já está com o relatório inteiro no contexto e tende a defender as próprias conclusões. Sessão nova lê a config como ela está, não como o relatório disse que estava.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Reversibilidade é pré-condição de coragem. Com git na config, um corte agressivo custa um <code>git revert</code>; sem git, custa lembrar o que estava escrito — e ninguém lembra.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-2-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🪜</span><div><span class="font-medium">Ataque na ordem certa</span><span class="text-neutral-500 text-sm ml-2">- redundância primeiro, TEST por último</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-2-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Primeiro as redundâncias e os conflitos — a mesma regra em três lugares, duas regras que se contradizem. Depois o microgerenciamento e o legado datado. Por último o que ficou marcado como <code>TEST</code>, que só sai depois de medição.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Redundância e conflito são os cortes de maior impacto e menor risco: apagar a cópia não muda o comportamento, porque a regra continua existindo em um lugar. Começar por eles dá redução real sem arriscar nada — e limpa o terreno para julgar o resto.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Conflito é pior que redundância: com duas regras contraditórias, o modelo escolhe uma e você não sabe qual. Resolver conflito é decisão sua sobre qual regra vale, não corte automático.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-2-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">📤</span><div><span class="font-medium">Mova procedimento para skill</span><span class="text-neutral-500 text-sm ml-2">- MOVE e LOAD-ON-DEMAND na prática</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-2-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Regra que vive no <code>CLAUDE.md</code> é lida em toda execução, inclusive nas 90% que não têm nada a ver com ela. A mesma regra dentro de uma skill só custa contexto quando a tarefa é aquela. Isso é exatamente o <code>MOVE</code> e o <code>LOAD-ON-DEMAND</code> do relatório.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É a forma mais barata de emagrecer a config sem perder nada — nenhuma instrução é descartada, ela só muda de lugar. Para quem tem medo de apagar, mover é o corte que dá para fazer no primeiro dia.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O critério de partição: o <code>CLAUDE.md</code> fica só com o que é verdade <em>sempre</em> — identidade, guardrails, fontes de verdade, segurança. Todo o resto (procedimento, formato, receita, integração) vira skill.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-2-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">⌨️</span><div><span class="font-medium">Chame a skill direto</span><span class="text-neutral-500 text-sm ml-2">- fim da loteria do gatilho</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-2-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Invocar por <code>/nome-da-skill</code> em vez de torcer para a descrição casar com a sua frase. Quando várias skills competem pelo mesmo assunto, a invocação explícita é o desempate.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Isso mata uma categoria inteira de linha inchada: a regra de roteamento no <code>CLAUDE.md</code> ("quando o usuário pedir X, use a skill Y"). Se você chama direto, a regra de roteamento não precisa existir — e ela era lida em toda execução.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Gatilho por descrição é probabilístico; invocação explícita é determinística. Trocar um pelo outro reduz contexto e aumenta previsibilidade ao mesmo tempo — raro ganhar nas duas pontas.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-2-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">💊</span><div><span class="font-medium">Escolha o remédio certo</span><span class="text-neutral-500 text-sm ml-2">- prompt, skill ou MCP</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-2-5">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">Quando o modelo tropeça, há três remédios. Prompt melhor: a instrução estava obscura. Skill: falta um procedimento repetível. MCP: falta contexto que ele não alcança sozinho.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Escolher errado engorda o <code>CLAUDE.md</code>. O reflexo mais comum é despejar mais uma regra global para um problema que era falta de ferramenta ou falta de procedimento — e a regra fica lá para sempre, sendo relida em toda execução.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O diagnóstico vem da falha observada, não do palpite: se o modelo não sabia de algo, é contexto/MCP; se sabia mas fez fora de ordem, é procedimento/skill; se entendeu errado o pedido, é prompt.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t3-2-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🛠️</span><div><span class="font-medium">Aplique suas 3 primeiras mudanças</span><span class="text-neutral-500 text-sm ml-2">- antes/depois em linhas e regras</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t3-2-6">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O exercício de fechamento da trilha: tirar três itens do Top 10, aplicar numa sessão separada e registrar o antes/depois em dois números — linhas do <code>CLAUDE.md</code> e quantidade de regras — mais uma frase sobre o comportamento observado.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem registro, você não sabe se a config emagreceu ou se você só reorganizou. E o critério de sucesso não é a redução: é comportamento inalterado com menos linhas. Se algo quebrou, o corte errado é identificável porque foram só três.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Três de cada vez é lote pequeno de propósito — é o que mantém a causa identificável. Depois vem o uso em trabalho real por alguns dias, que é onde a Trilha 4 pega o assunto com o plano A/B/C.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-2')">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-2.html">Ver Completo</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha2/index.html">← Trilha anterior: Como diagnosticar</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../trilha4/index.html">Próxima trilha: Provar e manter →</a>
+</div>
 </div>
 </main>
-
-<div id="modal-3-1" class="modal hidden fixed inset-0 z-50 flex items-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
-  <div class="bg-dark-800 rounded-xl w-full max-w-6xl mx-auto h-[95vh] flex flex-col border border-dark-600">
-    <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-      <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.1</span><span class="font-semibold">Rodando a skill audit-ablacao</span></div>
-      <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none" aria-label="Fechar">&times;</button>
-    </div>
-    <iframe src="modulo-3-1.html" title="Modulo 3.1" class="flex-1 w-full rounded-b-xl"></iframe>
-  </div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center p-2 sm:p-4 bg-black/80" id="modal-3-1" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl mx-auto h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.1</span><span class="font-semibold">Rodando a skill audit-ablacao</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
 </div>
-<div id="modal-3-2" class="modal hidden fixed inset-0 z-50 flex items-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
-  <div class="bg-dark-800 rounded-xl w-full max-w-6xl mx-auto h-[95vh] flex flex-col border border-dark-600">
-    <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
-      <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.2</span><span class="font-semibold">Do relatório aos cortes</span></div>
-      <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none" aria-label="Fechar">&times;</button>
-    </div>
-    <iframe src="modulo-3-2.html" title="Modulo 3.2" class="flex-1 w-full rounded-b-xl"></iframe>
-  </div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-1.html" title="Modulo 3.1"></iframe>
 </div>
-
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center p-2 sm:p-4 bg-black/80" id="modal-3-2" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl mx-auto h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.2</span><span class="font-semibold">Do relatório aos cortes</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-2.html" title="Modulo 3.2"></iframe>
+</div>
+</div>
 <footer class="border-t border-dark-600 py-8 mt-16">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
-    <p>Auditoria de Ablação — INEMA · 2026</p>
-    <p>
-      <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a>
-      <span class="text-neutral-600">-</span>
-      <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a>
-    </p>
-    <p class="text-xs">Método e visão: Boris Cherny (Anthropic) — palestra na Y Combinator sobre o corte de 80% do prompt de sistema do Claude Code.</p>
-  </div>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Auditoria de Ablação — INEMA · 2026</p>
+<p>
+<a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a>
+</p>
+<p class="text-xs">Método e visão: Boris Cherny (Anthropic) — palestra na Y Combinator sobre o corte de 80% do prompt de sistema do Claude Code.</p>
+</div>
 </footer>
-
 <script>
   function toggleTopic(button) {
     const topicItem = button.closest('.topic-item');

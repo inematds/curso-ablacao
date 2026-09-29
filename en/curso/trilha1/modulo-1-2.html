@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ablacao" name="inema-course"/>
+<title>Module 1.2 — The Ablation Method | Ablation Audit</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+  })();
+  </script>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "ablacao",
+    "tracks": [
+      { "n": "1", "title": "Por que apagar", "modules": [
+        { "id": "1-1", "title": "Configuracao envelhece", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O metodo de ablacao", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" }
+      ]},
+      { "n": "2", "title": "Como diagnosticar", "modules": [
+        { "id": "2-1", "title": "A taxonomia: o que cada linha e", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "De microgerenciamento a criterio", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" }
+      ]},
+      { "n": "3", "title": "Auditar de verdade", "modules": [
+        { "id": "3-1", "title": "Rodando a skill audit-ablacao", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Do relatorio aos cortes", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" }
+      ]},
+      { "n": "4", "title": "Provar e manter", "modules": [
+        { "id": "4-1", "title": "O plano de ablacao A/B/C", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O ciclo continuo", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" }
+      ]}
+    ]
+  }
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="../../../assets/curso.css" rel="stylesheet"/>
+<style>
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+  </style>
+<link href="https://inematds.github.io/curso-ablacao/curso/trilha1/modulo-1-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/en/curso/trilha1/modulo-1-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/es/curso/trilha1/modulo-1-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Ablation Audit</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1">
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Why delete</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnose</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Audit</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Prove and maintain</span></a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden xl:inline">Journey</span><span aria-hidden="true" class="inema-journey-badge hidden"></span>
+</button>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Breadcrumb" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Track 1</a><span>/</span>
+<span class="text-emerald-400">Module 1.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="1-2" data-inema-track="1">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULE 1.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧪 The ablation method</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+      Ablation means deleting to measure. You delete the configuration, use the tool on real work, observe
+      where it stumbles—and only restore an instruction after seeing the same failure repeat. Rebuild
+      based on evidence, never prediction.
+    </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">45</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Basic</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Method</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-300 font-semibold">Progress in this module</span>
+<div aria-label="Module 1.2 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-sm" data-inema-meter="modulo:1-2" role="progressbar">
+<span class="inema-meter-pct text-emerald-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 of 6</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+<nav aria-label="Page index" class="hidden lg:block sticky top-24 self-start" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3">Section <span class="inema-toc-pos">1</span> of <span class="inema-toc-total">6</span></p>
+<ul class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Understand what ablation means</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Mark when to delete it</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-3">3. Follow the 4 reconstruction steps</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Build your baseline</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Retire your evals at the right time</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Apply the reintroduction rule</a></li>
+</ul>
+</nav>
+<main class="inema-prose" id="conteudo">
+<!-- TOPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🔬 Understand what ablation means</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t1-p1">
+<strong class="text-emerald-400">Ablation</strong> is a term borrowed from research: you <em>remove</em> a component
+      of a system for <em>measure</em> the impact it had. It's not cleanup, and it's not opinion — it's an experiment.
+      The ablation always answers the same question: <strong>what changes when this is no longer here?</strong>
+</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t1-p2">
+      Applied to prompts and configuration, the method is literal: the entire system prompt is deleted, then each line is brought back
+      one at a time to find out what each line actually does. That’s how the Claude Code team discovered that more than 80% of its own system prompt wasn’t doing anything—the model was already
+      handling it on its own.
+    </p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Three words from this module</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong class="text-neutral-100">Ablation:</strong> remove a piece of the system on purpose to measure how much it contributed.</li>
+<li><strong class="text-neutral-100">Hook:</strong> a Claude Code automation hook — a command that runs automatically before or after an action (e.g., run the formatter every time a file is saved).</li>
+<li><strong class="text-neutral-100">Baseline:</strong> the baseline measurement—how the system behaves <em>without</em> nothing on top. That’s what you compare everything else against.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Two routes compared. At the top, the wrong route: you look at the configuration, try to predict which line the model needs, and keep everything, ending at a red box labeled nothing measured. At the bottom, the right route: you remove the line, use the system, observe the result, and end at a highlighted emerald box labeled impact measured." class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m12a-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="m12a-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m12a-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m12a-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m12a-ahr" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m12a-grid)" height="300" width="1000" x="0" y="0"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="13" font-weight="600" x="24" y="40">Predict (what almost everyone does)</text>
+<g fill="none" opacity="0.55" stroke="#f87171" stroke-width="1.8">
+<path d="M232,82 L272,82" marker-end="url(#m12a-ahr)"></path>
+<path d="M496,82 L536,82" marker-end="url(#m12a-ahr)"></path>
+<path d="M760,82 L800,82" marker-end="url(#m12a-ahr)"></path>
+</g>
+<g font-family="Inter,sans-serif" font-size="12.5">
+<rect fill="#2a0f16" height="48" rx="12" stroke="#f87171" stroke-width="2" width="208" x="24" y="58"></rect><text fill="#fca5a5" text-anchor="middle" x="128" y="87">read the config</text>
+<rect fill="#2a0f16" height="48" rx="12" stroke="#f87171" stroke-width="2" width="224" x="272" y="58"></rect><text fill="#fca5a5" text-anchor="middle" x="384" y="87">“I think it’s needed”</text>
+<rect fill="#2a0f16" height="48" rx="12" stroke="#f87171" stroke-width="2" width="224" x="536" y="58"></rect><text fill="#fca5a5" text-anchor="middle" x="648" y="87">keep everything</text>
+<rect fill="#2a0f16" height="48" rx="12" stroke="#f87171" stroke-width="2" width="176" x="800" y="58"></rect><text fill="#fca5a5" font-weight="600" text-anchor="middle" x="888" y="87">nothing measured</text>
+</g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="600" x="24" y="184">Measure (ablation)</text>
+<g fill="none" opacity="0.55" stroke="#34d399" stroke-width="1.8">
+<path d="M232,226 L272,226" marker-end="url(#m12a-ah)"></path>
+<path d="M496,226 L536,226" marker-end="url(#m12a-ah)"></path>
+<path d="M760,226 L800,226" marker-end="url(#m12a-ah)"></path>
+</g>
+<g font-family="Inter,sans-serif" font-size="12.5">
+<rect fill="#0e2018" height="48" rx="12" stroke="#34d399" stroke-width="2" width="208" x="24" y="202"></rect><text fill="#a7f3d0" text-anchor="middle" x="128" y="231">remove the line</text>
+<rect fill="#0e1b26" height="48" rx="12" stroke="#38bdf8" stroke-width="2" width="224" x="272" y="202"></rect><text fill="#bfe6ff" text-anchor="middle" x="384" y="231">actually use</text>
+<rect fill="#0e2018" height="48" rx="12" stroke="#34d399" stroke-width="2" width="224" x="536" y="202"></rect><text fill="#a7f3d0" text-anchor="middle" x="648" y="231">observe the result</text>
+<g filter="url(#m12a-glow)"><rect fill="#0e2018" height="48" rx="12" stroke="url(#m12a-grad)" stroke-width="2" width="176" x="800" y="202"></rect></g>
+<text fill="#34d399" font-weight="600" text-anchor="middle" x="888" y="231">measured impact</text>
+</g>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="500" y="150">the difference isn’t the care you take—it’s whether you have a measurement at the end</text>
+</svg>
+</div>
+<p class="text-xs text-neutral-400 mt-3 mb-6">
+<strong class="text-neutral-300">What to look at:</strong> both routes have the same number of steps, and the top one even seems
+      more responsible (“I read everything carefully”). But look at the last box in each row: only the bottom one ends in a
+      <em>data</em>. Reading the prompt to review it produces an opinion; removing it and using it produces evidence. Also notice that the step in
+      <span style="color:#38bdf8">cyan</span> — “actually use it” — the only thing that doesn’t happen in your head.
+    </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ This is ablation</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Remove the instruction and run the same real task again</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Compare the result with and without it, on the same task</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Conclude “it’s a tie” and leave it removed</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ This is not an ablation</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reread the <code>CLAUDE.md</code> and think line 42 is important</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ask the model to “review my prompt” — it’s guessing too</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cut everything at once and never use the trimmed config for real work</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button>
+</div>
+</section>
+<!-- TOPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📅 Schedule when to delete it</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t2-p1">
+      Boris Cherny’s advice for anyone who <em>uses</em> Claude Code — and it doesn't build agentic products — is
+      uncomfortably direct: <strong class="text-emerald-400">approximately every six months, and especially
+      with a major model launch, delete the <code>CLAUDE.md</code>, delete the skills, delete the hooks—and see
+      what the model does without them.</strong> This isn’t rhetoric. It’s the literal recommendation.
+    </p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t2-p2">
+      Two reasons support this schedule, and it’s worth understanding both because they point in the same direction.
+    </p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> The two reasons, in numbers</h3>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li><strong class="text-neutral-100">You’re terrible at predicting.</strong> Even the team that built Claude Code got it wrong: when they measured, more than <strong>80%</strong> of the system prompt was dead weight. If the person who wrote the harness was 80% wrong, your intuition about your own <code>CLAUDE.md</code> isn’t better.</li>
+<li><strong class="text-neutral-100">Each line costs you on every run.</strong> A rule in the <code>CLAUDE.md</code> isn’t read “when needed.” It enters the context in <strong>100%</strong> of runs, including the 95% where it’s irrelevant. The cost isn’t writing the line—it’s rereading it forever.</li>
+<li><strong class="text-neutral-100">The trigger isn’t just the calendar.</strong> A major model release matters more than the date: that’s exactly when old weaknesses disappear and the fixes written for them become dead weight.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> "Delete" here is reversible</h3>
+<p class="text-neutral-300 text-sm">
+        Deleting doesn’t mean destroying. It means <em>take out of circulation</em> for a real period of work, with the old version saved and recoverable — in git, or simply by renaming the file. If you can’t go back in
+        30 seconds, you’re not running an experiment: you’re taking a risk. Topic 4 shows how to set up that safety net.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button>
+</div>
+</section>
+<!-- TOPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔁 Follow the 4 reconstruction steps</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t3-p1">
+      Deleting is only the first half. Rebuilding is what determines whether the new configuration will actually be smaller
+      or just <em>different</em>. There are four steps, and the fourth is the one that usually gets skipped — which is
+      exactly why most configs return to their original size within two weeks.
+    </p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-6">The cycle, step by step</h3>
+<ol class="relative border-l border-emerald-500/30 ml-3 space-y-8">
+<li class="ml-6">
+<span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold">1</span>
+<h4 class="font-semibold text-neutral-100 mb-1">Delete the configuration</h4>
+<p class="text-sm text-neutral-400"><code>CLAUDE.md</code>— skills, hooks. Out of circulation, with the old version saved. No middle ground: cutting “only the worst ones” doesn’t measure anything, because you’re still trusting your prediction about which ones were the worst.</p>
+</li>
+<li class="ml-6">
+<span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold">2</span>
+<h4 class="font-semibold text-neutral-100 mb-1">Use it on real work — never in a hypothetical test</h4>
+<p class="text-sm text-neutral-400">The real product, the real codebase, the task you’d do today anyway. An invented test produces an invented failure: you end up putting back instructions for problems you’d never encounter in practice.</p>
+</li>
+<li class="ml-6">
+<span class="absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold">3</span>
+<h4 class="font-semibold text-neutral-100 mb-1">Observe what works well and where it stumbles</h4>
+<p class="text-sm text-neutral-400">Record both sides. Recording only the stumbles skews your read—you end the experiment convinced everything got worse, when 90% stayed the same. Getting it right without instructions is the most valuable evidence there is.</p>
+</li>
+<li class="ml-6">
+<span class="absolute -left-3 flex items-center justify-center w-8 h-8 -ml-1 rounded-full bg-emerald-500/30 border-2 border-emerald-400 text-emerald-300 text-sm font-bold">4</span>
+<h4 class="font-semibold text-emerald-400 mb-1">Bring back an instruction only after you see the failure REPEAT</h4>
+<p class="text-sm text-neutral-300">This is the step that matters. An isolated failure may be noise: poor context, an ambiguous request, an off day. Only repeated <em>same class</em> of a failure proves there’s a structural gap—and only a structural gap justifies paying for context forever.</p>
+</li>
+</ol>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="A cycle of four boxes in sequence: delete the config, use it in real work, observe successes and missteps, and restore an instruction only if it recurs. From the observation box, a cyan return arrow labeled didn’t recur loops back to using it in real work, showing that the cycle continues without restoring anything." class="w-full h-auto" role="img" viewbox="0 0 1000 320">
+<defs>
+<lineargradient id="m12b-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="m12b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m12b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m12b-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m12b-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m12b-grid)" height="320" width="1000" x="0" y="0"></rect>
+<g fill="none" opacity="0.55" stroke="#34d399" stroke-width="1.8">
+<path d="M244,96 L284,96" marker-end="url(#m12b-ah)"></path>
+<path d="M516,96 L556,96" marker-end="url(#m12b-ah)"></path>
+<path d="M788,96 L828,96" marker-end="url(#m12b-ah)"></path>
+</g>
+<g font-family="Inter,sans-serif" font-size="12.5">
+<rect fill="#0e2018" height="48" rx="12" stroke="#34d399" stroke-width="2" width="220" x="24" y="72"></rect><text fill="#a7f3d0" text-anchor="middle" x="134" y="101">1 · delete the config</text>
+<rect fill="#0e1b26" height="48" rx="12" stroke="#38bdf8" stroke-width="2" width="232" x="284" y="72"></rect><text fill="#bfe6ff" text-anchor="middle" x="400" y="101">2 · real work</text>
+<rect fill="#0e2018" height="48" rx="12" stroke="#34d399" stroke-width="2" width="232" x="556" y="72"></rect><text fill="#a7f3d0" text-anchor="middle" x="672" y="101">3 · observe</text>
+<g filter="url(#m12b-glow)"><rect fill="#0e2018" height="48" rx="12" stroke="url(#m12b-grad)" stroke-width="2" width="150" x="828" y="72"></rect></g>
+<text fill="#34d399" font-size="12" font-weight="600" text-anchor="middle" x="903" y="95">4 · return</text>
+<text fill="#a7f3d0" font-size="10.5" text-anchor="middle" x="903" y="111">only if it repeated</text>
+</g>
+<path d="M672,120 C672,222 480,236 400,180" fill="none" marker-end="url(#m12b-ahc)" opacity="0.75" stroke="#38bdf8" stroke-dasharray="8 8" stroke-width="1.8"></path>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="560" y="252">didn’t repeat → run again, return nothing</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="903" y="150">rare output</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="500" y="296">the usual path is the cyan loop, not box 4</text>
+</svg>
+</div>
+<p class="text-xs text-neutral-400 mt-3 mb-6">
+<strong class="text-neutral-300">What to look at:</strong> the arrow <span style="color:#38bdf8">cyan</span> dashed is the widest in the diagram for a reason. In practice, most observations end there—the stumble doesn’t happen again, and you
+      simply keep working without writing any rule. Box 4, with its glow, looks like the flow’s destination, but
+      it’s marked “rare exit.” A config that grows every week is a config where that loop is never used.
+    </p>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button>
+</div>
+</section>
+<!-- TOPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">⚙️ Build your baseline</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t4-p1">
+      There are two ways to run your own ablation. The first is the <strong>system prompt flag</strong>
+      at Claude Code startup: it replaces the system prompt with whatever you want—including nothing.
+      The second is the <strong class="text-emerald-400">environment variable <code>CLAUDE_CODE_SIMPLE=1</code></strong>,
+      poorly documented, that removes <em>all</em> the system prompts — including the prompts associated with each
+      tool. This is the ablation baseline used internally at Anthropic.
+    </p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t4-p2">
+      One <strong>environment variable</strong> is a value you set in the terminal that the program reads on startup;
+      write it before the command (<code class="text-emerald-400">VAR=1 comando</code>) applies only to that run—
+      nothing is configured permanently. That’s why it’s the perfect tool for an experiment.
+    </p>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">🧪</span> Copy and run: the baseline</h3>
+<p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objective:</strong> open a session with no system prompt at all, then a session without your <code>CLAUDE.md</code>. Both are reversible.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300"># 1) Linha de base total — remove TODOS os prompts de sistema,
+#    inclusive os das ferramentas. Vale só para esta sessão.
+CLAUDE_CODE_SIMPLE=1 claude
+
+# 2) Alternativa mais segura — mantém o produto normal,
+#    mas tira só a SUA configuração do caminho.
+mv ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.bak
+claude          # trabalhe normalmente por alguns dias
+
+# 3) Restaurar quando quiser (ou quando o experimento acabar)
+mv ~/.claude/CLAUDE.md.bak ~/.claude/CLAUDE.md</pre>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-sm text-neutral-300"><strong class="text-emerald-400">How to verify:</strong> three signs that the ablation
+        is actually active—(1) <code>ls ~/.claude/CLAUDE.md</code> returns “No such file” during the experiment;
+        (2) in the session, ask “summarize in one sentence the rules you received in this project” — if it repeats your usual rules,
+        something wasn’t removed (check the <code>CLAUDE.md</code> of the project, in addition to the global one);
+        (3) the behavior changes in <em>something</em> — if nothing changed at all, great: that’s already the first result of the experiment.</p>
+<p class="text-sm text-neutral-400 mt-3"><strong class="text-neutral-300">Replace:</strong> the global path through <code>./CLAUDE.md</code> if what you want to ablate is a specific project’s config.</p>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Do this with the config under git</h3>
+<p class="text-neutral-300 text-sm mb-3">
+        Before moving or deleting anything, make sure <code>~/.claude/</code> (or the folder <code>.claude/</code> of the project)
+        is versioned and everything is committed. A <code>mv</code> A typo in a directory without git can wipe out months of
+        skills and hooks without warning — and turn the experiment into a loss.
+      </p>
+<p class="text-neutral-300 text-sm">
+        Practical rule: <strong>if you can’t restore everything with one command, don’t start.</strong> Skills and hooks also
+        count toward this, not just the <code>CLAUDE.md</code>.
+      </p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> The counterintuitive detail</h3>
+<p class="text-neutral-300 text-sm mb-3">
+        Without the system prompts, the model is <strong>slightly smarter</strong>. You didn’t misread it:
+        fewer instructions, a slightly better result. The prompt costs attention, and some of it pushes the model toward
+        paths it no longer needs to take.
+      </p>
+<p class="text-neutral-300 text-sm">
+        So why are the prompts still there? Because they make Claude Code <em>behave as the person expects</em>
+        when using a product: predictable output format, permissions, tone, tool use. The practical conclusion for you
+        is good: if even the official prompt doesn’t exist because of a capability limitation, much less your 300 lines of <code>CLAUDE.md</code>.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button>
+</div>
+</section>
+<!-- TOPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🎯 Retire your evals at the right time</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t5-p1">
+      If instructions age quickly, what lasts? <strong class="text-emerald-400">Evals</strong> last longer—but not
+      forever. An eval typically survives for <strong>one to three model generations</strong> before the model
+      <em>saturate it</em>; at that point, it’s discarded and replaced with a harder one.
+    </p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🆕</span> New here? Evals and saturation</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong class="text-neutral-100">Eval:</strong> a test case for the model. A concrete task with a clear way to tell whether the result passed. It’s the “automated test” for your work with the agent—it measures capability, not behavior correction.</li>
+<li><strong class="text-neutral-100">Saturate an eval:</strong> the model starts getting it right every time. From then on, it stops telling you anything: whether the model is good or great, the result is the same. A saturated eval is noise dressed up as a metric.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ An eval worth keeping</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>It came from a point where you <em>actually observed</em> the model to stumble</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>It still fails sometimes—the result varies, so it’s still measuring something</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Use a real task from your job, with the pass criteria written down beforehand</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Eval to retire</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>It passes 100% of the time across three model generations</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Invented in theory (“it would be good to test this”), with no observed failure behind it</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Test a weakness in a model you don’t even use anymore</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">📊</span> The life cycle of an eval</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Generation 0:</strong> you see the failure in real work and turn the case into an eval. It fails often.</li>
+<li><strong>Generation 1 to 3:</strong> the pass rate rises, but fluctuates. This is the useful phase—the eval can still distinguish a good model from a great one.</li>
+<li><strong>Saturation:</strong> a consistent 100% success rate. The eval can’t distinguish anything anymore; keeping it only wastes execution time and gives a false sense of coverage.</li>
+<li><strong>Retirement:</strong> archive (don’t delete the history—it documents what has already been difficult) and write a new one based on the latest stumbling block you observed.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> An eval isn't an instruction</h3>
+<p class="text-neutral-300 text-sm">
+        Common confusion: “if the model gets X wrong, I’ll write a rule about X.” But evals and instructions solve different problems.
+        The eval <em>detects</em> the problem and costs zero context — it runs when you run it. The instruction <em>tries to fix</em>
+        the problem and costs context on every run. When a new failure occurs, the eval comes first; the instruction only comes back if
+        the reintroduction rule in the next topic allows it.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button>
+</div>
+</section>
+<!-- TOPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">📓 Apply the reintroduction rule</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t6-p1">
+      A removed instruction doesn’t come back because you missed it. It comes back when it passes <strong>four
+      conditions, all together</strong>. If any one is missing, the instruction is still out — and the work continues
+      normally without it.
+    </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ The 4 conditions for handing it back</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>1. Real failure:</strong> happened in your own work, not in a made-up test</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>2. Repetition:</strong> a <em>same class</em> of the failure has occurred at least a second time</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>3. A specific instruction solves:</strong> you can point to which sentence would have prevented that</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>4. Shortest possible form:</strong> one line, not a 12-step procedure</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Reasons that don't count</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>“I feel safer with this rule there”</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Made a mistake once, on a request you wrote poorly yourself</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>“Since I’m already working on this, I might as well restore the other three”</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>The failure was different, and you brought back the old rule by association</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">📝</span> Exercise: create your <code>ablacao-diario.md</code></h3>
+<p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objective:</strong> record <strong>a real task</strong> done with the config ablated. Without a log, step 4 of the cycle is impossible — you have no way to know whether the failure repeated.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300"># Diário de ablação
+
+Config ablacionada em: 2026-08-18
+O que saiu: CLAUDE.md global · skills X e Y · hook de pre-commit
+Como restauro: `mv ~/.claude/CLAUDE.md.bak ~/.claude/CLAUDE.md`
+
+---
+
+## Tarefa 1 — &lt;o que você realmente precisava fazer&gt;
+- **Data:** 2026-08-18
+- **Tarefa real:** refatorar o módulo de export do projeto Z
+- **Acertos (foi bem sem instrução):**
+  - encontrou os arquivos certos sozinho
+  - rodou os testes sem eu pedir
+- **Tropeços (onde falhou):**
+  - commitou sem eu autorizar
+- **Classe do tropeço:** permissão / commit não solicitado
+- **Repetiu?** ainda não (1ª ocorrência)
+- **Instrução devolvida:** NENHUMA — aguardando repetição</pre>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-sm text-neutral-300"><strong class="text-emerald-400">How to verify:</strong> the field
+        <strong>“Type of stumble”</strong> is what makes the journal work. It needs to be generic enough for
+        you to recognize the <em>same</em> fails a week from now in a different context — “committed without authorization” is
+a category; “committed the utils.ts file at 2 p.m.” is an anecdote. If you can't name the category, the stumble
+was probably noise.</p>
+<p class="text-sm text-neutral-400 mt-3"><strong class="text-neutral-300">Exit criterion for this module:</strong>
+        daily with <strong>≥1 real task</strong> recorded, with successes, stumbles, and “repeated?” filled in — and
+        <strong>no instructions returned yet</strong>. Reintroducing it at the first occurrence is the mistake this entire module
+        is designed to prevent.</p>
+</div>
+</div>
+<div class="inema-check mt-8 bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6" data-inema-check="modulo-1-2#q1">
+<p class="font-medium mb-4">You deleted the <code>CLAUDE.md</code> and on the first real task, the model committed without authorization. What does the reintroduction rule say to do?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Bring back the rule about commits immediately — the failure is serious</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Record the type of stumble in the journal and keep working to see if it happens again</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Restore the <code>CLAUDE.md</code> whole and end the experiment</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button>
+</div>
+</section>
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module Summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Ablation means deleting to measure</strong><span class="text-neutral-400"> — remove a component to discover its real impact. Rereading the prompt doesn’t measure anything.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Every ~6 months and with a major model release</strong><span class="text-neutral-400"> — delete it <code>CLAUDE.md</code>— skills and hooks, and see what the model does without them.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Four steps, and the fourth is the one that matters</strong><span class="text-neutral-400"> — delete it, use it in real work, observe, and restore it only after the failure repeats.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white"><code>CLAUDE_CODE_SIMPLE=1</code> is the baseline</strong><span class="text-neutral-400"> — remove all system prompts; without them, the model gets slightly smarter.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Evals last 1 to 3 generations</strong><span class="text-neutral-400"> — create them where you observed the stumble; retire the ones the model has outgrown.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Reintroducing it requires all 4 conditions</strong><span class="text-neutral-400"> — a real, repeated failure, with a specific instruction, in the shortest form possible.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">2.1 — The taxonomy: what each line is. Ten categories, six decisions, and the seven questions that classify any instruction in your config.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="../trilha2/modulo-2-1.html">Next Module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Ablation Audit — INEMA · 2026</p>
+<p>
+<a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a>
+</p>
+<p class="text-xs">Method and vision: Boris Cherny (Anthropic) — talk at Y Combinator about cutting 80% of Claude Code's system prompt.</p>
+</div>
+</footer>
+<script>
+  function toggleTopic(button) {
+    const topicItem = button.closest('.topic-item');
+    const explanation = topicItem.querySelector('.topic-explanation');
+    const moduleCard = button.closest('.bg-dark-800') || document;
+    moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) { exp.classList.remove('active'); const b = exp.closest('.topic-item').querySelector('button'); if (b) b.setAttribute('aria-expanded','false'); } });
+    explanation.classList.toggle('active');
+    button.setAttribute('aria-expanded', explanation.classList.contains('active') ? 'true' : 'false');
+  }
+  function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const htmlEl = document.documentElement;
+  if (htmlEl.classList.contains('dark')) themeToggleLightIcon.classList.remove('hidden'); else themeToggleDarkIcon.classList.remove('hidden');
+  themeToggle.addEventListener('click', () => {
+    themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+    htmlEl.classList.toggle('dark');
+    const dark = htmlEl.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { const p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = dark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+  });
+</script>
+<script src="../../../assets/learn.js"></script>
+<script>
+  if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.INEMA && INEMA.registerCheck) {
+      INEMA.registerCheck('modulo-1-2#q1', {
+        answer: 1,
+        explain: {
+          0: 'Não. Uma ocorrência isolada pode ser ruído — pedido ambíguo, contexto ruim, acaso. Devolver na primeira falha é exatamente o reflexo que faz a config voltar ao tamanho original em duas semanas, sem que nada disso tenha sido medido.',
+          1: 'Isso. Registre a classe do tropeço ("commit não solicitado") e continue o trabalho real. Se a mesma classe reaparecer, aí sim as quatro condições se cumprem e você devolve uma instrução — na forma mais curta possível.',
+          2: 'Não. Restaurar tudo encerra o experimento antes de ele produzir qualquer dado, e você volta a carregar as outras dezenas de linhas que talvez fossem peso morto. Um tropeço não invalida a ablação; ele é justamente o que você foi lá observar.'
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

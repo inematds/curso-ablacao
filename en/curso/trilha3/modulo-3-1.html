@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ablacao" name="inema-course"/>
+<title>Module 3.1 — Running the audit-ablacao skill | Ablation Audit</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+  })();
+  </script>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "ablacao",
+    "tracks": [
+      { "n": "1", "title": "Por que apagar", "modules": [
+        { "id": "1-1", "title": "Configuracao envelhece", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O metodo de ablacao", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" }
+      ]},
+      { "n": "2", "title": "Como diagnosticar", "modules": [
+        { "id": "2-1", "title": "A taxonomia: o que cada linha e", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "De microgerenciamento a criterio", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" }
+      ]},
+      { "n": "3", "title": "Auditar de verdade", "modules": [
+        { "id": "3-1", "title": "Rodando a skill audit-ablacao", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Do relatorio aos cortes", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" }
+      ]},
+      { "n": "4", "title": "Provar e manter", "modules": [
+        { "id": "4-1", "title": "O plano de ablacao A/B/C", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O ciclo continuo", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" }
+      ]}
+    ]
+  }
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="../../../assets/curso.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/curso-ablacao/curso/trilha3/modulo-3-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/en/curso/trilha3/modulo-3-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/es/curso/trilha3/modulo-3-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Ablation Audit</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1">
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Why delete</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnose</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Audit</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Prove and maintain</span></a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden xl:inline">Journey</span><span aria-hidden="true" class="inema-journey-badge hidden"></span>
+</button>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Breadcrumb" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Track 3</a><span>/</span>
+<span class="text-purple-400">Module 3.1</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="3-1" data-inema-track="3">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🩺 Running the audit-ablacao skill</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+      So far, you've learned to look at the config and classify what you see. Now you'll install the tool that does this
+      <strong class="text-purple-400">on your own machine</strong> — and, more importantly, learns to read the 10-section report
+      knowing what each section expects from you. The skill is diagnostic only: it never edits, moves, deletes, or commits anything.
+    </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">50</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Intermediate</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-300 font-semibold">Progress in this module</span>
+<div aria-label="Module 3.1 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-sm" data-inema-meter="modulo:3-1" role="progressbar">
+<span class="inema-meter-pct text-purple-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 of 6</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+<nav aria-label="Page index" class="hidden lg:block sticky top-24 self-start" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3">Section <span class="inema-toc-pos">1</span> of <span class="inema-toc-total">6</span></p>
+<ul class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Know what it does and what it never does</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Install the skill</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. Choose the right scope</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. Read the 10-section report</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. Audit each skill</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Run and check 3 removals</a></li>
+</ul>
+</nav>
+<main class="inema-prose" id="conteudo">
+<!-- ============ TOPICO 1 ============ -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🔍 Know what the skill does and what it never does</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t1-p1">
+<strong class="text-purple-400">audit-ablacao</strong> and a <strong class="text-neutral-100">skill</strong> — a procedure file
+      that you keep in a folder and Claude Code loads when you call it by name or when its description
+      matches your request. What this skill does: reads your <code class="text-purple-400">CLAUDE.md</code> (the project-level and global ones,
+      in <code class="text-purple-400">~/.claude/CLAUDE.md</code>), your other skills, the <strong class="text-neutral-100">hooks</strong>
+      (commands that Claude Code triggers automatically at certain times, before or after a tool runs) and the
+      <strong class="text-neutral-100">settings.json</strong> (Claude Code’s own configuration file: permissions,
+      environment variables, hooks). Then it classifies each instruction, decides what to do with it, and delivers a 10-section report.
+    </p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t1-p2">
+      What it <strong class="text-purple-400">never</strong> does: edit, move, delete, overwrite config, or commit. That's intentional, not a limitation. An audit that starts making changes is an audit you can't trust — you lose the chance to disagree before the damage, and you lose the baseline for measuring whether the cut was good. Here, applying changes is a separate request from you, in another session.
+    </p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🆕</span> Four words before you continue</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong class="text-neutral-100">Skill:</strong> file <code>SKILL.md</code> with a named procedure, loaded on demand by the agent.</li>
+<li><strong class="text-neutral-100">Hook:</strong> command that Claude Code runs automatically in response to an event (before/after a tool, when ending the session).</li>
+<li><strong class="text-neutral-100">settings.json:</strong> harness config—permissions, environment variables, and hook registration.</li>
+<li><strong class="text-neutral-100">Trigger:</strong> the skill description sentences that make the agent decide to load it without you calling it by name.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ What the skill does</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Read <code>CLAUDE.md</code> of the project and the global one</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Read the skills, the hooks, and the <code>settings.json</code></span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Classifies each instruction (context, guardrail, criterion, verification, micromanagement, redundancy, legacy…)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Decide: KEEP · SIMPLIFY · MOVE · MERGE · TEST · REMOVE</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Audit skills one by one</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Delivers the 10-section report</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ What it never does</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Edit any config file</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Move or rename skills</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Delete lines from your <code>CLAUDE.md</code></span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Overwrite <code>settings.json</code> or hooks</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Run <code>git</code>, commit or push anything</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comment on a file it couldn't read</span></li>
+</ul>
+</div>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Left-to-right flow: four configuration boxes (CLAUDE.md, skills, hooks, settings.json) feed into a reading step, which leads to a classification step, which leads to the highlighted 10-section report box. After the report, a dashed arrow crossed by an X points to the apply box, indicating that the skill stops at the report and applies nothing." class="w-full h-auto" role="img" viewbox="0 0 1000 360">
+<defs>
+<lineargradient id="m31a-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="m31a-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m31a-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m31a-arrow" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="4.5"><path d="M0,0 L9,4.5 L0,9 z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m31a-grid)" height="360" width="1000" x="0" y="0"></rect>
+<text fill="#c4b5fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="500" y="28">the skill reads, classifies, and reports—and stops there</text>
+<g fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11.5">
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.5" width="150" x="30" y="60"></rect><text text-anchor="middle" x="105" y="82">CLAUDE.md</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.5" width="150" x="30" y="108"></rect><text text-anchor="middle" x="105" y="130">skills</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.5" width="150" x="30" y="156"></rect><text text-anchor="middle" x="105" y="178">hooks</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.5" width="150" x="30" y="204"></rect><text text-anchor="middle" x="105" y="226">settings.json</text>
+</g>
+<text fill="#c4b5fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="105" y="266">configuration (unchanged)</text>
+<path d="M185,148 L245,148" marker-end="url(#m31a-arrow)" stroke="#38bdf8" stroke-width="1.8"></path>
+<rect fill="#150f26" height="60" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="250" y="118"></rect>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="325" y="146">read</text>
+<text fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="325" y="166">read-only</text>
+<path d="M405,148 L455,148" marker-end="url(#m31a-arrow)" stroke="#38bdf8" stroke-width="1.8"></path>
+<rect fill="#150f26" height="80" rx="10" stroke="#c084fc" stroke-width="2" width="180" x="460" y="108"></rect>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="550" y="136">classify</text>
+<text fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="550" y="157">10 categories</text>
+<text fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="550" y="175">6 decisions</text>
+<path d="M645,148 L695,148" marker-end="url(#m31a-arrow)" stroke="#38bdf8" stroke-width="1.8"></path>
+<g filter="url(#m31a-glow)"><rect fill="#1a1230" height="100" rx="12" stroke="url(#m31a-grad)" stroke-width="2.5" width="200" x="700" y="98"></rect></g>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="800" y="136">report</text>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="800" y="160">10 sections</text>
+<text fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="800" y="180">proposal, not application</text>
+<path d="M800,205 L800,270" opacity="0.85" stroke="#f87171" stroke-dasharray="8 8" stroke-width="1.8"></path>
+<g stroke="#f87171" stroke-width="3"><path d="M782,232 L818,258"></path><path d="M818,232 L782,258"></path></g>
+<rect fill="#1a1230" height="42" opacity="0.6" rx="10" stroke="#f87171" stroke-width="1.5" width="200" x="700" y="272"></rect>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="800" y="298">apply (you, in another session)</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">
+<strong class="text-neutral-300">What to look at:</strong> the solid arrows go all the way to the report—that’s the path the skill follows.
+      The last arrow is dashed and crossed out with an X: applying is not part of its job. Also notice that the left column
+      says “configuration (unchanged)”: the files go in and come out exactly the same.
+    </p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4">Neighboring area: don't confuse the two</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-purple-400 font-semibold text-sm mb-1">memory-audit</div><p class="text-xs text-neutral-400">Takes care of the <strong>memory</strong> saved from the session: what was recorded, what is noise, what should be forgotten.</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-purple-400 font-semibold text-sm mb-1">audit-ablacao</div><p class="text-xs text-neutral-400">Takes care of the <strong>configuration</strong> of the agent: <code>CLAUDE.md</code>— skills, hooks, <code>settings.json</code>.</p></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 2 ============ -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📦 Install the skill</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t2-p1">
+      Install a skill and copy a file to a folder. Nothing else. Two options: global (applies to all your projects,
+      lives in <code class="text-purple-400">~/.claude/skills/</code>) or per project (applies only there, stays in
+      <code class="text-purple-400">.claude/skills/</code> within the repository). Choose one of the two blocks below and run it in the terminal.
+    </p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2">Path A — global installation</h3>
+<p class="text-sm text-neutral-400 mb-4">Available in any project you open with Claude Code.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">git clone https://github.com/inematds/audit-ablacaocc.git
+mkdir -p ~/.claude/skills/audit-ablacao
+cp audit-ablacaocc/SKILL.md ~/.claude/skills/audit-ablacao/SKILL.md</pre>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2">Path B — project-level installation</h3>
+<p class="text-sm text-neutral-400 mb-4">Run it from the project folder. Replace <code>&lt;caminho&gt;</code> by where you cloned the repository.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">mkdir -p .claude/skills/audit-ablacao
+cp &lt;caminho&gt;/audit-ablacaocc/SKILL.md .claude/skills/audit-ablacao/SKILL.md</pre>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2">Verify that you installed it</h3>
+<p class="text-sm text-neutral-400 mb-4">Two checks: the file exists on disk, and the agent can see the skill.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto mb-4">
+<pre class="text-sm text-neutral-300"># 1. o arquivo esta no lugar?
+ls ~/.claude/skills/audit-ablacao/
+# esperado: SKILL.md
+
+# 2. o cabecalho da skill esta legivel?
+head -4 ~/.claude/skills/audit-ablacao/SKILL.md
+# esperado: uma linha "name: audit-ablacao"</pre>
+</div>
+<p class="text-sm text-neutral-300"><strong class="text-purple-400">Step 3:</strong> restart the Claude Code session. Skills are
+      read at startup — until you restart, the skill exists on disk but not for the agent. After restarting,
+      <code>audit-ablacao</code> should appear in the list of available skills.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Global or per project? The practical difference</h3>
+<p class="text-neutral-300 mb-3">
+        The project skill <strong>versioned alongside the code</strong>: it travels with the repository, goes into the pull request, and a colleague
+        reviews the procedure like any other file. And it doesn’t spill over into your other projects — it’s no longer another line
+        competing for attention where it doesn’t belong.
+      </p>
+<p class="text-neutral-300">
+        The global one, convenient for the tool you use everywhere. Simple rule: <strong>team procedure goes in the project,
+        personal tool goes in the global config.</strong>
+</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 3 ============ -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🎯 Choose the right scope</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t3-p1">
+<strong class="text-neutral-100">Scope</strong> and the set of files you want the skill to audit. If you don't specify,
+      it asks—and the answer changes the report's quality more than any other choice in this module. Three scopes
+      worth considering, each with its own moment:
+    </p>
+<div class="bg-dark-900/60 rounded-xl border border-dark-600 overflow-hidden mb-6">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-800 text-neutral-400">
+<tr><th class="px-4 py-3">Scope</th><th class="px-4 py-3">Where it lives</th><th class="px-4 py-3">When to run</th></tr>
+</thead>
+<tbody class="divide-y divide-dark-700 text-neutral-300">
+<tr><td class="px-4 py-3 font-semibold text-neutral-100">Global</td><td class="px-4 py-3"><code>~/.claude/</code></td><td class="px-4 py-3">Every ~6 months, especially with a major model release</td></tr>
+<tr><td class="px-4 py-3 font-semibold text-neutral-100">One project</td><td class="px-4 py-3"><code>./CLAUDE.md</code> + <code>./.claude/</code></td><td class="px-4 py-3">When the <code>CLAUDE.md</code> of it exceeds ~150 lines</td></tr>
+<tr><td class="px-4 py-3 font-semibold text-neutral-100">A set of skills</td><td class="px-4 py-3">Some folders in <code>skills/</code></td><td class="px-4 py-3">When 3+ skills compete for the same trigger</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t3-p2">
+      Why not audit everything at once? Because the cost shows up in the report, not in your time. A broad scope means lots of
+      instructions read with little attention per instruction: the tables get shallow, the “How to test” column becomes generic, and the
+      <em>Top 10</em> mixes things from contexts that aren’t comparable. A narrow scope does the opposite — each recommendation comes with a cited excerpt,
+      a named risk, and a test you can run today.
+    </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Well-chosen scope</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>"Audit only the <code>CLAUDE.md</code> global" — one file, analyze it line by line</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>"Audit the 4 video skills in this project" — a clearly bounded scope</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>One scope per session, one report per scope</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Scope that ruins the report</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Audit everything" — global + 12 projects + 40 skills in one pass</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Vague scope ("my config") that forces the skill to guess what to read</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Mixing two projects: the identified redundancies don't actually exist</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 4 ============ -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">📑 Read the 10-section report</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t4-p1">
+      The report has a fixed order, and that order makes an argument: it starts with the diagnosis, moves through the evidence, reaches the proposal, and ends
+      with the test plan. Reading it in order means following the reasoning. Each section <strong class="text-purple-400">asks something of you</strong> —
+      below, what and e.
+    </p>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="A staircase of ten numbered steps rising from left to right, grouped into four bands: diagnosis (sections 1 and 2), evidence (sections 3, 4, and 5), proposal (sections 6, 7, and 8), and proof (sections 9 and 10). Step 10, top 10 changes, is highlighted with a glow at the top." class="w-full h-auto" role="img" viewbox="0 0 1000 460">
+<defs>
+<lineargradient id="m31b-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="m31b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m31b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle></pattern>
+</defs>
+<rect fill="url(#m31b-grid)" height="460" width="1000" x="0" y="0"></rect>
+<text fill="#c4b5fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="500" y="26">diagnosis → evidence → proposal → proof</text>
+<path d="M75,400 L245,364 L415,292 L585,220 L755,148 L880,96" fill="none" opacity="0.5" stroke="#38bdf8" stroke-dasharray="9 9" stroke-width="1.6"></path>
+<g fill="#c4b5fd" font-family="Inter,sans-serif" font-size="11">
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.6" width="120" x="30" y="400"></rect><text text-anchor="middle" x="90" y="421">1 summary</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.6" width="120" x="160" y="400"></rect><text text-anchor="middle" x="220" y="421">2 metrics</text>
+<text fill="#38bdf8" font-size="11.5" text-anchor="middle" x="155" y="452">diagnosis</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.6" width="120" x="300" y="330"></rect><text text-anchor="middle" x="360" y="351">3 per file</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.6" width="130" x="430" y="330"></rect><text text-anchor="middle" x="495" y="351">4 removals</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.6" width="140" x="570" y="330"></rect><text text-anchor="middle" x="640" y="351">5 conflicts</text>
+<text fill="#38bdf8" font-size="11.5" text-anchor="middle" x="505" y="382">evidence</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.6" width="120" x="300" y="240"></rect><text text-anchor="middle" x="360" y="261">6 skills</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.6" width="150" x="430" y="240"></rect><text text-anchor="middle" x="505" y="261">7 minimal CLAUDE.md</text>
+<rect fill="#1a1230" height="34" rx="8" stroke="#c084fc" stroke-width="1.6" width="150" x="590" y="240"></rect><text text-anchor="middle" x="665" y="261">8 proposed skills</text>
+<text fill="#38bdf8" font-size="11.5" text-anchor="middle" x="520" y="292">proposal (not applied)</text>
+<rect fill="#1a1230" height="36" rx="8" stroke="#c084fc" stroke-width="1.6" width="180" x="560" y="150"></rect><text text-anchor="middle" x="650" y="172">9 A/B/C ablation plan</text>
+</g>
+<g filter="url(#m31b-glow)"><rect fill="#1a1230" height="46" rx="10" stroke="url(#m31b-grad)" stroke-width="2.5" width="210" x="760" y="80"></rect></g>
+<text fill="#e9d5ff" font-family="Inter,sans-serif" font-size="13.5" font-weight="700" text-anchor="middle" x="865" y="109">10 top 10 (impact ÷ risk)</text>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="11.5" text-anchor="middle" x="820" y="205">proof</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">
+<strong class="text-neutral-300">What to look at:</strong> the steps rise across four bands. The first two bands (sections 1 to 5)
+      look at what exists; the last two (6 to 10) propose and prove. The spotlight stays on step 10 because that’s where your work list comes from — but it only has value if the lower steps are filled with cited excerpts.
+    </p>
+<div class="space-y-4 mb-6">
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-white mb-1">Executive summary — the 5 biggest problems</h4>
+<p class="text-sm text-neutral-400">It asks you to decide whether these 5 are really your problems. If none sound familiar, the scope was wrong.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-white mb-1">Metrics — instructions analyzed, count by decision, estimated % reduction</h4>
+<p class="text-sm text-neutral-400">It asks you to check whether the number of instructions analyzed matches the actual size of what you asked it to read. Too low a number = partial reading.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-white mb-1">Problems by file — File | Problem | Severity | Recommendation | Rationale</h4>
+<p class="text-sm text-neutral-400">It asks you to check whether the reason is an argument, not an adjective. "Verbose" isn't a reason; "duplicates rule X from file Y" is.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-purple-500/30"><h4 class="font-semibold text-white mb-1">Candidates for removal — Excerpt | File | Reason | Risk | How to test</h4>
+<p class="text-sm text-neutral-400">The most important section. It asks you to open the file and check the passage. <strong class="text-purple-400">Without the "How to test" column, the report is incomplete</strong> — removing it without testing is a gamble.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">5</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-white mb-1">Redundancies and conflicts</h4>
+<p class="text-sm text-neutral-400">It asks you to decide which copy stays. An unresolved conflict still leaves the model to choose on its own — and you won't know which one.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">6</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-white mb-1">Skills — Skill | Current function | Diagnosis | Recommendation | Estimated reduction</h4>
+<p class="text-sm text-neutral-400">It asks you to recognize the function described. If the "current function" isn't what you use the skill for, its description is misleading — and so is its trigger.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">7</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-white mb-1"><code>CLAUDE.md</code> proposed — complete minimum version</h4>
+<p class="text-sm text-neutral-400">It asks you to read it as a draft, not an order. It comes in a code block and is a proposal — nothing has been applied to your file.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">8</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-white mb-1">Proposed skills — reduced versions of the ones that remain</h4>
+<p class="text-sm text-neutral-400">It asks you to verify that the procedure is still executable after the cut. A streamlined skill that lost an essential step isn't a gain.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">9</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-white mb-1">Ablation plan — A (current) / B (simplified) / C (minimal)</h4>
+<p class="text-sm text-neutral-400">It asks you to recognize the proposed 5 to 10 tasks as tasks <em>real</em> of your project. A hypothetical task proves nothing. And that's the subject of Module 4.1.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">10</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600"><h4 class="font-semibold text-white mb-1">Top 10 changes — by expected impact ÷ risk</h4>
+<p class="text-sm text-neutral-400">It asks you to check your work queue. If an item appears here without appearing in any previous section, it came out of nowhere — be suspicious.</p></div></div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> The skill doesn’t apply anything—don’t ask it to edit</h3>
+<p class="text-neutral-300">
+        Finished reading the report and feel like saying "now apply the Top 10 for me"? Don’t. Applying changes in the same session as the audit mixes diagnosis with execution: you lose version A (the original, intact config) that the ablation plan needs as a baseline, and you lose the chance to disagree item by item. Make changes in another session, with the saved report open beside you.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 5 ============ -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🧩 Audit skill by skill</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t5-p1">
+      A standalone instruction has 6 possible decisions (KEEP · SIMPLIFY · MOVE · MERGE · TEST · REMOVE). A skill has 7, because a skill is a
+      unit with boundaries: you can split it, merge it, or change the <em>moment</em> where it is loaded. This last possibility—
+      <strong class="text-purple-400">load-on-demand</strong>, load only when the task calls for it instead of keeping it in context all the time—and
+      the one that frees up the most space without losing anything.
+    </p>
+<div class="bg-dark-900/60 rounded-xl border border-dark-600 overflow-hidden mb-6">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-800 text-neutral-400">
+<tr><th class="px-4 py-3">Decision</th><th class="px-4 py-3">Means</th><th class="px-4 py-3">Typical sign</th></tr>
+</thead>
+<tbody class="divide-y divide-dark-700 text-neutral-300">
+<tr><td class="px-4 py-3 font-semibold text-purple-400">KEEP</td><td class="px-4 py-3">Keep as is</td><td class="px-4 py-3">Solves a recurring problem and has no dead weight</td></tr>
+<tr><td class="px-4 py-3 font-semibold text-purple-400">SIMPLIFY</td><td class="px-4 py-3">Keep, but shorten</td><td class="px-4 py-3">Good criteria buried in too many steps and examples</td></tr>
+<tr><td class="px-4 py-3 font-semibold text-purple-400">MERGE</td><td class="px-4 py-3">Merge with another</td><td class="px-4 py-3">Two skills competing for the same trigger and saying almost the same thing</td></tr>
+<tr><td class="px-4 py-3 font-semibold text-purple-400">SPLIT</td><td class="px-4 py-3">Becomes two</td><td class="px-4 py-3">A file with two procedures that are never used together</td></tr>
+<tr><td class="px-4 py-3 font-semibold text-purple-400">LOAD-ON-DEMAND</td><td class="px-4 py-3">Only loads when requested</td><td class="px-4 py-3">Useful, but rare — it doesn't need to cost context on the other 90% of tasks</td></tr>
+<tr><td class="px-4 py-3 font-semibold text-purple-400">CONVERT-TO-CONTEXT</td><td class="px-4 py-3">Becomes two lines in the <code>CLAUDE.md</code></td><td class="px-4 py-3">There is no procedure there, just a fact that needs to always be available</td></tr>
+<tr><td class="px-4 py-3 font-semibold text-purple-400">DELETE-CANDIDATE</td><td class="px-4 py-3">Candidate for removal</td><td class="px-4 py-3">Teaches generic reasoning the model already does on its own</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t5-p2">
+      The decisions above don't come out of nowhere. They follow from seven questions the skill asks for each file—and that you can ask yourself,
+      by reading any of your skills:
+    </p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4">The questions that decide</h3>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400 font-bold">1.</span><span>Does it need to exist?</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 font-bold">2.</span><span>What problem <strong>recurring</strong> does it solve it? (one time only, not recurring)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 font-bold">3.</span><span>Which parts are context, which are procedure, and which are micromanagement?</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 font-bold">4.</span><span>Could this fit in a short instruction?</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 font-bold">5.</span><span>Should it load only on demand?</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 font-bold">6.</span><span>Can it be split, or merged with something else?</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 font-bold">7.</span><span>Do these include things the model already does on its own?</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300">
+        Question 3 is the one that yields the most. Take one of your skills and mark each paragraph with one of three letters: C (context—a fact the
+        model can’t infer), P (procedure—a genuinely repeatable step), or M (micromanagement—you directing <em>how</em> it
+        thinks). Every M is an immediate candidate to become an exit criterion. The skill does exactly that, but across the entire file.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 6 ============ -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🧪 Run and check 3 removals</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t6-p1">
+      Time to run it. Call it directly by name, or trigger it with natural language—the difference is that a direct call eliminates the
+      lottery: you don't depend on the skill description matching your phrasing. Ask for the output in a file <code>.md</code> new; a 10-section report
+      in chat scrolls off the screen before you finish checking it.
+    </p>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2">How to call it</h3>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300"># chamada direta (recomendada)
+/audit-ablacao
+
+# por gatilho, em linguagem natural
+faz uma auditoria de ablacao do meu CLAUDE.md global
+audita as skills deste projeto, meu prompt ta inchado
+o que da pra remover da minha config sem quebrar nada?
+
+# pedindo a saida em arquivo (faca isso)
+/audit-ablacao — escopo: ~/.claude/CLAUDE.md e ~/.claude/skills/.
+Salve o relatorio completo, com as 10 secoes, num arquivo .md NOVO
+no diretorio de trabalho. Nao edite nenhum arquivo de config.</pre>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ A report you accept</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Every recommendation cites a file and passage</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Every meaningful removal comes with the risk explained</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>The “How to test” column is filled in with a test you can run</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Where evidence is lacking, the decision is TEST, not KEEP or REMOVE</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Report you return</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Diagnosis based on an assumption about a file it didn’t read</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Too verbose, cut it" without pointing to the passage</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Treating a security guardrail cut as a concision gain</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>70% reduction celebrated without any test plan</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Shorter isn’t always better</h3>
+<p class="text-neutral-300">
+        The goal isn’t the biggest percentage reduction. It’s <strong>quality + autonomy + verifiability ÷ complexity</strong>. Context
+        that the model can’t infer on its own—project identity, file paths, sources of truth, branding, security,
+        compliance, interface contracts—doesn’t go into the cut queue just because it’s long. If the report suggests removing anything in this group,
+        the right answer is “no,” not “great, another 8%.”
+      </p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🎯</span> Exercise: audit the auditor</h3>
+<p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objective:</strong> move beyond passive reading. You’ll take 3 REMOVE recommendations from your own report and check them one by one in the file, with the relevant passage open in front of you.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto mb-4">
+<pre class="text-sm text-neutral-300">1. Rode a skill no escopo escolhido, salvando em relatorio-ablacao.md
+2. Abra a secao 4 (Candidatas a remocao) e escolha 3 linhas
+3. Para cada uma:
+   - abra o arquivo citado no trecho
+   - confirme que o trecho existe MESMO, e no lugar indicado
+   - anote arquivo:linha
+   - de o veredito: CONCORDO / DISCORDO / MUDA PARA TEST
+   - escreva uma frase dizendo por que
+
+Formato da anotacao:
+  ~/.claude/CLAUDE.md:42 — MUDA PARA TEST
+  "o risco descrito e real, mas nao existe teste proposto;
+   quero ver o modelo falhar sem isso antes de apagar"</pre>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-sm text-neutral-300"><strong class="text-purple-400">Exit criterion:</strong> a file <code>.md</code> saved
+        with the complete report in all 10 sections, plus 3 written verdicts, each pointing to <code>arquivo:linha</code>. If you couldn’t
+        locate the passage for any of the 3, that’s a finding: the skill made a claim about something it didn’t read carefully — and that line
+        becomes DISAGREE right away.</p>
+</div>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mt-8 bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6" data-inema-check="modulo-3-1#q1">
+<p class="font-medium mb-4">Quick check (doesn't block anything): the report has a line in section 4 recommending REMOVE for a paragraph from your <code>CLAUDE.md</code>, with the reason and risk filled in—but the “How to test” column is empty. What should you do?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Apply the removal: the reason and risk are enough to decide</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Ask the skill to delete the paragraph itself and check afterward</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Treat it as an incomplete report: require the test, and until there is one, downgrade from REMOVE to TEST</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ============ RESUMO ============ -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module Summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">The skill reads, classifies, and reports—and stops there</strong><span class="text-neutral-400"> — never edits, moves, deletes, overwrites, or commits. And that's by design.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Install and copy a file</strong><span class="text-neutral-400"> — global in <code>~/.claude/skills/</code>, or by project in <code>.claude/skills/</code>; then restart the session.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Narrow scope for a better report</strong><span class="text-neutral-400"> — global every ~6 months, projects over ~150 lines, skills when 3+ compete for the same trigger.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">10 sections, each demanding something from you</strong><span class="text-neutral-400"> — and section 4 without "How to test" means the report is incomplete.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Skill has 7 decisions</strong><span class="text-neutral-400"> — KEEP, SIMPLIFY, MERGE, SPLIT, LOAD-ON-DEMAND, CONVERT-TO-CONTEXT, DELETE-CANDIDATE.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">It covers the skill</strong><span class="text-neutral-400"> — quoted passage, risk explained, no assumptions about unread files; when in doubt, TEST.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">3.2 — From the report to the cuts: turn the Top 10 into a sequence of actionable changes without losing the baseline.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-2.html">Next Module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Ablation Audit — INEMA · 2026</p>
+<p>
+<a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a>
+</p>
+<p class="text-xs">Method and vision: Boris Cherny (Anthropic) — talk at Y Combinator about cutting 80% of Claude Code's system prompt.</p>
+</div>
+</footer>
+<script>
+  function toggleTopic(button) {
+    const topicItem = button.closest('.topic-item');
+    const explanation = topicItem.querySelector('.topic-explanation');
+    const moduleCard = button.closest('.bg-dark-800') || document;
+    moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) { exp.classList.remove('active'); const b = exp.closest('.topic-item').querySelector('button'); if (b) b.setAttribute('aria-expanded','false'); } });
+    explanation.classList.toggle('active');
+    button.setAttribute('aria-expanded', explanation.classList.contains('active') ? 'true' : 'false');
+  }
+  function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const htmlEl = document.documentElement;
+  if (htmlEl.classList.contains('dark')) themeToggleLightIcon.classList.remove('hidden'); else themeToggleDarkIcon.classList.remove('hidden');
+  themeToggle.addEventListener('click', () => {
+    themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+    htmlEl.classList.toggle('dark');
+    const dark = htmlEl.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { const p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = dark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+  });
+</script>
+<script src="../../../assets/learn.js"></script>
+<script>
+  if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.INEMA && INEMA.registerCheck) {
+      INEMA.registerCheck('modulo-3-1#q1', {
+        answer: 2,
+        explain: {
+          0: 'Nao. Sem "Como testar", voce nao tem como saber o que quebra quando o paragrafo sumir — a remocao vira aposta, e o risco descrito continua sendo so uma frase.',
+          1: 'Nao, duas vezes. A skill e somente diagnostico: ela nao edita nada. E, mesmo que editasse, aplicar dentro da sessao da auditoria destroi a versao A (config original) que o plano de ablacao usa como linha de base.',
+          2: 'Isso. A coluna "Como testar" e o que separa recomendacao de palpite. Enquanto ela estiver vazia, a decisao honesta e TEST — na duvida, sempre TEST, nunca REMOVE.'
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

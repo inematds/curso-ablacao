@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ablacao" name="inema-course"/>
+<title>Track 2 — How to Diagnose | Ablation Audit</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+  })();
+  </script>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "ablacao",
+    "tracks": [
+      { "n": "1", "title": "Por que apagar", "modules": [
+        { "id": "1-1", "title": "Configuracao envelhece", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O metodo de ablacao", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" }
+      ]},
+      { "n": "2", "title": "Como diagnosticar", "modules": [
+        { "id": "2-1", "title": "A taxonomia: o que cada linha e", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "De microgerenciamento a criterio", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" }
+      ]},
+      { "n": "3", "title": "Auditar de verdade", "modules": [
+        { "id": "3-1", "title": "Rodando a skill audit-ablacao", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Do relatorio aos cortes", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" }
+      ]},
+      { "n": "4", "title": "Provar e manter", "modules": [
+        { "id": "4-1", "title": "O plano de ablacao A/B/C", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O ciclo continuo", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" }
+      ]}
+    ]
+  }
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="../../../assets/curso.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/curso-ablacao/curso/trilha2/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/en/curso/trilha2/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/es/curso/trilha2/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Ablation Audit</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1">
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Why delete</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnose</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Audit</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Prove and maintain</span></a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden xl:inline">Journey</span><span aria-hidden="true" class="inema-journey-badge hidden"></span>
+</button>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main id="conteudo">
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-track="2">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">PATH 2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔍 How to diagnose</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+      How do you go line by line and decide what stays, what goes, and what needs testing? This track gives you the taxonomy—10 categories, 6 decisions, 7 questions—and the move that most improves quality: replace recipes with criteria and verification.
+    </p>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mt-8 mb-6 overflow-hidden">
+<svg aria-label="Triage funnel: configuration lines enter from the left, pass through a highlighted box with seven questions, and exit classified into six decisions — KEEP, SIMPLIFY, MOVE, MERGE, TEST, and REMOVE. The TEST output is marked in cyan as the default destination when in doubt." class="w-full h-auto" role="img" viewbox="0 0 1000 280">
+<defs>
+<lineargradient id="t2-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="t2-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="t2-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="t2-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="t2-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#t2-grid)" height="280" width="1000" x="0" y="0"></rect>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="12.5" x="40" y="34">lines in your config</text>
+<g font-family="Inter,sans-serif" font-size="12">
+<rect fill="#0e1622" height="30" opacity="0.9" rx="8" stroke="#60a5fa" stroke-width="1.4" width="176" x="34" y="50"></rect><text fill="#bfdbfe" text-anchor="middle" x="122" y="70">“always run the tests”</text>
+<rect fill="#0e1622" height="30" opacity="0.9" rx="8" stroke="#60a5fa" stroke-width="1.4" width="176" x="34" y="92"></rect><text fill="#bfdbfe" text-anchor="middle" x="122" y="112">“do A, then B, then C”</text>
+<rect fill="#0e1622" height="30" opacity="0.9" rx="8" stroke="#60a5fa" stroke-width="1.4" width="176" x="34" y="134"></rect><text fill="#bfdbfe" text-anchor="middle" x="122" y="154">“deploy via git”</text>
+<rect fill="#0e1622" height="30" opacity="0.9" rx="8" stroke="#60a5fa" stroke-width="1.4" width="176" x="34" y="176"></rect><text fill="#bfdbfe" text-anchor="middle" x="122" y="196">“don’t use emoji” (2×)</text>
+<rect fill="#0e1622" height="30" opacity="0.9" rx="8" stroke="#60a5fa" stroke-width="1.4" width="176" x="34" y="218"></rect><text fill="#bfdbfe" text-anchor="middle" x="122" y="238">“think step by step”</text>
+</g>
+<g fill="none" opacity="0.5" stroke="#60a5fa" stroke-width="1.6">
+<path d="M210,65 C258,65 262,132 300,138" marker-end="url(#t2-ah)"></path>
+<path d="M210,107 C258,107 268,136 300,140" marker-end="url(#t2-ah)"></path>
+<path d="M210,149 L300,144" marker-end="url(#t2-ah)"></path>
+<path d="M210,191 C258,191 268,152 300,148" marker-end="url(#t2-ah)"></path>
+<path d="M210,233 C258,233 262,156 300,150" marker-end="url(#t2-ah)"></path>
+</g>
+<g filter="url(#t2-glow)"><rect fill="#0e1622" height="88" rx="14" stroke="url(#t2-grad)" stroke-width="2" width="204" x="312" y="100"></rect></g>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<text fill="#60a5fa" font-size="14" font-weight="600" x="414" y="132">7 questions</text>
+<text fill="#9ad6ff" font-size="11.5" x="414" y="154">what does it guarantee? is it still needed?</text>
+<text fill="#9ad6ff" font-size="11.5" x="414" y="172">says WHAT or directs HOW?</text>
+</g>
+<g fill="none" opacity="0.55" stroke="#60a5fa" stroke-width="1.6">
+<path d="M516,120 C580,120 600,48 656,44" marker-end="url(#t2-ah)"></path>
+<path d="M516,128 C584,128 604,90 656,88" marker-end="url(#t2-ah)"></path>
+<path d="M516,138 C588,138 608,132 656,132" marker-end="url(#t2-ah)"></path>
+<path d="M516,150 C588,150 608,176 656,176" marker-end="url(#t2-ah)"></path>
+<path d="M516,168 C580,168 600,264 656,264" marker-end="url(#t2-ah)"></path>
+</g>
+<path d="M516,158 C584,158 604,218 656,220" fill="none" marker-end="url(#t2-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<rect fill="#0e1622" height="38" rx="10" stroke="#60a5fa" stroke-width="2" width="150" x="666" y="24"></rect><text fill="#bfdbfe" text-anchor="middle" x="741" y="48">KEEP</text>
+<rect fill="#0e1622" height="38" rx="10" stroke="#60a5fa" stroke-width="2" width="150" x="666" y="68"></rect><text fill="#bfdbfe" text-anchor="middle" x="741" y="92">SIMPLIFY</text>
+<rect fill="#0e1622" height="38" rx="10" stroke="#60a5fa" stroke-width="2" width="150" x="666" y="112"></rect><text fill="#bfdbfe" text-anchor="middle" x="741" y="136">MOVE</text>
+<rect fill="#0e1622" height="38" rx="10" stroke="#60a5fa" stroke-width="2" width="150" x="666" y="156"></rect><text fill="#bfdbfe" text-anchor="middle" x="741" y="180">MERGE</text>
+<rect fill="#0e1622" height="38" rx="10" stroke="#38bdf8" stroke-width="2" width="150" x="666" y="200"></rect><text fill="#38bdf8" text-anchor="middle" x="741" y="224">TEST</text>
+<rect fill="#0e1622" height="38" rx="10" stroke="#60a5fa" stroke-width="2" width="150" x="666" y="244"></rect><text fill="#bfdbfe" text-anchor="middle" x="741" y="268">REMOVE</text>
+</g>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12" x="836" y="228">← here if you’re unsure</text>
+</svg>
+</div>
+<p class="text-xs text-neutral-400 mt-3 max-w-3xl mb-8">
+<strong class="text-neutral-300">What to look at:</strong> the funnel doesn't have two outcomes ("stays" / "goes") — it has six.
+      The highlighted box isn't the decision: it's the <em>7 questions</em>— because the question decides, not taste. And the output highlighted in cyan is <strong>TEST</strong>: when you can’t answer “what breaks if it disappears?”,
+      the line’s destination is the ablation test, never KEEP for comfort — KEEP without an answer is just fear dressed up as a criterion.
+    </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">2</div><div class="text-xs text-neutral-400">Modules</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">12</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~1h40</div><div class="text-xs text-neutral-400">Duration</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermediate</div><div class="text-xs text-neutral-400">Level</div></div>
+</div>
+<div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-300 font-semibold">Track progress</span>
+<div aria-label="Track progress 2" aria-valuemax="100" aria-valuemin="0" class="inema-meter" data-inema-meter="trilha:2" role="progressbar"><span class="inema-meter-pct">0%</span> <span class="inema-meter-count">0 of 0</span></div>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Track map</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-1">
+<div class="flex items-center justify-between mb-2"><span class="text-blue-400 font-bold text-sm">2.1</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🔍 The taxonomy: what each line is</h3>
+<p class="text-xs text-neutral-400">10 categories, 6 decisions</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-5 transition-all" href="#modulo-2-2">
+<div class="flex items-center justify-between mb-2"><span class="text-blue-400 font-bold text-sm">2.2</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-blue-400 transition-colors">🎯 From micromanagement to criteria and verification</h3>
+<p class="text-xs text-neutral-400">Criteria beat recipes</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- MODULO 2.1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="2-1" data-inema-track="2" id="modulo-2-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-blue-400 font-bold">2.1</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🔍 The taxonomy: what each line is</h3>
+<p class="text-neutral-400 text-sm">Classify each instruction into a category and a decision, based on 7 questions. When in doubt, TEST — never KEEP for comfort.</p>
+<div class="mt-3"><div aria-label="Module 2.1 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-xs" data-inema-meter="modulo:2-1" role="progressbar"><span class="inema-meter-pct text-blue-400 font-bold">0%</span> <span class="inema-meter-count text-neutral-400 ml-2">0 of 6</span></div></div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t2-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🏷️</span><div><span class="font-medium">Classify each line into one of the 10 categories</span><span class="text-neutral-500 text-sm ml-2">- the diagnostic vocabulary</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Every instruction in your config falls into one of ten boxes: CONTEXT, GUARDRAIL, QUALITY CRITERION, VERIFICATION, INTEGRATION/TOOL, REPEATABLE PROCEDURE, MICROMANAGEMENT, REDUNDANCY, LEGACY/OBSOLETE, and AMBIGUOUS/UNPROVEN. "Deployments go through git" is CONTEXT; "never force push to main" is a GUARDRAIL; "think step by step" is MICROMANAGEMENT.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Without a name, every line seems equally important — and you end up defending everything. The category is what separates what the model <em>there’s no way to know</em> (context, integrations) for what it already does better on its own (micromanagement). This is the step that makes the audit debatable with someone else.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Category describes what the line <strong>é</strong>, not what to do with it. The last four (micromanagement, redundancy, legacy, ambiguity) are the natural suspects; the first six carry the value. A line can fit two categories—that’s already a sign it needs to be split in two.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">⚖️</span><div><span class="font-medium">Choose among the 6 outcomes</span><span class="text-neutral-500 text-sm ml-2">- KEEP, SIMPLIFY, MOVE, MERGE, TEST, REMOVE</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">After the category comes the decision. KEEP = leave as is. SIMPLIFY = keep it, but in half the words. MOVE = it’s in the wrong place (a project rule in the global config, or vice versa). MERGE = two lines say the same thing. TEST = you don’t know, so prove it through ablation. REMOVE = you know it’s dead weight.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The audit fails when there are only two buttons, “stays” and “goes” — then everything becomes “stays.” Six outcomes allow for an honest move: most lines don’t need to disappear; they need to be shortened, moved to another file, or merged with the one next to them.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm"><strong>When in doubt, TEST — never KEEP.</strong> An audit with no lines in TEST almost always means the author is protecting their own config. TEST doesn’t delete anything: it only schedules the proof.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">❓</span><div><span class="font-medium">Ask the 7 questions for each instruction</span><span class="text-neutral-500 text-sm ml-2">- the question decides, not taste</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">What does this line prevent or ensure? Does the current model still need it? Does it say <em>what</em> should happen or directs <em>how</em> Does the model stumble over it? Is it duplicated somewhere else? Does it limit autonomy for no reason? Is there a shorter version? What breaks if it disappears?</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">They turn an opinion (“I think this helps”) into an auditable record. The most discriminating is the third: an instruction that says <strong>what</strong> usually survives; an instruction that directs <strong>how to think</strong> is the one that aged along with the old model.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Always write down the question you decided and the answer to “what breaks if it’s removed?” If the answer is “I don’t know,” the decision is already made: TEST. This pair—question + consequence—is what Track 4 will use as the hypothesis for the A/B/C test.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔐</span><div><span class="font-medium">Protect what the model can't infer</span><span class="text-neutral-500 text-sm ml-2">- the list of things never to cut on reflex</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Project identity, paths and sources of truth, branding, security, compliance, interface contracts, integrations, and internal conventions. None of this is in the model's weights: it can't guess that your deploys happen through git, that the key is in a certain `.env` file, or that the commit's destination account varies by repository.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Ablation turns into damage when someone cuts things out on a whim. This list is the brake: these are the lines whose absence doesn’t gradually degrade quality—they break things all at once, sometimes in production.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Quick test: if the information is <em>specific to your world</em> and not inferable from the repository, it's KEEP (SIMPLIFY at most). "Don't cut" doesn't mean "don't shorten"—true context can also fit in one line.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🧮</span><div><span class="font-medium">Optimize the right function</span><span class="text-neutral-500 text-sm ml-2">- it’s not “reduce as much as possible”</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-5">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The audit’s objective function is to maximize <strong>quality + autonomy + verifiability ÷ complexity</strong>. Line count appears only in the denominator—and never by itself.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Anyone who focuses only on the denominator produces a beautiful config that’s worse: it cuts verification (which was cheap and valuable) along with micromanagement. An audit can legitimately end with the config <em>larger</em>— if what you added was a verifiable exit criterion.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Adding checks raises the numerator. Removing step-by-step instructions lowers the denominator <em>e</em> increases autonomy. They’re the two highest-return moves—and that’s why module 2.2 exists.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-1-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🕵️</span><div><span class="font-medium">Look for the signs in your config</span><span class="text-neutral-500 text-sm ml-2">- where dead weight hides</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-1-6">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Patterns that appear in almost every mature configuration: rules duplicated between `CLAUDE.md` and skills, oversized skills, too many examples, rigid formatting without a reason, accumulated exceptions ("except when…" repeated three times), contradictions between files, global context that only serves two tasks — and, the most costly of all, <strong>missing checks</strong>.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">They’re reading shortcuts: instead of rereading everything with the same attention, you scan the config for these five or six signs and quickly find the candidates. Duplication and contradiction are the ones that quietly sabotage things the most—the model picks one of the two versions, and you never know which.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">The costliest signal is the one that <em>isn’t there</em>. Accumulated exceptions are fossils from an old model; contradiction is a silent bug; missing verification is the instruction that would have let everything else work without a babysitter.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-1')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-1.html">View Full</a>
+</div>
+</div>
+<!-- MODULO 2.2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-inema-module="2-2" data-inema-track="2" id="modulo-2-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-blue-400 font-bold">2.2</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🎯 From micromanagement to criteria and verification</h3>
+<p class="text-neutral-400 text-sm">Stop scripting "do A, then B." Write the objective, guardrails, exit criteria — and a real way for the model to check its own work.</p>
+<div class="mt-3"><div aria-label="Module 2.2 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-xs" data-inema-meter="modulo:2-2" role="progressbar"><span class="inema-meter-pct text-blue-400 font-bold">0%</span> <span class="inema-meter-count text-neutral-400 ml-2">0 of 6</span></div></div>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t2-2-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🧨</span><div><span class="font-medium">Recognize over-specification</span><span class="text-neutral-500 text-sm ml-2">- the most common mistake of all</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-2-1">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Tell the model every step along the way instead of telling it where to end up. "Open the file, find the function, edit line 12, run the build, then…" — a script that only describes <em>one</em> path, what you would have followed.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">This is the number one failure mode—and, oddly, it's more common among people with years of engineering experience, because specifying things well has always been a virtue. With older models, the script helped; with current ones, it blocks a better route the model would find on its own.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">The right level of instruction is what you’d give a capable colleague who just joined: context and criteria, not step-by-step directions. If your instruction wouldn’t hold up to a “why?”, it’s a script.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-2-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🔄</span><div><span class="font-medium">Turn the recipe into a criterion</span><span class="text-neutral-500 text-sm ml-2">- the canonical conversion</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-2-2">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Replace "do A, then B, then C" with <strong>"Produce X. Follow Y. The result must achieve Z. Verify using W. Choose the strategy."</strong> Same intent, different form: what was a sequence becomes a target plus a constraint plus proof.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It's the rewrite that usually shrinks the instruction and improves the result at the same time—because it gives the model a choice of approach, but not of standards. You stay in control of what matters: the Y and the Z.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">If, when converting, you can’t write Z ("the result must achieve…"), the prompt was never the problem: you haven’t defined what you want yet. And without W, the instruction once again depends on you checking each output.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-2-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🧱</span><div><span class="font-medium">Use the 6-field template</span><span class="text-neutral-500 text-sm ml-2">- the form that makes sure you don’t forget anything</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-2-3">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Objective (what to produce) · Context (what the model won't infer) · Guardrails (what never to do) · Quality criteria (what good looks like) · Verification (how to check) · Autonomy (what it can decide on its own and when to stop and ask).</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Filling in all six fields exposes the gap right away. Almost every bad instruction you have today is strong on Objective, bloated with step-by-step details, and <em>empty</em> under Verification and Autonomy—the two fields that determine whether you’ll need to stay nearby.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Each field maps directly to the taxonomy in module 2.1: Context = CONTEXT, Guardrails = GUARDRAIL, Criteria = QUALITY CRITERION, Verification = VERIFICATION. Anything that doesn't fit into one of the six fields is very likely micromanagement.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-2-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔬</span><div><span class="font-medium">Install the verification</span><span class="text-neutral-500 text-sm ml-2">- the lever almost everyone gets wrong</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-2-4">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Give the model a real way to check its own work. Cherny’s example: rewrite an Electron app in Swift, run the original in a VM, take screenshots of both, and compare them pixel by pixel, without stopping until they match. Produce → observe → compare → stop.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">A short prompt with verification beats a giant prompt without verification, and it’s not even close. Without the comparison step, the model has no way to know it made a mistake—and you become the verifier, manually, forever.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Good verification is <strong>executable by a third party</strong>: a command, a test, a comparison, a file check. “Review carefully” isn’t verification — it’s wishful thinking. And every verification needs an explicit stop condition.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-2-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🚀</span><div><span class="font-medium">Aim above the ceiling</span><span class="text-neutral-500 text-sm ml-2">- and retest the old failures</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-2-5">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Give the model a task that’s a little harder than feels comfortable — and keep a list of requests that failed, so you can run them again with each new model.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Most of the defensive instructions in your config exist because of a failure that no longer happens today. Without retesting, you’ll never find out—and you’ll keep paying the complexity cost for a problem that was solved two models ago.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">This is empirical science, not theoretical: there’s no secret trick, just a difficult task → a way to verify → observe where it gets stuck → fix it <em>that</em> → repeat. The list of past failures is your personal benchmark, and it’s what drives the cycle in Track 4.</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="t2-2-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">✍️</span><div><span class="font-medium">Rewrite your worst instruction</span><span class="text-neutral-500 text-sm ml-2">- exercise in two versions</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t2-2-6">
+<div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+<div><span class="text-blue-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Choose the most "by-the-book" instruction in your config or one of your skills and write two versions next to the original: (a) 50% shorter, preserving the intent; (b) minimal, using the 6-field template, with an objective verification step.</p></div>
+<div><span class="text-blue-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Reading about conversion changes nothing; doing it once does. The two versions side by side reveal how much of the original text was process and how much was criteria — and the answer is usually surprising.</p></div>
+<div><span class="text-blue-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Exercise exit criterion: the minimum version has a check that <strong>someone else could execute</strong> without asking you anything. If it needs you to explain, it isn’t verification yet. Keep all three versions — they become the A/B/C arms of the ablation test.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-2')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-2.html">View Full</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha1/index.html">← Previous track: Why delete</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="../trilha3/index.html">Next track: Audit for real →</a>
+</div>
+</div>
+</main>
+<div class="modal hidden fixed inset-0 z-50 grid place-items-center p-2 sm:p-4 bg-black/80" id="modal-2-1" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.1</span><span class="font-semibold">The taxonomy: what each line is</span></div>
+<button aria-label="Close" class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-1.html" title="Module 2.1"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 grid place-items-center p-2 sm:p-4 bg-black/80" id="modal-2-2" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-blue-400 font-bold">2.2</span><span class="font-semibold">From micromanagement to criteria and verification</span></div>
+<button aria-label="Close" class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-2-2.html" title="Module 2.2"></iframe>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Ablation Audit — INEMA · 2026</p>
+<p>
+<a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a>
+</p>
+<p class="text-xs">Method and vision: Boris Cherny (Anthropic) — talk at Y Combinator about cutting 80% of Claude Code's system prompt.</p>
+</div>
+</footer>
+<script>
+  function toggleTopic(button) {
+    const topicItem = button.closest('.topic-item');
+    const explanation = topicItem.querySelector('.topic-explanation');
+    const moduleCard = button.closest('.bg-dark-800') || document;
+    moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) { exp.classList.remove('active'); const b = exp.closest('.topic-item').querySelector('button'); if (b) b.setAttribute('aria-expanded','false'); } });
+    explanation.classList.toggle('active');
+    button.setAttribute('aria-expanded', explanation.classList.contains('active') ? 'true' : 'false');
+  }
+  function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const htmlEl = document.documentElement;
+  if (htmlEl.classList.contains('dark')) themeToggleLightIcon.classList.remove('hidden'); else themeToggleDarkIcon.classList.remove('hidden');
+  themeToggle.addEventListener('click', () => {
+    themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+    htmlEl.classList.toggle('dark');
+    const dark = htmlEl.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { const p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = dark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+  });
+</script>
+<script src="../../../assets/learn.js"></script>
+<script>
+  if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+</script>
+</body>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ablacao" name="inema-course"/>
+<title>Module 4.2 — The Continuous Cycle | Ablation Audit</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+  })();
+  </script>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "ablacao",
+    "tracks": [
+      { "n": "1", "title": "Por que apagar", "modules": [
+        { "id": "1-1", "title": "Configuracao envelhece", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O metodo de ablacao", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" }
+      ]},
+      { "n": "2", "title": "Como diagnosticar", "modules": [
+        { "id": "2-1", "title": "A taxonomia: o que cada linha e", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "De microgerenciamento a criterio", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" }
+      ]},
+      { "n": "3", "title": "Auditar de verdade", "modules": [
+        { "id": "3-1", "title": "Rodando a skill audit-ablacao", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Do relatorio aos cortes", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" }
+      ]},
+      { "n": "4", "title": "Provar e manter", "modules": [
+        { "id": "4-1", "title": "O plano de ablacao A/B/C", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O ciclo continuo", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" }
+      ]}
+    ]
+  }
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="../../../assets/curso.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/curso-ablacao/curso/trilha4/modulo-4-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/en/curso/trilha4/modulo-4-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/es/curso/trilha4/modulo-4-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Ablation Audit</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1">
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Why delete</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnose</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Audit</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Prove and maintain</span></a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden xl:inline">Journey</span><span aria-hidden="true" class="inema-journey-badge hidden"></span>
+</button>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Breadcrumb" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Track 4</a><span>/</span>
+<span class="text-amber-400">Module 4.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="4-2" data-inema-track="4">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.2 · LAST IN THE COURSE</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔁 The continuous cycle</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+      Ablation is not <strong class="text-amber-400">heroic cleanup</strong> all at once—it’s routine.
+      Here you close the loop: the 5-step cycle, the triggers that call for re-auditing, the empirical mindset
+      that replaces overengineering, and the <strong class="text-amber-400">ablation policy</strong> that makes all of this
+      survive the next model release. At the end, the course’s final project.
+    </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">45</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Summary</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-300 font-semibold">Progress in this module</span>
+<div aria-label="Module 4.2 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-sm" data-inema-meter="modulo:4-2" role="progressbar">
+<span class="inema-meter-pct text-amber-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 of 6</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+<nav aria-label="Page index" class="hidden lg:block sticky top-24 self-start" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3">Section <span class="inema-toc-pos">1</span> of <span class="inema-toc-total">6</span></p>
+<ul class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. Run the 5-step cycle</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Recognize the triggers</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Unlearn overengineering</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Calibrate what still needs to be resolved</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. One-sentence routines</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. Write your policy</a></li>
+</ul>
+</nav>
+<main class="inema-prose" id="conteudo">
+<!-- ============ TOPICO 1 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🔄 Run the 5-step cycle</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t1-p1">
+      Everything you learned in the first three tracks fits into a five-step cycle that repeats. It doesn’t end:
+      each round produces a smaller configuration than the last, and each new model restarts the cycle. The point of the module
+      isn’t to do the audit <em>once</em> — is setting up the mechanism that gets you to do it again six months from now,
+      without relying on motivation or a crisis.
+    </p>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="A closed loop with five numbered nodes in amber: run the audit, cut the top 10, use it on real work, document and restore, and repeat. The edges between the first four nodes are amber; the return edge from the fifth node to the first is cyan and labeled every six months or with a new model. Node four is highlighted with a glow and the label the step almost everyone skips." class="w-full h-auto" role="img" viewbox="0 0 1000 420">
+<defs>
+<lineargradient id="m42a-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m42a-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m42a-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#f59e0b" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m42a-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+<marker id="m42a-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m42a-grid)" height="420" width="1000" x="0" y="0"></rect>
+<g fill="none" opacity="0.75" stroke="#fbbf24" stroke-width="2"><path d="M215,150 L305,150" marker-end="url(#m42a-ah)"></path><path d="M425,150 L515,150" marker-end="url(#m42a-ah)"></path><path d="M635,150 L725,150" marker-end="url(#m42a-ah)"></path><path d="M810,192 C810,265 700,290 620,290" marker-end="url(#m42a-ah)"></path></g>
+<g font-family="Inter,sans-serif" font-size="12.5" font-weight="600">
+<rect fill="#1f1604" height="44" rx="12" stroke="#fbbf24" stroke-width="2" width="120" x="95" y="128"></rect>
+<text fill="#fbbf24" font-size="11" text-anchor="middle" x="155" y="147">1 · RUN</text>
+<text fill="#fcd9a0" font-size="11" text-anchor="middle" x="155" y="163">/audit-ablacao</text>
+<rect fill="#1f1604" height="44" rx="12" stroke="#fbbf24" stroke-width="2" width="120" x="305" y="128"></rect>
+<text fill="#fbbf24" font-size="11" text-anchor="middle" x="365" y="147">2 · CUT</text>
+<text fill="#fcd9a0" font-size="11" text-anchor="middle" x="365" y="163">Top 10, another session</text>
+<rect fill="#1f1604" height="44" rx="12" stroke="#fbbf24" stroke-width="2" width="120" x="515" y="128"></rect>
+<text fill="#fbbf24" font-size="11" text-anchor="middle" x="575" y="147">3 · USE</text>
+<text fill="#fcd9a0" font-size="11" text-anchor="middle" x="575" y="163">real work, days</text>
+<g filter="url(#m42a-glow)"><rect fill="#1f1604" height="48" rx="12" stroke="url(#m42a-grad)" stroke-width="2.6" width="170" x="725" y="126"></rect></g>
+<text fill="#fbbf24" font-size="11" text-anchor="middle" x="810" y="146">4 · NOTE AND RETURN</text>
+<text fill="#fcd9a0" font-size="11" text-anchor="middle" x="810" y="163">only when it repeats</text>
+<rect fill="#1f1604" height="44" rx="12" stroke="#fbbf24" stroke-width="2" width="180" x="440" y="268"></rect>
+<text fill="#fbbf24" font-size="11" text-anchor="middle" x="530" y="287">5 · REPEAT</text>
+<text fill="#fcd9a0" font-size="11" text-anchor="middle" x="530" y="303">the cycle’s return path</text>
+</g>
+<path d="M440,290 C330,290 155,270 155,192" fill="none" marker-end="url(#m42a-ahc)" stroke="#38bdf8" stroke-dasharray="10 6" stroke-width="2.6"></path>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="245" y="245">~6 months · or a new model</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="810" y="205">↑ the step almost everyone skips</text>
+<text fill="#fcd9a0" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="500" y="380">the loop never opens: each pass produces a config smaller than the last</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">
+<strong class="text-neutral-300">What to look at:</strong> the dotted cyan line is the only edge that closes the loop—without it,
+      you’ve done a cleanup, not installed a cycle. And notice the emphasis on node 4: that’s where most people fail, because returning
+      an instruction after the first failure seems careful, but in practice it’s how the configuration starts to bloat again. The entire
+      discipline of the course lives in this box.
+    </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Run <code class="text-amber-400">/audit-ablacao</code> in the selected scope</h4><p class="text-neutral-300 text-sm">Global, one project, or a set of skills. The skill only diagnoses: it reads, classifies, and proposes—it doesn't edit, move, or delete. The deliverable is a 10-section report.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Cut the Top 10 by impact ÷ risk — in a separate session</h4><p class="text-neutral-300 text-sm">The skill doesn’t apply anything. Applying changes is your decision, in a new request, with the config under git so you can roll back. Start with redundancies and conflicts (almost zero risk), then legacy instructions, then micromanagement.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Use it on real work for a few days</h4><p class="text-neutral-300 text-sm">Not in a hypothetical test. An invented test exercises what you imagine matters; real work exercises what actually matters—and that's where the failure appears.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-amber-500/40"><h4 class="font-semibold text-amber-400 mb-2">Document the failures and restore only when they repeat</h4><p class="text-neutral-300 text-sm">This is the step almost everyone skips. Record the failure; only add an instruction back when <strong>the same class of failure</strong> if it repeats — in the shortest form possible. A single failure is noise; a repeated failure is a signal.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">5</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Repeat every ~6 months or with each major model release</h4><p class="text-neutral-300 text-sm">What survived the last pass may not survive the next: the instruction that corrected a real weakness becomes dead weight when that weakness no longer exists.</p></div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Why step 4 gets skipped the most</h3>
+<p class="text-neutral-300 text-sm">Because one painful mistake already seems like enough justification. The model makes a mistake on a task, you write the rule right away — and you’ve just traded a one-off mistake for a permanent cost: that line will be read in 100% of future runs, including ones that have nothing to do with it. Taking notes and waiting for it to happen again costs three days of patience and saves years of burned context.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">Key concepts</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">A cycle, not a cleanup</div><p class="text-xs text-neutral-400">Return, not a one-time event</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Separate session</div><p class="text-xs text-neutral-400">Audit ≠ apply</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Real work</div><p class="text-xs text-neutral-400">A hypothetical test doesn’t count</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Repeated failure</div><p class="text-xs text-neutral-400">Only trigger for reintroduction</p></div>
+</div>
+</div>
+<div class="flex justify-start mt-6"><button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button></div>
+</section>
+<!-- ============ TOPICO 2 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🚨 Recognize the re-audit triggers</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t2-p1">
+      The six-month schedule is the floor, not the ceiling. There are signs that say “audit now, don’t wait for the date” — and
+      almost all of them are easy to observe: a number that crossed a threshold, behavior that became unpredictable,
+      or something someone said to you. The table below connects each trigger to the <strong class="text-amber-400">scope</strong>
+      that it asks for: not every signal calls for auditing everything.
+    </p>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead class="bg-dark-700">
+<tr>
+<th class="text-left px-4 py-3 text-amber-400 font-semibold">Observed trigger</th>
+<th class="text-left px-4 py-3 text-amber-400 font-semibold">Scope to audit</th>
+<th class="text-left px-4 py-3 text-amber-400 font-semibold">Why</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800/60"><td class="px-4 py-3 text-neutral-200">New model released</td><td class="px-4 py-3 text-neutral-300">Everything: global + projects + skills</td><td class="px-4 py-3 text-neutral-400">Every instruction written to fix the previous model’s weakness became a candidate for dead weight.</td></tr>
+<tr><td class="px-4 py-3 text-neutral-200"><code class="text-amber-400">CLAUDE.md</code> exceeded ~150 lines</td><td class="px-4 py-3 text-neutral-300">That file only</td><td class="px-4 py-3 text-neutral-400">Beyond that, it’s almost always procedure disguised as a global rule—material for <code>MOVE</code> for a skill.</td></tr>
+<tr class="bg-dark-800/60"><td class="px-4 py-3 text-neutral-200">3+ skills competing for the same trigger</td><td class="px-4 py-3 text-neutral-300">The set of skills, not the CLAUDE.md</td><td class="px-4 py-3 text-neutral-400">The trigger became a lottery. The solution is usually <code>MERGE</code>, a narrower scope or direct invocation.</td></tr>
+<tr><td class="px-4 py-3 text-neutral-200">"No one knows what this rule is protecting anymore"</td><td class="px-4 py-3 text-neutral-300">The block that contains the rule</td><td class="px-4 py-3 text-neutral-400">A rule no one dares delete is a rule with no owner. It goes to <code>TEST</code>, never for <code>KEEP</code> out of fear.</td></tr>
+<tr class="bg-dark-800/60"><td class="px-4 py-3 text-neutral-200">You explained the same rule to someone else twice</td><td class="px-4 py-3 text-neutral-300">The rule and its neighbors</td><td class="px-4 py-3 text-neutral-400">If it needs a human explanation to be understood, it’s poorly written — or shouldn’t exist.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📌</span> The most underestimated trigger</h3>
+<p class="text-neutral-300 text-sm">The last one in the table. When you explain the same rule to a colleague for the second time, it has failed as text—and if it fails with a human who can ask you a follow-up question, it fails even more with the model, which won’t ask. This trigger doesn’t show up in any metric; it shows up in what you say. Pay attention to it.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Re-audit now</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>A new model came out, and your config is the same as it was two models ago</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>You've added rules in recent months and never removed any</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Two rules in your config contradict each other, and you don’t know which one takes precedence</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Not a re-audit trigger</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>A task went wrong today—that calls for diagnosis, not a general cleanup</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>You read a post saying that "a large CLAUDE.md is bad" — measure yours, not the average</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Wanting to tinker on a Friday with no real work to test it afterward</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6"><button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button></div>
+</section>
+<!-- ============ TOPICO 3 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🧪 Unlearn overengineering</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t3-p1">
+      Boris keeps coming back to the same topic: working with a model has become <strong class="text-amber-400">empirical, not theoretical</strong>. You don’t infer what the model needs from principles — you test, observe where it
+      struggles, and adjust based on what <em>saw</em>. This means letting go of two kinds of baggage: what you learned about
+      how earlier models behaved, and assumptions from computer science theory about what “should” be difficult.
+    </p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t3-p2">
+      The third requirement is the most uncomfortable: stay willing to retest ideas that failed in the past, because
+      the reason they failed may have disappeared. Boris describes <strong class="text-amber-400">overengineering</strong> as a failure mode <em>recurring</em> — and unlearning this habit as a real journey for experienced builders.
+      The more years of engineering experience you have, the stronger the reflex to specify everything, and the more work it takes to undo it.
+    </p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🆕</span> Two words before moving on</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong class="text-neutral-100">Overengineering:</strong> overengineering—solving a problem that called for less with too much structure, too many rules, and too many steps. In an agent config, it appears as an instruction that scripts every step instead of giving an objective and criteria.</li>
+<li><strong class="text-neutral-100">Eval:</strong> abbreviation for <em>evaluation</em> — a test case for your agent: a task with an expected result that you rerun with each model version to see whether it improved or got worse. Evals age too: retire the ones the model always aces.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Old mindset (theoretical)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"This is hard for models" — a deduction based on what you saw two models ago</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"In theory, this problem is intractable, so I need to decompose it by hand"</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"I tried this once and it didn't work" — archived forever</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Writing the rule <em>before</em> to see the failure, just in case</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Measure prompt quality by its length and level of detail</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Empirical mindset</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“Let’s see” — run the task and observe where the model actually stumbles</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Give the whole task first; break it down only if observation calls for it</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Scheduled retesting of past failures with each new version</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Write the rule <em>afterward</em> from the second occurrence of the same failure</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Measure prompt quality by the verified result</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🎯</span> The detail that makes a difference: retest what failed</h3>
+<p class="text-neutral-300 text-sm">The list of “things AI can’t get right” that you carry around in your head was built using models that no longer exist. Every item on it is a disproven hypothesis, not a fact. Pick one item from that list with each new model and retest it—it’s the cheapest way to discover new capabilities, and the only one that doesn’t depend on someone telling you.</p>
+</div>
+<div class="flex justify-start mt-6"><button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button></div>
+</section>
+<!-- ============ TOPICO 4 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🧭 Calibrate what’s still unresolved</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t4-p1">
+      Boris has said publicly that programming is solved — and added the caveat that tends to disappear from the quote:
+      solved <strong class="text-amber-400">for the kind of programming it does</strong>, not for everyone.
+      The caveat matters to you for a practical reason: in areas where the model still struggles, the remedy
+      isn’t to write a longer instruction. It’s to tighten verification.
+    </p>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead class="bg-dark-700">
+<tr>
+<th class="text-left px-4 py-3 text-amber-400 font-semibold">Area that’s still difficult</th>
+<th class="text-left px-4 py-3 text-amber-400 font-semibold">How this looks in practice</th>
+<th class="text-left px-4 py-3 text-amber-400 font-semibold">Verification that pays off</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800/60"><td class="px-4 py-3 text-neutral-200">Very deep system codebases</td><td class="px-4 py-3 text-neutral-400">A plausible change that violates an invariant buried in another layer.</td><td class="px-4 py-3 text-neutral-300">Integration test that exercises the layer below, not just the one you changed.</td></tr>
+<tr><td class="px-4 py-3 text-neutral-200">Distributed systems</td><td class="px-4 py-3 text-neutral-400">Works on the machine, fails under concurrency, message ordering, or network partition.</td><td class="px-4 py-3 text-neutral-300">Run under load and with injected failures; check the final state, not just the return value.</td></tr>
+<tr class="bg-dark-800/60"><td class="px-4 py-3 text-neutral-200">Detailed visual verification</td><td class="px-4 py-3 text-neutral-400">Something shifted by one pixel passes as “the same.” Opus 5 made a major leap in vision and computer use, but it still isn’t perfect.</td><td class="px-4 py-3 text-neutral-300">Automated image comparison with a threshold, a reference screenshot, and a human review at the end.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Warning: the trap in this section</h3>
+<p class="text-neutral-300 text-sm">Read “this is still difficult here” and respond with <em>three more instruction paragraphs in the <code>CLAUDE.md</code></em> is exactly the reflex the entire course tried to dismantle. A long instruction can't fix a capability limit; it just burns context while the limit remains. In these areas: stronger verification, narrower scope, human review at the right point. Never longer prose.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔭</span> Calibration isn't giving up</h3>
+<p class="text-neutral-300 text-sm">This list is a snapshot of today, and the rule from section 3 applies here too: retest. Visual verification, which used to be a dead end, has advanced a lot from one model to the next. Treat every item as "not yet" and set a review date—not as "never."</p>
+</div>
+<div class="flex justify-start mt-6"><button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button></div>
+</section>
+<!-- ============ TOPICO 5 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚙️ Automate with one-sentence routines (bonus)</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t5-p1">
+      This section is a bonus: it solves a different problem from the rest of the course. Loops and routines aren't about a
+      large task divided into parts—they're about a <strong class="text-amber-400">a repetitive task run on a schedule</strong>.
+      A <strong class="text-amber-400">loop</strong> is essentially a cron job running Claude locally. A
+      <strong class="text-amber-400">routine</strong> is the same thing in the cloud, so you can close your laptop.
+    </p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🆕</span> Four words before you continue</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong class="text-neutral-100">Cron job:</strong> a scheduled task that the system runs on its own at a fixed time—“every day at 3 a.m.,” “every hour.” It comes from <code>cron</code>, the classic Unix scheduler.</li>
+<li><strong class="text-neutral-100">Routine:</strong> the same schedule, but running in the cloud — it doesn't depend on your computer being on.</li>
+<li><strong class="text-neutral-100">PR (pull request):</strong> a proposed code change opened in a repository, with the diff visible, for someone to review and approve before it goes in. It’s how the routine delivers work without applying anything on its own.</li>
+<li><strong class="text-neutral-100">Scaffolding:</strong> scaffolding—temporary code that exists only to support something during a phase (for example, toggling an experiment on and off) and becomes junk when the phase ends.</li>
+</ul>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t5-p2">
+      Two properties matter: each run <strong>doesn’t share context</strong> with the previous one, though it can share memory; and scheduling can be every five minutes, every hour, or daily. Anthropic currently runs 20 to 30 daily routines on its own products—and the detail that changes everything: <strong class="text-amber-400">each
+      one is a single prompt, often one sentence</strong>. The model figures out the implementation details on its own.
+    </p>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="On the left, a highlighted daily scheduling clock glows. Five amber edges fan out from it to five boxes, each with a one-sentence routine: remove dead code, publish completed experiments, write missing tests, delete useless tests, and police abstractions. On the right, arrows converge in cyan on a single block labeled codebase, with the tag opens a PR, doesn’t apply it automatically." class="w-full h-auto" role="img" viewbox="0 0 1000 400">
+<defs>
+<lineargradient id="m42b-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m42b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m42b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#f59e0b" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m42b-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+<marker id="m42b-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m42b-grid)" height="400" width="1000" x="0" y="0"></rect>
+<g filter="url(#m42b-glow)"><circle cx="95" cy="200" fill="#1f1604" r="46" stroke="url(#m42b-grad)" stroke-width="2.6"></circle></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="12.5" font-weight="700" text-anchor="middle" x="95" y="196">cron</text>
+<text fill="#fcd9a0" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle" x="95" y="213">daily</text>
+<g fill="none" opacity="0.7" stroke="#fbbf24" stroke-width="1.8"><path d="M141,180 C230,70 260,60 320,58" marker-end="url(#m42b-ah)"></path><path d="M141,190 C230,140 260,128 320,126" marker-end="url(#m42b-ah)"></path><path d="M141,200 L320,194" marker-end="url(#m42b-ah)"></path><path d="M141,212 C230,262 260,262 320,262" marker-end="url(#m42b-ah)"></path><path d="M141,222 C230,330 260,330 320,330" marker-end="url(#m42b-ah)"></path></g>
+<g font-family="Inter,sans-serif" font-size="11.5">
+<rect fill="#1f1604" height="40" rx="10" stroke="#fbbf24" stroke-width="1.8" width="290" x="330" y="38"></rect><text fill="#fcd9a0" x="345" y="63">“clean up dead code”</text>
+<rect fill="#1f1604" height="40" rx="10" stroke="#fbbf24" stroke-width="1.8" width="290" x="330" y="106"></rect><text fill="#fcd9a0" x="345" y="131">“publish experiments at 100%”</text>
+<rect fill="#1f1604" height="40" rx="10" stroke="#fbbf24" stroke-width="1.8" width="290" x="330" y="174"></rect><text fill="#fcd9a0" x="345" y="199">“write tests where coverage is low”</text>
+<rect fill="#1f1604" height="40" rx="10" stroke="#fbbf24" stroke-width="1.8" width="290" x="330" y="242"></rect><text fill="#fcd9a0" x="345" y="267">“delete useless tests”</text>
+<rect fill="#1f1604" height="40" rx="10" stroke="#fbbf24" stroke-width="1.8" width="290" x="330" y="310"></rect><text fill="#fcd9a0" x="345" y="335">“unify nearly duplicate abstractions”</text>
+</g>
+<g fill="none" opacity="0.85" stroke="#38bdf8" stroke-width="2"><path d="M620,58 C720,58 760,150 830,180" marker-end="url(#m42b-ahc)"></path><path d="M620,126 C720,126 760,165 830,190" marker-end="url(#m42b-ahc)"></path><path d="M620,194 L830,196" marker-end="url(#m42b-ahc)"></path><path d="M620,262 C720,262 760,225 830,205" marker-end="url(#m42b-ahc)"></path><path d="M620,330 C720,330 760,245 830,215" marker-end="url(#m42b-ahc)"></path></g>
+<rect fill="#0e1b26" height="96" rx="14" stroke="#38bdf8" stroke-width="2.2" width="140" x="838" y="150"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="908" y="186">based on</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="908" y="204">code</text>
+<text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle" x="908" y="226">opens a PR, doesn’t apply it</text>
+<text fill="#fcd9a0" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="475" y="385">one sentence each · no human trigger · the model chooses the method</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">
+<strong class="text-neutral-300">What to look at:</strong> notice the size of the boxes in the middle — it’s the entire prompt for
+      each routine, one sentence. Nobody wrote "use static and dynamic analysis" in the dead code routine; the model
+      chose those methods on its own. And look at the label on the right: the deliverable is a PR, not an applied change.
+      It’s the same discipline as the audit skill — propose and leave the decision to a human.
+    </p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">The five routines Anthropic runs</h3>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li><strong class="text-amber-400">Clean up dead code.</strong> Runs daily, uses static and dynamic analysis, and opens a PR removing what it finds. No one explicitly requested these methods — the model figured them out on its own.</li>
+<li><strong class="text-amber-400">Publish completed experiments.</strong> Finds experiments already released to 100% of users, removes the experiment scaffolding, and publishes the result.</li>
+<li><strong class="text-amber-400">Write missing tests</strong> in areas of the codebase with low coverage.</li>
+<li><strong class="text-amber-400">Delete useless tests</strong> — including low-value tests added by older models or by people over time.</li>
+<li><strong class="text-amber-400">Abstraction police.</strong> Finds nearly duplicated abstractions that diverged over time and merges them back into one.</li>
+</ul>
+<p class="text-sm text-neutral-400 mt-4">
+        The pattern worth copying: the highest-leverage routines are obvious, repetitive maintenance tasks
+        that are easy to put off. Auditing your own config is exactly this kind of task.
+      </p>
+</div>
+<!-- CODE BOX 1 -->
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🧪</span> Copy and run: your re-audit as a periodic reminder</h3>
+<p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objective:</strong> turn step 5 of the cycle into something that happens without relying on your memory. Two options—the one-line version, which works on any machine, and the routine version, for those who already use cloud scheduling.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300"># --- Opção A: cron job local (roda no seu computador) ---
+# abre o editor de agendamentos:
+crontab -e
+
+# cola esta linha: dia 1, a cada 6 meses (janeiro e julho), 9h
+0 9 1 1,7 * echo "ABLACAO: rodar /audit-ablacao na config global" &gt;&gt; ~/ablacao-lembretes.txt
+
+# --- Opção B: routine (roda na nuvem, notebook fechado) ---
+# o prompt inteiro da routine é UMA frase:
+"Rode uma auditoria de ablação em ~/.claude/CLAUDE.md e ~/.claude/skills/,
+ e me entregue o Top 10 por impacto ÷ risco. Não altere nenhum arquivo."
+
+# --- Opção C: sem nada instalado ---
+# evento recorrente semestral no calendário, com este título:
+"Ablação: rodar /audit-ablacao + abrir ablacao-diario.md"</pre>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-sm text-neutral-300"><strong class="text-amber-400">How to verify:</strong></p>
+<ul class="space-y-2 text-neutral-300 text-sm mt-2">
+<li><strong class="text-amber-400">1.</strong> Run <code class="text-amber-400">crontab -l</code> and confirm that the line appears in the listing.</li>
+<li><strong class="text-amber-400">2.</strong> Temporarily change the schedule to 2 minutes from now and check that <code class="text-amber-400">~/ablacao-lembretes.txt</code> got one line. Then return to the semiannual review.</li>
+<li><strong class="text-amber-400">3.</strong> If you used option B, confirm that the routine’s sentence explicitly prohibits changing files — an audit that starts making changes is one you can’t trust.</li>
+</ul>
+<p class="text-sm text-neutral-400 mt-3"><strong class="text-neutral-300">Now replace it with yours:</strong> replace the paths with
+        <code class="text-amber-400">&lt;a config que você realmente audita&gt;</code> and the month by
+        <code class="text-amber-400">&lt;seus dois meses do ano&gt;</code>. If you have more than one active project, make one line per scope — auditing everything together turns into a report nobody reads.</p>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📎</span> Why “one sentence” and not a manual</h3>
+<p class="text-neutral-300 text-sm">The routine is the final test of the course’s thesis: if a one-sentence prompt, with no step-by-step instructions, produces useful PRs daily in a codebase the size of Claude Code’s, then your 12-step procedure wasn’t ensuring quality—it was just making you feel in control.</p>
+</div>
+<div class="flex justify-start mt-6"><button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button></div>
+</section>
+<!-- ============ TOPICO 6 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">📝 Write your ablation policy</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t6-p1">
+      Final module and course exercise: write your <strong class="text-amber-400">ablation policy</strong> personal
+      in <strong>≤10 lines</strong>. It needs four things: when to re-audit, what you never cut,
+      the reintroduction rule, and where the logs and evals live. Less than that isn’t a policy; more than that won’t get read.
+    </p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t6-p2">
+      And it will <strong class="text-amber-400">where it will be reread</strong> — as a separate skill or note, with a date set,
+      not as another paragraph in the <code class="text-amber-400">CLAUDE.md</code>. If you paste the policy there, you’ve just
+      created zombie line number 1 for the next audit: text about ablation being loaded in 100% of runs,
+      including those that have nothing to do with auditing configuration.
+    </p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> The irony that closes the course</h3>
+<p class="text-neutral-300 text-sm">Finish eight modules on not inflating the <code>CLAUDE.md</code> and celebrating by adding ten lines to it would be a perfect ending—for a comedy. A policy is a procedure with a known trigger, so it belongs in a skill (or a note with a reminder). You already know the rule: <strong>what's always true stays in the <code>CLAUDE.md</code>; what’s true only when the task is that specific becomes a skill.</strong></p>
+</div>
+<!-- CODE BOX 2 -->
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">📋</span> Copy and fill in: policy template (≤10 lines)</h3>
+<p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objective:</strong> save as <code class="text-amber-400">~/.claude/skills/politica-ablacao/SKILL.md</code> (or as a pinned note, if you prefer). Fill in everything between <code class="text-amber-400">&lt; &gt;</code> with your real-world case.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">## Política de ablação — &lt;seu nome&gt;
+
+1. Re-auditar: a cada 6 meses (próxima: &lt;DD/MM/AAAA&gt;) e a cada modelo novo.
+2. Gatilho extra: CLAUDE.md &gt; 150 linhas, 3+ skills no mesmo gatilho, regra sem dono.
+3. Escopo padrão: &lt;global | projeto X | conjunto de skills Y&gt;.
+4. Nunca cortar sem teste: identidade, caminhos/fontes de verdade, segurança,
+   compliance, contratos de interface, integrações, convenções internas.
+5. Reintrodução: só após a MESMA falha repetir 2x em trabalho real,
+   e na forma mais curta possível.
+6. Aplicar cortes sempre em sessão separada da auditoria, com a config sob git.
+7. Diário de falhas: &lt;caminho/ablacao-diario.md&gt;.
+8. Evals pessoais: &lt;caminho/evals/&gt; — aposentar as saturadas a cada re-auditoria.
+9. Toda remoção aplicada registra: trecho citado + risco + como testar.
+10. Toda versão nova precisa ter pelo menos uma verificação objetiva.</pre>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-sm text-neutral-300"><strong class="text-amber-400">How to verify:</strong></p>
+<ul class="space-y-2 text-neutral-300 text-sm mt-2">
+<li><strong class="text-amber-400">1.</strong> None remain <code class="text-amber-400">&lt; &gt;</code> in the file—if it’s still there, the policy is still a template, not yours.</li>
+<li><strong class="text-amber-400">2.</strong> Line 1 has a concrete date, not “in a few months.”</li>
+<li><strong class="text-amber-400">3.</strong> The file is NOT inside the <code class="text-amber-400">CLAUDE.md</code>. Run <code class="text-amber-400">grep -c "Política de ablação" ~/.claude/CLAUDE.md</code> — needs to return <code class="text-amber-400">0</code>.</li>
+<li><strong class="text-amber-400">4.</strong> The paths in lines 7 and 8 really exist: <code class="text-amber-400">ls &lt;caminho&gt;</code> works without errors.</li>
+</ul>
+</div>
+</div>
+<!-- PROJETO FINAL -->
+<div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🎓</span> Final course project</h3>
+<p class="text-neutral-300 text-sm mb-4">You deliver four items, all about your own configuration — nothing hypothetical:</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+<div class="bg-dark-800/60 rounded-lg p-4 border border-dark-600"><div class="text-amber-400 font-semibold text-sm mb-1">1 · Skill report</div><p class="text-xs text-neutral-400">The 10 sections, saved in <code>.md</code> (module 3.1)</p></div>
+<div class="bg-dark-800/60 rounded-lg p-4 border border-dark-600"><div class="text-amber-400 font-semibold text-sm mb-1">2 · CLAUDE.md before/after</div><p class="text-xs text-neutral-400">With the diff visible (module 3.2)</p></div>
+<div class="bg-dark-800/60 rounded-lg p-4 border border-dark-600"><div class="text-amber-400 font-semibold text-sm mb-1">3 · A/B/C table</div><p class="text-xs text-neutral-400">≥2 real tasks × 3 versions (module 4.1)</p></div>
+<div class="bg-dark-800/60 rounded-lg p-4 border border-dark-600"><div class="text-amber-400 font-semibold text-sm mb-1">4 · Ablation policy</div><p class="text-xs text-neutral-400">≤10 lines, outside CLAUDE.md (this module)</p></div>
+</div>
+<h4 class="font-semibold text-amber-400 mb-2 text-sm">Approval criteria</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span>All four items are present.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span>Every applied removal has <strong>quoted excerpt + risk + how to test</strong>.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span>Every returned instruction has <strong>repeated failure recorded</strong> — no reintroducing things out of caution.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span>The final version has <strong>at least one objective check</strong> where there wasn't one before.</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3 flex items-center"><span class="mr-2">✓</span> Exit criterion for this module</h3>
+<p class="text-neutral-300 text-sm">Written policy, with the <strong>date of the next scheduled re-audit</strong> — and you can tell, by looking at the <code>CLAUDE.md</code> final, <strong>why each remaining line survived</strong>. If there’s a line where the answer is “who knows, it’s always been there,” it’s the first line of your next audit.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mt-8 bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6" data-inema-check="modulo-4-2#q1">
+<p class="font-medium mb-4">Quick check (doesn't block anything): you finished the audit, cut the Top 10, and wrote your policy in 8 lines. Where should it live?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">At the top of the <code>CLAUDE.md</code> global, so the model always remembers the discipline</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">As a separate skill (or note), with the next re-audit date marked</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Nowhere—after doing the audit once, the discipline was already</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="flex justify-start mt-6"><button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span></button></div>
+</section>
+<!-- ============ RESUMO E FIM DO CURSO ============ -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">🏁</span> Module Summary and end of course</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">5-step cycle</strong><span class="text-neutral-400"> — run it, cut it in a separate session, use it in real work, take notes, and restore it only if the issue recurs; repeat every ~6 months or with a new model.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Re-audit triggers</strong><span class="text-neutral-400"> — new model, 150 lines, 3+ skills with the same trigger, rule with no owner, rule you’ve explained twice.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Empirical mindset</strong><span class="text-neutral-400"> — test and observe instead of deducing; retest what failed before; overengineering is the experienced builder’s recurring failure mode.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Where it remains unresolved</strong><span class="text-neutral-400"> — deep systems, distributed systems, fine-grained visual verification. The answer: stronger verification, not longer instructions.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">One-sentence Routines</strong><span class="text-neutral-400"> — 20 to 30 daily ones at Anthropic, each a single prompt; your re-audit could become one.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Ablation policy</strong><span class="text-neutral-400"> — ≤10 lines, with a scheduled date for when it will be reviewed: a skill or note, never another paragraph in CLAUDE.md.</span></div></div>
+</div>
+<div class="bg-dark-800/60 rounded-xl border border-dark-600 p-6 mb-8">
+<h3 class="font-semibold text-amber-400 mb-4">The entire course, in four lines</h3>
+<ul class="space-y-3 text-sm">
+<li class="flex items-start space-x-3"><span class="text-emerald-400 font-bold">T1</span><span class="text-neutral-300"><strong class="text-white">Why delete</strong> — configuration gets stale: each instruction fixes a specific model’s weakness and becomes dead weight when that weakness goes away.</span></li>
+<li class="flex items-start space-x-3"><span class="text-blue-400 font-bold">T2</span><span class="text-neutral-300"><strong class="text-white">How to diagnose</strong> — 10 categories, 6 decisions, 7 questions; and turning micromanagement into an objective + guardrails + criteria + verification.</span></li>
+<li class="flex items-start space-x-3"><span class="text-purple-400 font-bold">T3</span><span class="text-neutral-300"><strong class="text-white">Audit for real</strong> — the skill that reads, classifies, and proposes without touching anything; and turning the Top 10 into safe cuts, with skills as the unit for trimming.</span></li>
+<li class="flex items-start space-x-3"><span class="text-amber-400 font-bold">T4</span><span class="text-neutral-300"><strong class="text-white">Prove and maintain</strong> — A/B/C on real tasks to prove it didn’t get worse, and the continuous cycle to keep the sediment from returning.</span></li>
+</ul>
+</div>
+<div class="bg-dark-800/60 rounded-xl border border-amber-500/30 p-6 mb-8">
+<h3 class="font-semibold text-amber-400 mb-4">The four deliverables of the final project</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">1 · Report</div><p class="text-xs text-neutral-400">10 sections, saved in .md</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">2 · Before/after</div><p class="text-xs text-neutral-400">CLAUDE.md with diff</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">3 · A/B/C table</div><p class="text-xs text-neutral-400">≥2 real tasks</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">4 · Policy</div><p class="text-xs text-neutral-400">≤10 lines, dated</p></div>
+</div>
+</div>
+<p class="text-neutral-300 mb-8 leading-relaxed">
+        This is the end of the course. You came in with a config that kept growing on its own and leave with one you can defend
+        line by line—and, more importantly, with the habit of reviewing that defense when the world changes. The hard part
+        wasn't deleting things; it was resisting the urge to write a rule after the first failure. Save the date of your next
+        re-audit somewhere that will hold you accountable. It'll come sooner than you think.
+      </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../../index.html">Return to the beginning of the course →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Ablation Audit — INEMA · 2026</p>
+<p>
+<a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a>
+</p>
+<p class="text-xs">Method and vision: Boris Cherny (Anthropic) — talk at Y Combinator about cutting 80% of Claude Code's system prompt.</p>
+</div>
+</footer>
+<script>
+  function toggleTopic(button) {
+    const topicItem = button.closest('.topic-item');
+    const explanation = topicItem.querySelector('.topic-explanation');
+    const moduleCard = button.closest('.bg-dark-800') || document;
+    moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) { exp.classList.remove('active'); const b = exp.closest('.topic-item').querySelector('button'); if (b) b.setAttribute('aria-expanded','false'); } });
+    explanation.classList.toggle('active');
+    button.setAttribute('aria-expanded', explanation.classList.contains('active') ? 'true' : 'false');
+  }
+  function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const htmlEl = document.documentElement;
+  if (htmlEl.classList.contains('dark')) themeToggleLightIcon.classList.remove('hidden'); else themeToggleDarkIcon.classList.remove('hidden');
+  themeToggle.addEventListener('click', () => {
+    themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+    htmlEl.classList.toggle('dark');
+    const dark = htmlEl.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { const p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = dark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+  });
+</script>
+<script src="../../../assets/learn.js"></script>
+<script>
+  if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.INEMA && INEMA.registerCheck) {
+      INEMA.registerCheck('modulo-4-2#q1', {
+        answer: 1,
+        explain: {
+          0: 'Não. Colar a política no CLAUDE.md a faz ser lida em 100% das execuções, inclusive nas que não têm nada a ver com auditar configuração — você acabou de criar a linha zumbi nº 1 da próxima auditoria.',
+          1: 'Isso. Política é procedimento com gatilho conhecido: vira skill (ou nota fixada), com a data da próxima re-auditoria marcada, onde você vai reler quando a data chegar.',
+          2: 'Não. Sem gatilho escrito e sem data, a disciplina dura até a primeira semana corrida. O ponto do módulo é justamente trocar força de vontade por rotina agendada.'
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

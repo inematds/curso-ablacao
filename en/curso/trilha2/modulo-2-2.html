@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ablacao" name="inema-course"/>
+<title>Module 2.2 — From Micromanagement to Criteria and Verification | Ablation Audit</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+  })();
+  </script>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "ablacao",
+    "tracks": [
+      { "n": "1", "title": "Por que apagar", "modules": [
+        { "id": "1-1", "title": "Configuracao envelhece", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O metodo de ablacao", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" }
+      ]},
+      { "n": "2", "title": "Como diagnosticar", "modules": [
+        { "id": "2-1", "title": "A taxonomia: o que cada linha e", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "De microgerenciamento a criterio", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" }
+      ]},
+      { "n": "3", "title": "Auditar de verdade", "modules": [
+        { "id": "3-1", "title": "Rodando a skill audit-ablacao", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Do relatorio aos cortes", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" }
+      ]},
+      { "n": "4", "title": "Provar e manter", "modules": [
+        { "id": "4-1", "title": "O plano de ablacao A/B/C", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O ciclo continuo", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" }
+      ]}
+    ]
+  }
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="../../../assets/curso.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/curso-ablacao/curso/trilha2/modulo-2-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/en/curso/trilha2/modulo-2-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/es/curso/trilha2/modulo-2-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Ablation Audit</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1">
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Why delete</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnose</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Audit</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Prove and maintain</span></a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="My journey" type="button">
+<span aria-hidden="true">◷</span><span class="hidden xl:inline">Journey</span><span aria-hidden="true" class="inema-journey-badge hidden"></span>
+</button>
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Breadcrumb" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a><span>/</span>
+<span class="text-blue-400">Module 2.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-2" data-inema-track="2">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎯 From micromanagement to criteria and verification</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+      Stop scripting “do A, then B, then C.” Write <strong class="text-blue-400">objective + guardrails +
+      exit criteria + verification</strong> — and let the model choose the path. Verification is the highest-impact lever, and it’s exactly what almost everyone forgets to put in the config.
+    </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">50</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermediate</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-300 font-semibold">Progress in this module</span>
+<div aria-label="Module 2.2 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-sm" data-inema-meter="modulo:2-2" role="progressbar">
+<span class="inema-meter-pct text-blue-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 of 6</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+<nav aria-label="Page index" class="hidden lg:block sticky top-24 self-start" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3">Section <span class="inema-toc-pos">1</span> of <span class="inema-toc-total">6</span></p>
+<ul class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. Recognize over-specification</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. Turn recipes into criteria</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. Use the 6-field template</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. Install the check</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. Aim above the ceiling</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Rewrite your worst instruction</a></li>
+</ul>
+</nav>
+<main class="inema-prose" id="conteudo">
+<!-- ============ TOPICO 1 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🔍 Recognize over-specification</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t1-p1">
+      Boris Cherny describes the <strong class="text-blue-400">over-specification</strong> — writing the exact sequence
+      of moves the model must make — as one of the most common mistakes he sees. And the uncomfortable detail: it’s
+      <em>more</em> common among people with years or decades of engineering experience, no less. The more experienced the config's author, the more scripted it tends to be.
+    </p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t1-p2">
+      The reason is historical. Software used to be built by designing the entire system up front, writing a huge suite
+      of unit tests, and treating a re-architecture as a project that took months or years. That reflex—decide everything first,
+      on paper—became the way to write <code class="text-blue-400">CLAUDE.md</code>. It worked with the old models:
+      they needed you to guide every step. Today, the script does the opposite of what you want: <strong>it keeps the
+      model from finding a better path than the one you imagined.</strong>
+</p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🆕</span> Four words that will appear throughout the module</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong class="text-neutral-100">Guardrail:</strong> a limit that can’t be crossed — “never commit without running the tests,” “don’t touch <code>node_modules/</code>”. Say what is forbidden, not how to do it.</li>
+<li><strong class="text-neutral-100">Exit criterion:</strong> the phrase that lets the model know it’s finished. “Done when the build passes and the file exists” is a criterion; “done when it’s good” isn’t.</li>
+<li><strong class="text-neutral-100">Verification:</strong> the concrete form of the model <em>check on your own</em> whether the exit criterion was met — a command, a test, a file comparison, a screenshot.</li>
+<li><strong class="text-neutral-100">Autonomy:</strong> explicit permission for the model to choose the execution strategy, as long as it respects the guardrails and meets the criterion.</li>
+</ul>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Side-by-side comparison. On the left, a rigid track with eight numbered steps in a single queue, one exit at the end, and a better path blocked by a barrier. On the right, an open field bounded by two fences labeled guardrail, with three different routes crossing to a single gate labeled exit criterion, highlighted with a glow." class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m22-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m22-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m22-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m22-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m22-grid)" height="260" width="1000" x="0" y="0"></rect>
+<path d="M500,20 L500,240" opacity="0.4" stroke="#9ca3af" stroke-dasharray="9 9" stroke-width="1.5"></path>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="245" y="36">RECIPE: RIGID TRACK</text>
+<rect fill="#0e1622" height="34" opacity="0.5" rx="6" stroke="#60a5fa" stroke-width="1.6" width="410" x="40" y="96"></rect>
+<g fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" font-weight="700">
+<circle cx="70" cy="113" fill="#0e1622" r="13" stroke="#60a5fa" stroke-width="1.8"></circle><text text-anchor="middle" x="70" y="117">1</text><circle cx="118" cy="113" fill="#0e1622" r="13" stroke="#60a5fa" stroke-width="1.8"></circle><text text-anchor="middle" x="118" y="117">2</text>
+<circle cx="166" cy="113" fill="#0e1622" r="13" stroke="#60a5fa" stroke-width="1.8"></circle><text text-anchor="middle" x="166" y="117">3</text><circle cx="214" cy="113" fill="#0e1622" r="13" stroke="#60a5fa" stroke-width="1.8"></circle><text text-anchor="middle" x="214" y="117">4</text>
+<circle cx="262" cy="113" fill="#0e1622" r="13" stroke="#60a5fa" stroke-width="1.8"></circle><text text-anchor="middle" x="262" y="117">5</text><circle cx="310" cy="113" fill="#0e1622" r="13" stroke="#60a5fa" stroke-width="1.8"></circle><text text-anchor="middle" x="310" y="117">6</text>
+<circle cx="358" cy="113" fill="#0e1622" r="13" stroke="#60a5fa" stroke-width="1.8"></circle><text text-anchor="middle" x="358" y="117">7</text><circle cx="406" cy="113" fill="#0e1622" r="13" stroke="#60a5fa" stroke-width="1.8"></circle><text text-anchor="middle" x="406" y="117">8</text>
+</g>
+<path d="M120,150 C200,196 320,196 400,152" fill="none" opacity="0.55" stroke="#38bdf8" stroke-dasharray="6 6" stroke-width="1.6"></path>
+<path d="M236,172 L284,196" stroke="#f87171" stroke-width="2.4"></path><path d="M284,172 L236,196" stroke="#f87171" stroke-width="2.4"></path>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="245" y="224">the better path stays blocked</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="750" y="36">CRITERION: OPEN FIELD</text>
+<path d="M556,66 L900,66" stroke="#60a5fa" stroke-width="2.2"></path><path d="M556,196 L900,196" stroke="#60a5fa" stroke-width="2.2"></path>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" font-weight="600" x="600" y="58">guardrail</text><text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" font-weight="600" x="600" y="212">guardrail</text>
+<path d="M566,131 C650,86 760,96 890,124" fill="none" marker-end="url(#m22-ah)" opacity="0.8" stroke="#38bdf8" stroke-width="1.8"></path>
+<path d="M566,131 C660,131 780,131 890,131" fill="none" marker-end="url(#m22-ah)" opacity="0.55" stroke="#38bdf8" stroke-width="1.8"></path>
+<path d="M566,131 C650,178 760,176 890,138" fill="none" marker-end="url(#m22-ah)" opacity="0.55" stroke="#38bdf8" stroke-width="1.8"></path>
+<g filter="url(#m22-glow)"><rect fill="#0e1622" height="58" rx="10" stroke="url(#m22-grad)" stroke-width="2.2" width="86" x="896" y="102"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="939" y="126">criterion</text><text fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle" x="939" y="144">of output</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="740" y="240">three routes, one gate</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">
+<strong class="text-neutral-300">What to look at:</strong> on the left, there's only one route, and it's the route that <em>you</em>
+      imagined. If there's a better path, the track prohibits it — and the model obeys. Nothing was scripted on the right: the
+      fences are the guardrails (what's not allowed), the gate is the exit criterion (when it's done), and the middle is open.
+      The three arrows show the concrete benefit: the model can choose the shortest route to today's real problem, which
+      isn't necessarily the one you wrote months ago.
+    </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Signs of over-specification</h4>
+<ul class="space-y-3 text-neutral-300 text-sm"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>“First run <code>git status</code>, then <code>git diff</code>, then read the file, then…”</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Numbering 8 to 12 steps for a task that fits in two sentences</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>“Use tool X, never Y” without saying <em>why</em> (the reason is what gets old)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Stacked exceptions: “except when…, but if…, unless…”</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Instruction that teaches the model to <em>think</em> (“analyze carefully before responding”)</span></li>
+</ul></div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ What survives the audit</h4>
+<ul class="space-y-3 text-neutral-300 text-sm"><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“Deploy happens via git push; the webhook takes care of the rest.” — context the model can’t infer</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“Never print the value of an API key.” — security guardrail</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“The keys are in <code>~/projetos/wifi/.env</code>.” — source of truth, concrete path</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“Done when <code>npm run build</code> exits with code 0.” — verifiable criterion</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“Choose the execution strategy.” — stated autonomy</span></li>
+</ul></div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-4">Key concepts</h3><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Over-specification</div><p class="text-xs text-neutral-400">The exact sequence of actions</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Old reflex</div><p class="text-xs text-neutral-400">Design everything first, on paper</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Real cost</div><p class="text-xs text-neutral-400">Blocks the better path</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Experience gets in the way</div><p class="text-xs text-neutral-400">More common among veterans</p></div>
+</div></div>
+<div class="flex justify-start mt-6"><button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button></div>
+</section>
+<!-- ============ TOPICO 2 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🔄 Turn the recipe into criteria</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t2-p1">
+      There’s a canonical conversion, and it fits on one line. Every instruction in the form
+      <em>“do A, then B, then C”</em> becomes:
+      <strong class="text-blue-400">“Produce X. Respect Y. The result must meet Z. Verify using W. Choose the
+      strategy.”</strong> Five slots. X is the objective, Y is the guardrails, Z is the exit criterion, W is the verification,
+      and the last sentence is the autonomy.
+    </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-8">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🎯</span> The template sentence</h3><p class="text-neutral-100 text-lg mb-3">Produce <strong>X</strong>. Respect <strong>Y</strong>. The result should reach <strong>Z</strong>. Check using <strong>W</strong>. Choose the strategy.</p>
+<p class="text-neutral-300 text-sm">
+        If you can’t fill in <strong>W</strong>, stop: you don’t have an instruction yet, you have a wish.
+        The absence of W is the most common flaw in the configs the audit finds.
+      </p>
+</div>
+<h3 class="text-xl font-semibold text-neutral-100 mb-4">A real case: scripted publishing rule</h3>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t2-p2">
+      Below is a publishing rule written the way almost everyone <code class="text-blue-400">CLAUDE.md</code> real
+      writes — eight steps, fixed order, one command per line. It works, but locks the model into a sequence that is no
+      longer the best one (and breaks on the first project with an extra step).
+    </p>
+<div class="bg-dark-800 rounded-xl border border-red-500/30 p-6 mb-4">
+<h4 class="font-bold text-red-400 mb-3">✗ BEFORE — 8 steps, 14 lines</h4>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto"><pre class="text-sm text-neutral-300">## Publicação
+
+1. Rode `git status` e verifique se há mudanças.
+2. Rode `git diff` e leia tudo o que mudou.
+3. Rode `git log -5` para ver o estilo das mensagens anteriores.
+4. Rode `git config user.email` e confira se é o autor certo.
+5. Se estiver errado, rode `git config user.email <email>`.
+6. Faça `git add` só dos arquivos que você editou (nunca `git add .`).
+7. Escreva a mensagem de commit no padrão `tipo: descrição`.
+8. Rode `git push` e depois confira no dashboard se o deploy subiu.</email></pre></div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h4 class="font-bold text-emerald-400 mb-3">✓ AFTER — 4 lines of criteria</h4>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto"><pre class="text-sm text-neutral-300">## Publicação
+
+Objetivo: publicar = commit + push no `origin`. O deploy é automático; não é sua responsabilidade.
+Guardrails: nunca `git add .`; o autor do commit acompanha a conta de destino do repo (default `inematds`).
+Critério de saída: o commit está em `origin` e a mensagem segue `tipo: descrição`.
+Verificação: `git log origin/main -1` mostra o seu commit com o autor esperado.</pre></div>
+<div class="bg-dark-700/50 rounded-lg p-4 mt-4">
+<p class="text-sm text-neutral-300">
+<strong class="text-blue-400">What actually changed:</strong> steps 1–3 disappeared because the model already knows
+          how to inspect a repository — they were pure micromanagement. Steps 4–5 became <em>a guardrail</em> (the rule,
+          not the procedure). Steps 6–7 became guardrails and criteria. And step 8 — “check the dashboard” — became
+          a <strong>executable verification</strong>: a command that gives you the answer without anyone needing to open a website.
+        </p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> The scalpel test</h3><p class="text-neutral-300">
+        For each numbered step in the instruction, ask: <em>“is this a rule that’s always true, or a move the
+        model would choose on its own?”</em> A rule becomes a guardrail. A movement becomes nothing—delete it. What remains is usually
+        20–30% of the original, and it’s exactly what the model couldn’t guess.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 3 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🧱 Use the 6-field template</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t3-p1">
+      The template sentence from the previous topic, expanded, becomes a six-field template:
+      <strong class="text-blue-400">Objective · Context · Guardrails · Quality criteria · Verification · Autonomy</strong>.
+      It’s not bureaucracy: each field exists because leaving it out causes a specific kind of failure. This applies to
+      standalone prompts and to blocks in the <code class="text-blue-400">CLAUDE.md</code> and for the body of a skill.
+    </p>
+<div class="space-y-6 mb-8">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Objective — the result, not the process</h4><p class="text-sm text-neutral-400 mb-3">One sentence saying what should exist at the end.</p>
+<p class="text-neutral-300 text-sm"><strong class="text-red-400">Typical mistake:</strong> describing the activity (“review the code”) instead of the result (“a report with the correctness bugs found in the diff”).</p>
+</div>
+</div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Context — only what it can’t discover on its own</h4><p class="text-sm text-neutral-400 mb-3">Paths, system names, sources of truth, internal conventions.</p>
+<p class="text-neutral-300 text-sm"><strong class="text-red-400">Typical mistake:</strong> dumping the project history. Context is an address, not a biography. If the model can read the file, say where it is instead of summarizing it.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Guardrails—the prohibitions, stated negatively</h4><p class="text-sm text-neutral-400 mb-3">Security, compliance, interface contracts, anything that must never be touched.</p>
+<p class="text-neutral-300 text-sm"><strong class="text-red-400">Typical mistake:</strong> disguising a procedure as a guardrail. “Always run lint before the build” isn’t a limit—it’s a step. A limit is “don’t commit with lint failing.”</p>
+</div>
+</div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Quality criteria — what “good” looks like</h4><p class="text-sm text-neutral-400 mb-3">Preferably measurable: maximum number of lines, output format, coverage, tone.</p>
+<p class="text-neutral-300 text-sm"><strong class="text-red-400">Typical mistake:</strong> adjectives alone—“clear,” “professional,” “well-written.” An adjective without an anchor doesn’t decide anything, and the model fills in the blanks with its own guess.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">5</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Verification — how it checks by itself</h4><p class="text-sm text-neutral-400 mb-3">One command, one test, one comparison, one file check. With a stopping condition.</p>
+<p class="text-neutral-300 text-sm"><strong class="text-red-400">Typical mistake:</strong> the field simply doesn't exist. It's the most absent field and the one with the greatest impact — topic 4 is entirely about it.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">6</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Autonomy — explicit permission</h4><p class="text-sm text-neutral-400 mb-3">“Choose the execution strategy.” One line, and it changes the behavior.</p>
+<p class="text-neutral-300 text-sm"><strong class="text-red-400">Typical mistake:</strong> thinking it’s redundant. Without this line, a config full of old rules still pushes the model into “follow the script” mode.</p>
+</div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">📋</span> Ready-to-paste template</h3>
+<p class="text-sm text-neutral-400 mb-4">Copy, replace what’s between <code class="text-blue-400">&lt; &gt;</code> and delete the fields that don't apply—except Verification, which is never removed.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto"><pre class="text-sm text-neutral-300">## &lt;nome da tarefa&gt;
+
+**Objetivo:** &lt;o resultado que deve existir no final, em uma frase&gt;
+
+**Contexto:** &lt;caminhos, sistemas e convenções que o modelo não descobre sozinho&gt;
+
+**Guardrails:**
+- &lt;o que nunca pode acontecer&gt;
+- &lt;limite de segurança / compliance / interface&gt;
+
+**Critérios de qualidade:**
+- &lt;algo contável: tamanho, formato, cobertura&gt;
+- &lt;algo observável: tom, estrutura, nomes&gt;
+
+**Verificação:** &lt;comando, teste ou comparação que prova o critério&gt;.
+Repita produzir → verificar até &lt;condição de parada explícita&gt;.
+
+**Autonomia:** escolha a estratégia de execução; não peça confirmação
+para decisões cobertas pelos guardrails acima.</pre></div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Tip: the template is a measuring stick, not a form</h3><p class="text-neutral-300">
+        You don't need the six literal headings in the config. You need the six <em>exist</em> somewhere. Use the
+        template to <strong>audit</strong> an instruction: read it and mark which of the six fields it covers. An instruction
+        that covers only “the path” and none of the six is a direct candidate for <code class="text-blue-400">REMOVE</code> or
+        <code class="text-blue-400">SIMPLIFY</code> in the module 2.1 taxonomy.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 4 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔬 Install the check (the lever)</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t4-p1">
+      They asked Boris which skill matters now that “prompt engineering” has lost traction as a job title. The answer:
+      give the model a task that seems a little too difficult, and <strong class="text-blue-400">make it possible for
+      it to check its own work throughout the process</strong>. He called verification “the most important
+      thing people get wrong.” Put in terms of this course: a short prompt with a real way to check it
+      beats a giant prompt with none.
+    </p>
+<h3 class="text-xl font-semibold text-neutral-100 mb-4">The Electron → Swift example</h3>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t4-p2">
+      Boris wanted to see what Claude’s desktop app — built with Electron — would look like as a native app. He connected a macOS runner
+      (a Mac virtual machine), created an empty repository, and gave it <em>a single instruction</em>: rewrite the Electron app
+      in Swift, run the original in the VM, take screenshots, compare them pixel by pixel with the Swift version, and don’t stop until
+      you’re done. On the date of the talk, the task had been running for more than two weeks, creating thousands to tens of
+      thousands of agents. The prompt had no technique at all. It had a <strong class="text-blue-400">complete verification
+      cycle</strong>.
+    </p>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Cycle of four boxes in a row: produce, observe, compare, and a fourth highlighted box that glows, called stopping condition. Arrows connect them from left to right, and a curved cyan arrow loops from compare back to produce, indicating repetition until the stopping condition is met." class="w-full h-auto" role="img" viewbox="0 0 1000 250">
+<defs>
+<lineargradient id="m22b-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m22b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m22b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m22b-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m22b-grid)" height="250" width="1000" x="0" y="0"></rect>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="500" y="34">THE CYCLE THAT MAKES A SHORT PROMPT WORK FOR WEEKS</text>
+<rect fill="#0e1622" height="70" rx="12" stroke="#60a5fa" stroke-width="2" width="180" x="50" y="80"></rect>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="140" y="110">produce</text><text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="140" y="132">rewrite in Swift</text>
+<path d="M232,115 L288,115" marker-end="url(#m22b-ah)" stroke="#60a5fa" stroke-width="2"></path>
+<rect fill="#0e1622" height="70" rx="12" stroke="#60a5fa" stroke-width="2" width="180" x="290" y="80"></rect>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="380" y="110">observe</text><text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="380" y="132">run the original in the VM</text>
+<path d="M472,115 L528,115" marker-end="url(#m22b-ah)" stroke="#60a5fa" stroke-width="2"></path>
+<rect fill="#0e1622" height="70" rx="12" stroke="#60a5fa" stroke-width="2" width="180" x="530" y="80"></rect>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="620" y="110">compare</text><text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="620" y="132">pixel by pixel</text>
+<path d="M712,115 L768,115" marker-end="url(#m22b-ah)" stroke="#60a5fa" stroke-width="2"></path>
+<g filter="url(#m22b-glow)"><rect fill="#0e1622" height="70" rx="12" stroke="url(#m22b-grad)" stroke-width="2.4" width="185" x="770" y="80"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="862" y="110">stopping condition</text><text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="862" y="132">“don’t stop until you’re done”</text>
+<path d="M620,152 C620,214 240,220 140,158" fill="none" marker-end="url(#m22b-ah)" stroke="#38bdf8" stroke-width="2.2"></path>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="400" y="212">until it passes, go back and produce it again</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="500" y="240">without the cyan feedback, the model delivers its first attempt and stops</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">
+<strong class="text-neutral-300">What to look at:</strong> the cyan return arrow. Almost
+      everyone writes the first three boxes; the return path and the highlighted box are what’s missing. Without an explicit stopping condition, the cycle isn’t a cycle—
+      it’s a straight line that ends with the first delivery. And notice that <em>observe</em> is the box that requires a real-world resource (the VM, the command, the file). Verification without external observation is just the model rereading itself.
+    </p>
+<h3 class="text-xl font-semibold text-neutral-100 mb-4">Four objective checks in different contexts</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6"><h4 class="font-bold text-blue-400 mb-2">1. Test that runs</h4>
+<p class="text-neutral-300 text-sm">“Done when <code>pytest tests/test_parser.py</code> passes in full. If it fails, fix it and run it again.” External observation: the test result. Stop condition: zero failures.</p></div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6"><h4 class="font-bold text-blue-400 mb-2">2. A command whose exit code proves it</h4>
+<p class="text-neutral-300 text-sm">“Run <code>npm run build</code>; consider it complete only with exit code 0.” External observation: the exit code. Stop condition: 0. There’s no room for interpretation.</p></div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6"><h4 class="font-bold text-blue-400 mb-2">3. File comparison</h4>
+<p class="text-neutral-300 text-sm">“Generate the CSV and run <code>diff saida.csv esperado.csv</code>; repeat until the diff is empty.” External observation: the reference file. Stop condition: empty diff.</p></div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6"><h4 class="font-bold text-blue-400 mb-2">4. Screenshot / visual comparison</h4>
+<p class="text-neutral-300 text-sm">“Open the page, take a screenshot, compare it with <code>referencia.png</code>; fix it until the difference is below 2%.” External observation: the rendered image. Stop condition: the threshold.</p></div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Why “review before delivering” is NOT verification</h3>
+<p class="text-neutral-300 mb-3">
+        It's the most common line in real-world configs, and it doesn't verify anything. It's missing the two pieces that make the mechanism
+        work:
+      </p>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>There is no external observation.</strong> The model rereads its own text in the same context that produced it—the reasoning that caused the error is still there, pushing it toward “it’s good enough.”</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>There is no stopping condition.</strong> “Review” happens once and that’s it. There’s no criterion for whether the review was sufficient, so there’s never a second pass.</span></li>
+</ul>
+<p class="text-neutral-400 text-sm mt-3">
+        Fix: replace it with “run <code>&lt;comando&gt;</code>; while it fails, fix it and run it again.” Same
+        sentence length, completely different mechanism.
+      </p>
+</div>
+<h3 class="text-xl font-semibold text-neutral-100 mb-4">The four moments, in order</h3>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Produce</h4><p class="text-neutral-300 text-sm">Generate the output. It’s the only moment every config already has.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Observe</h4><p class="text-neutral-300 text-sm">Look at something <em>out</em> from the text itself: run a command, open a file, take a screenshot.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Compare</h4><p class="text-neutral-300 text-sm">Compare the output with the reference and produce a verdict—pass or fail.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Stopping condition</h4><p class="text-neutral-300 text-sm">The sentence that closes the loop. “Don’t stop until you’re done,” “until the diff is empty,” “until the exit code is 0.”</p>
+</div>
+</div>
+</div>
+<div class="flex justify-start mt-6"><button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button></div>
+</section>
+<!-- ============ TOPICO 5 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🚀 Aim above the ceiling</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t5-p1">
+      Boris’s recommendation is to aim higher than feels comfortable: give the model a task that’s a little harder
+      than you think it can handle. The reason is simple— <strong class="text-blue-400">the ceiling changes with every
+      release</strong>. Your estimate of “what it can do” was calibrated to an earlier generation, and you
+      didn’t realize it had become outdated because no one tells you when the ceiling rises.
+    </p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t5-p2">
+      The direct consequence for the audit: <strong>retest your past failures with every new version.</strong>
+      That rule you wrote because “it always gets this wrong” may be protecting against a failure that no
+      longer exists. It still costs context on every run, and the reason for it disappeared without notice. This is exactly the mechanism from module 1.1: an instruction is a fix for a specific model’s weakness.
+    </p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🧬</span> Empirical science, not theory</h3><p class="text-neutral-100 text-lg mb-3">Working with a model is more like getting to know a living creature than configuring a system.</p>
+<p class="text-neutral-300">
+        Each generation behaves differently and has a slightly different personality. You spend some time
+        learning how it works and then adjust the <strong class="text-blue-400">harness</strong> — the set of
+        prompts, tools, and rules around the model — based on what you observed. Notice the order: <em>observe first,
+        write the rule afterward</em>. The opposite is theory, and theories about models go stale in weeks.
+      </p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> The coworker standard</h3><p class="text-neutral-300">
+        The right level of instruction is what you’d use to guide a capable colleague: context, the goal, the
+        constraints they can’t guess, and how to know when they’re done. You wouldn’t tell a colleague, “open the
+        editor, click File, type the name.” If your instruction wouldn’t pass the test of being read aloud to
+        someone without sounding offensive, it’s micromanagement.
+      </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Empirical approach</h4>
+<ul class="space-y-3 text-neutral-300 text-sm"><li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Give it a task that’s harder than you expect, and observe where it gets stuck</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Keep past failures and rerun with each new model</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Fixes the difficulty <em>specific</em> observed — nothing beyond it</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Choose the right remedy: a better prompt, skill, or MCP</span></li>
+</ul></div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Theoretical approach</h4>
+<ul class="space-y-3 text-neutral-300 text-sm"><li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Assumes the previous generation's limit and never tests again</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Write preventive rules for failures you've never seen happen</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Fixes “in the area” — three new paragraphs for one specific error</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Look for the secret trick from a social media influencer</span></li>
+</ul></div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔁</span> There's no secret trick—there's a cycle</h3>
+<p class="text-neutral-300 mb-4">
+        They asked Boris what separates the top 1% of Claude Code users. His answer was: stop looking for a
+        trick. The method is this, and it’s public:
+      </p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto"><pre class="text-sm text-neutral-300">1. tarefa difícil demais
+2. meios de verificar o trabalho
+3. observar onde ele trava
+4. corrigir AQUILO  →  prompt melhor  (instrução obscura)
+                    →  skill          (falta procedimento repetível)
+                    →  MCP            (falta contexto que ele não alcança)
+5. repetir</pre></div>
+<p class="text-sm text-neutral-400 mt-4">
+        Step 4 is where most people get it wrong: when faced with a stumble, the reflex is always “one more rule in the
+        <code class="text-blue-400">CLAUDE.md</code>”. Three causes, three different remedies—and only one of them is writing text.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 6 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6"><span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">✍️ Rewrite your worst instruction</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Mark a question on this topic" type="button">
+<span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t6-p1">
+      Time to apply this. Open your configuration— <code class="text-blue-400">~/.claude/CLAUDE.md</code>, o
+      <code class="text-blue-400">CLAUDE.md</code> of a project or the body of one of your skills—and find the most
+      “cookbook-style” instruction there: the most numbered, the longest, the one that describes steps. You’ll write
+      <strong class="text-blue-400">two versions</strong> of it, and the second must include objective verification.
+    </p>
+<div class="space-y-6 mb-8">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">a</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">50% smaller version</h4>
+<p class="text-neutral-300 text-sm">Same structure, half the text. Cut what the model already does on its own, and combine steps that always go together. No actual rule can disappear in this version—this is cutting fat, not muscle.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">b</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600"><h4 class="font-semibold text-white mb-2">Minimal version, using the 6-field template</h4>
+<p class="text-neutral-300 text-sm">A complete rewrite in the form Objective · Context · Guardrails · Criteria · Verification · Autonomy. Verification needs to be a command, test, comparison, or file check—something that produces an observable result.</p>
+</div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🧪</span> Prompt ready to paste into Claude Code</h3>
+<p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objective:</strong> have Claude Code itself produce both versions side by side, without letting it apply anything to the file.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto"><pre class="text-sm text-neutral-300">Read &lt;path to your CLAUDE.md or skill&gt; and locate the block
+"&lt;title or first line of the most scripted block&gt;".
+
+DO NOT edit any files. Only produce text in your response.
+
+Return three Markdown blocks:
+
+1. ORIGINAL — the excerpt exactly as it appears today, with the line count.
+
+2. 50% SHORTER VERSION — the same excerpt with half the lines. Cut only what
+you would do on your own without the instruction. List below, one per line,
+what was cut and why.
+
+3. MINIMAL VERSION — rewrite it using the fields Objective, Context, Guardrails,
+Quality criteria, Verification, and Autonomy. Verification must be a command,
+a test, a file comparison, or an existence check — nothing like “review before
+submitting” — and must include a stopping condition.
+
+At the end, answer in one sentence: could a colleague who doesn't know this
+project run the Verification in the minimal version without asking me anything?
+If the answer is no, rewrite the Verification.</pre></div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-sm text-neutral-300">
+<strong class="text-blue-400">Exit criterion for this exercise:</strong> both versions are written
+          alongside the original, and the minimum version’s verification is <strong>executable by a third party</strong> without asking
+          you anything. If it depends on context that exists only in your head, it isn’t verification yet.
+        </p>
+<p class="text-sm text-neutral-400 mt-3">
+<strong class="text-neutral-300">How to check this in practice:</strong> send the minimum version to someone (or
+          paste it into a new session with no history) and ask them only to run the Verification line. If they ask a
+          follow-up question, rewrite it. Keep all three versions — they become direct input for the A/B/C plan in Track 4.
+        </p>
+</div>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mt-8 bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6" data-inema-check="modulo-2-2#q1">
+<p class="font-medium mb-4">Quick check (doesn't block anything): your minimal instruction ends with “before finishing, carefully review the result and fix anything that's wrong.” Does that count as verification?</p>
+<div class="inema-check-options space-y-2"><button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Counts—it’s an explicit review instruction, which is what the verification requires</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Doesn't count—there's no external observation or stopping condition</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Only counts if you repeat the phrase in more than one place in the config</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6"><h3 class="text-lg font-semibold text-blue-400 mb-4">Key concepts</h3><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Two versions</div><p class="text-xs text-neutral-400">50% smaller and minimal</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Side by side</div><p class="text-xs text-neutral-400">The original stays visible</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Third-party test</div><p class="text-xs text-neutral-400">Can run without asking you</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">A/B/C inputs</div><p class="text-xs text-neutral-400">The three versions become a test</p></div>
+</div></div>
+<div class="flex justify-start mt-6"><button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Mark as read</span>
+</button></div>
+</section>
+<!-- ============ RESUMO ============ -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module Summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Over-specification is the most common mistake</strong><span class="text-neutral-400"> — and more common among people with more years of engineering experience. The script blocks the better path.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">The canonical conversion</strong><span class="text-neutral-400"> — “Produce X. Respect Y. The result must meet Z. Verify using W. Choose the strategy.”</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Six fields</strong><span class="text-neutral-400"> — Objective · Context · Guardrails · Criteria · Verification · Autonomy. Use it as a yardstick for auditing, not as a form.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Verification is the lever</strong><span class="text-neutral-400"> — produce → observe → compare → stopping condition. Without external observation and a stopping condition, it's not verification.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Aim above the ceiling</strong><span class="text-neutral-400"> — and retest your old failures with every new model; the reason for the rule may have disappeared.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">No secret trick</strong><span class="text-neutral-400"> — difficult task → ways to verify → observe where it gets stuck → fix that → repeat.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next Module:</h3>
+<p class="text-neutral-300">3.1 — Running the skill <code class="text-blue-400">audit-ablacao</code>: install it, choose the scope, and read the 10-section report knowing what each section asks of you.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="../trilha3/modulo-3-1.html">Next Module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Ablation Audit — INEMA · 2026</p>
+<p>
+<a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a>
+</p>
+<p class="text-xs">Method and vision: Boris Cherny (Anthropic) — talk at Y Combinator about cutting 80% of Claude Code's system prompt.</p>
+</div>
+</footer>
+<script>
+  function toggleTopic(button) {
+    const topicItem = button.closest('.topic-item');
+    const explanation = topicItem.querySelector('.topic-explanation');
+    const moduleCard = button.closest('.bg-dark-800') || document;
+    moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) { exp.classList.remove('active'); const b = exp.closest('.topic-item').querySelector('button'); if (b) b.setAttribute('aria-expanded','false'); } });
+    explanation.classList.toggle('active');
+    button.setAttribute('aria-expanded', explanation.classList.contains('active') ? 'true' : 'false');
+  }
+  function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const htmlEl = document.documentElement;
+  if (htmlEl.classList.contains('dark')) themeToggleLightIcon.classList.remove('hidden'); else themeToggleDarkIcon.classList.remove('hidden');
+  themeToggle.addEventListener('click', () => {
+    themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+    htmlEl.classList.toggle('dark');
+    const dark = htmlEl.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { const p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = dark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+  });
+</script>
+<script src="../../../assets/learn.js"></script>
+<script>
+  if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.INEMA && INEMA.registerCheck) {
+      INEMA.registerCheck('modulo-2-2#q1', {
+        answer: 1,
+        explain: {
+          0: 'Não. Pedir revisão é uma instrução, mas não é um mecanismo: o modelo relê o próprio texto no mesmo contexto que o produziu, e nada define quando a revisão foi suficiente. É a linha mais comum das configs reais e a que menos entrega.',
+          1: 'Isso. Verificação precisa de observação externa (um comando, um teste, um arquivo de referência, um screenshot) e de condição de parada ("repita até o diff sair vazio"). Sem essas duas peças, a frase é só um lembrete educado.',
+          2: 'Não. Repetir a mesma frase em vários lugares só multiplica a redundância — que é justamente uma das categorias que a auditoria marca para corte. Quantidade não transforma um lembrete em verificação.'
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ablacao" name="inema-course"/>
+<title>Módulo 2.1 — La taxonomía: qué es cada línea | Auditoría de Ablación</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object') { for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy === 'light') p.theme = 'claro'; else if (legacy === 'dark') p.theme = 'inema-dark'; }
+      } catch (e) { p = clone(DEF); }
+      var THEMES = { 'inema-dark': { dark: true, attr: null, cs: 'dark' }, 'claro': { dark: false, attr: null, cs: 'light' }, 'sepia': { dark: false, attr: 'sepia', cs: 'light' }, 'foco': { dark: null, attr: 'foco', cs: null }, 'contraste': { dark: true, attr: 'contraste', cs: 'dark' } };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark === true) html.classList.add('dark'); else if (t.dark === false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter'); html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale || 100);
+      s.setProperty('--inema-font-scale', (scale / 100).toString()); s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth || 68) + 'ch'); s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+      var fam = p.font === 'system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font === 'leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald: [152,76,45], blue: [217,91,60], purple: [258,90,66], amber: [38,92,50], teal: [174,72,41], rose: [350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
+  })();
+  </script>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "ablacao",
+    "tracks": [
+      { "n": "1", "title": "Por que apagar", "modules": [
+        { "id": "1-1", "title": "Configuracao envelhece", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O metodo de ablacao", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" }
+      ]},
+      { "n": "2", "title": "Como diagnosticar", "modules": [
+        { "id": "2-1", "title": "A taxonomia: o que cada linha e", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "De microgerenciamento a criterio", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" }
+      ]},
+      { "n": "3", "title": "Auditar de verdade", "modules": [
+        { "id": "3-1", "title": "Rodando a skill audit-ablacao", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Do relatorio aos cortes", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" }
+      ]},
+      { "n": "4", "title": "Provar e manter", "modules": [
+        { "id": "4-1", "title": "O plano de ablacao A/B/C", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O ciclo continuo", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" }
+      ]}
+    ]
+  }
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="../../../assets/curso.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/curso-ablacao/curso/trilha2/modulo-2-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/en/curso/trilha2/modulo-2-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/es/curso/trilha2/modulo-2-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Auditoría por ablación</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1">
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Por qué borrar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnosticar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Auditar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Probar y mantener</span></a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Mi recorrido" type="button">
+<span aria-hidden="true">◷</span><span class="hidden xl:inline">Recorrido</span><span aria-hidden="true" class="inema-journey-badge hidden"></span>
+</button>
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.1</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="2-1" data-inema-track="2">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔍 La taxonomía: qué es cada línea</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">
+      Auditar no es leer la configuración y tratar de adivinar si es extensa. Es tomar <strong class="text-blue-400">una línea a la vez</strong>, decir en qué <strong class="text-blue-400">categoría</strong> se cae y que <strong class="text-blue-400">decisión</strong> recibe.
+      Cada línea es culpable de complejidad hasta que demuestre su utilidad, pero el objetivo nunca fue recortar al máximo posible.
+    </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermedio</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Método</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-300 font-semibold">Progreso de este módulo</span>
+<div aria-label="Progreso del módulo 2.1" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-sm" data-inema-meter="modulo:2-1" role="progressbar">
+<span class="inema-meter-pct text-blue-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+<nav aria-label="Índice de la página" class="hidden lg:block sticky top-24 self-start" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3">Sección <span class="inema-toc-pos">1</span> de <span class="inema-toc-total">6</span></p>
+<ul class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. Clasifica en 10 categorías</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. Decide entre las 6 opciones</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. Haz las 7 preguntas</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. Protege lo que no se infiere</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. Optimiza la función adecuada</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Busca las señales en tu configuración</a></li>
+</ul>
+</nav>
+<main class="inema-prose" id="conteudo">
+<!-- ============ TOPICO 1 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🏷️ Clasifica cada línea en una de las 10 categorías</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button">
+<span aria-hidden="true">?</span><span>Tengo una duda</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t1-p1">
+      Antes de decidir si una instrucción se queda o se va, tienes que decir <em>lo que es</em>. Sin esto, la auditoría
+      se convierte en una cuestión de gustos. La taxonomía tiene 10 categorías, y cada línea de tu configuración cae en <strong class="text-blue-400">una</strong> de ellas.
+      Si no puedes elegir la casilla, ese ya es el diagnóstico: la instrucción está haciendo dos cosas al mismo tiempo y debe dividirse.
+    </p>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">🆕</span> Cinco palabras antes de continuar</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong class="text-neutral-100">Configuración:</strong> el conjunto de archivos que instruye al agente — <code class="text-blue-400">CLAUDE.md</code> (globales y de proyecto), skills, hooks y <code class="text-blue-400">settings.json</code>.</li>
+<li><strong class="text-neutral-100">Skill:</strong> un paquete de instrucciones que solo se carga cuando aparece esa tarea (o cuando llamas a <code class="text-blue-400">/nome</code>) — a diferencia de <code class="text-blue-400">CLAUDE.md</code>, que se lee en el 100% de las ejecuciones.</li>
+<li><strong class="text-neutral-100">Hook:</strong> un comando que el programa ejecuta automáticamente antes o después de una acción del agente. No es texto que el modelo lee: es código que ejecuta el harness.</li>
+<li><strong class="text-neutral-100">Guardrail:</strong> un límite estricto. Dice qué <em>no puede</em> que ocurra, nunca. «No hagas commit en la rama principal» es un guardrail.</li>
+<li><strong class="text-neutral-100">Instrucción:</strong> aquí, la unidad auditable más pequeña —normalmente una viñeta, una frase o un párrafo corto con una sola regla.</li>
+</ul>
+</div>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm">
+<thead class="bg-dark-800">
+<tr class="text-left">
+<th class="px-4 py-3 font-semibold text-blue-400">Categoría</th>
+<th class="px-4 py-3 font-semibold text-blue-400">Lo que es</th>
+<th class="px-4 py-3 font-semibold text-blue-400">Ejemplo real de instrucción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600 text-neutral-300">
+<tr class="bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">CONTEXTO</td><td class="px-4 py-3">Hecho de tu mundo que el modelo no puede adivinar.</td><td class="px-4 py-3"><em>"El portal es el proyecto en <code class="text-blue-400">~/projetos/portal</code>, dominio <code class="text-blue-400">inema.club</code>, Next.js en Vercel."</em></td></tr>
+<tr><td class="px-4 py-3 font-semibold text-neutral-100">GUARDRAIL</td><td class="px-4 py-3">Límite estricto. Lo que nunca puede pasar.</td><td class="px-4 py-3"><em>"Nunca hagas commit directamente en la <code class="text-blue-400">main</code>: siempre crea una rama antes.»</em></td></tr>
+<tr class="bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">CRITERIO DE CALIDAD</td><td class="px-4 py-3">Define cómo es un buen resultado, sin decir qué camino seguir.</td><td class="px-4 py-3"><em>"La página tiene que funcionar sin internet: nada de CDN externo."</em></td></tr>
+<tr><td class="px-4 py-3 font-semibold text-neutral-100">VERIFICACIÓN</td><td class="px-4 py-3">Dale al modelo una forma objetiva de verificar su propio trabajo.</td><td class="px-4 py-3"><em>"Antes de decir «listo», ejecuta <code class="text-blue-400">npm run build</code> y pega la salida."</em></td></tr>
+<tr class="bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">INTEGRACIÓN/HERRAMIENTA</td><td class="px-4 py-3">Dónde vive una credencial, un servicio, un binario.</td><td class="px-4 py-3"><em>"Las API keys están en <code class="text-blue-400">~/projetos/wifi/.env</code>; cárgalo en runtime, nunca imprimas el valor.»</em></td></tr>
+<tr><td class="px-4 py-3 font-semibold text-neutral-100">PROCEDIMIENTO REPETIBLE</td><td class="px-4 py-3">Secuencia que realmente se repite y aporta valor: candidata a convertirse en skill.</td><td class="px-4 py-3"><em>"Publicar en el portal = editar el catálogo, hacer commit en los 3 repos, push."</em></td></tr>
+<tr class="bg-dark-800/40"><td class="px-4 py-3 font-semibold text-red-300">MICROGESTIÓN</td><td class="px-4 py-3">Dirige <em>cómo</em> el modelo piensa/ejecuta, en vez de decir el resultado.</td><td class="px-4 py-3"><em>"Primero lee el archivo, después enumera las funciones, luego elige una y después..."</em></td></tr>
+<tr><td class="px-4 py-3 font-semibold text-red-300">REDUNDANCIA</td><td class="px-4 py-3">La misma regla ya indicada en otro archivo (o dos veces en el mismo).</td><td class="px-4 py-3"><em>"Sin emojis en la salida" — presente en el <code class="text-blue-400">CLAUDE.md</code> global, en la del proyecto y en dos skills.</em></td></tr>
+<tr class="bg-dark-800/40"><td class="px-4 py-3 font-semibold text-red-300">LEGADO/OBSOLETA</td><td class="px-4 py-3">Corrige la debilidad de un modelo que ya no funciona aquí.</td><td class="px-4 py-3"><em>"No intentes editar más de un archivo a la vez, te confundes."</em></td></tr>
+<tr><td class="px-4 py-3 font-semibold text-red-300">AMBIGUA/NO COMPROBADA</td><td class="px-4 py-3">Nadie sabe qué sostiene ni qué se rompe sin ella.</td><td class="px-4 py-3"><em>"Ten cuidado y piensa bien antes de responder."</em></td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">💡</span> Las seis de arriba y las cuatro de abajo</h3>
+<p class="text-neutral-300 mb-3">
+        Las primeras seis categorías describen instrucciones que <em>pueden</em> estar pagando su propio costo. Las cuatro últimas
+        (microgestión, redundancia, legado, ambigüedad) son <strong>diagnósticos</strong>: ponerle esa etiqueta a una línea ya
+        significa que no saldrá de la auditoría tal como entró.
+      </p>
+<p class="text-neutral-300">
+        Cuidado con la inversión fácil: etiquetar algo como CONTEXTO no es un pase libre. El contexto que solo sirve para el 2% de tus tareas y está en el <code class="text-blue-400">CLAUDE.md</code> global sigue teniendo un costo en el 100% de las ejecuciones.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span></button>
+</div>
+</section>
+<!-- ============ TOPICO 2 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🎚️ Decide entre las 6 salidas</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button">
+<span aria-hidden="true">?</span><span>Tengo una duda</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t2-p1">
+      La categoría es un diagnóstico; la decisión es lo que haces con él. Hay seis resultados posibles y ninguna línea
+      puede quedarse sin uno. Una auditoría en la que el 90% de las líneas termina como <code class="text-blue-400">KEEP</code>
+      no es una configuración saludable: es una auditoría que no se hizo.
+    </p>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Embudo de clasificación: a la izquierda, diez etiquetas de categoría apiladas; al centro, un embudo con la etiqueta «siete preguntas»; a la derecha, seis cuadros de decisión —KEEP, SIMPLIFY, MOVE, MERGE, TEST y REMOVE. El cuadro TEST está destacado con brillo y la leyenda dice: en caso de duda, TEST." class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m21a-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m21a-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m21a-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m21a-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+</defs>
+<rect fill="url(#m21a-grid)" height="300" width="1000" x="0" y="0"></rect>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="130" y="30">10 categorías</text>
+<g fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11.5">
+<rect fill="#0e1622" height="22" rx="7" stroke="#3b82f6" stroke-width="1.4" width="212" x="24" y="44"></rect><text text-anchor="middle" x="130" y="59">CONTEXTO</text>
+<rect fill="#0e1622" height="22" rx="7" stroke="#3b82f6" stroke-width="1.4" width="212" x="24" y="70"></rect><text text-anchor="middle" x="130" y="85">GUARDRAIL</text>
+<rect fill="#0e1622" height="22" rx="7" stroke="#3b82f6" stroke-width="1.4" width="212" x="24" y="96"></rect><text text-anchor="middle" x="130" y="111">CRITERIO DE CALIDAD</text>
+<rect fill="#0e1622" height="22" rx="7" stroke="#3b82f6" stroke-width="1.4" width="212" x="24" y="122"></rect><text text-anchor="middle" x="130" y="137">VERIFICACIÓN</text>
+<rect fill="#0e1622" height="22" rx="7" stroke="#3b82f6" stroke-width="1.4" width="212" x="24" y="148"></rect><text text-anchor="middle" x="130" y="163">INTEGRACIÓN/HERRAMIENTA</text>
+<rect fill="#0e1622" height="22" rx="7" stroke="#3b82f6" stroke-width="1.4" width="212" x="24" y="174"></rect><text text-anchor="middle" x="130" y="189">PROCEDIMIENTO REPETIBLE</text>
+<rect fill="#0e1622" height="22" rx="7" stroke="#38bdf8" stroke-width="1.4" width="212" x="24" y="200"></rect><text fill="#bae6fd" text-anchor="middle" x="130" y="215">MICROGESTIÓN</text>
+<rect fill="#0e1622" height="22" rx="7" stroke="#38bdf8" stroke-width="1.4" width="212" x="24" y="226"></rect><text fill="#bae6fd" text-anchor="middle" x="130" y="241">REDUNDANCIA</text>
+<rect fill="#0e1622" height="22" rx="7" stroke="#38bdf8" stroke-width="1.4" width="212" x="24" y="252"></rect><text fill="#bae6fd" text-anchor="middle" x="130" y="267">LEGADO/OBSOLETA</text>
+<rect fill="#0e1622" height="18" rx="7" stroke="#38bdf8" stroke-width="1.4" width="212" x="24" y="278"></rect><text fill="#bae6fd" text-anchor="middle" x="130" y="291">AMBIGUA/NO COMPROBADA</text>
+</g>
+<path d="M256,50 L400,120 L400,190 L256,290" fill="#0e1622" opacity="0.9" stroke="url(#m21a-grad)" stroke-width="2"></path>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="330" y="140">las 7</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="330" y="158">preguntas</text>
+<path d="M402,155 L470,155" fill="none" marker-end="url(#m21a-ah)" stroke="#60a5fa" stroke-width="1.8"></path>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="740" y="30">6 decisiones</text>
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<rect fill="#0e1622" height="40" rx="11" stroke="#3b82f6" stroke-width="2" width="200" x="490" y="48"></rect><text fill="#bfdbfe" text-anchor="middle" x="590" y="73">KEEP</text>
+<rect fill="#0e1622" height="40" rx="11" stroke="#3b82f6" stroke-width="2" width="240" x="720" y="48"></rect><text fill="#bfdbfe" text-anchor="middle" x="840" y="73">SIMPLIFY</text>
+<rect fill="#0e1622" height="40" rx="11" stroke="#3b82f6" stroke-width="2" width="200" x="490" y="104"></rect><text fill="#bfdbfe" text-anchor="middle" x="590" y="129">MOVE</text>
+<rect fill="#0e1622" height="40" rx="11" stroke="#3b82f6" stroke-width="2" width="240" x="720" y="104"></rect><text fill="#bfdbfe" text-anchor="middle" x="840" y="129">MERGE</text>
+<g filter="url(#m21a-glow)"><rect fill="#0e1622" height="40" rx="11" stroke="url(#m21a-grad)" stroke-width="2.4" width="200" x="490" y="160"></rect></g>
+<text fill="#60a5fa" text-anchor="middle" x="590" y="185">TEST</text>
+<rect fill="#0e1622" height="40" rx="11" stroke="#38bdf8" stroke-width="2" width="240" x="720" y="160"></rect><text fill="#bae6fd" text-anchor="middle" x="840" y="185">ELIMINA</text>
+</g>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="725" y="240">sin evidencia suficiente, la salida predeterminada es TEST — no KEEP</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="12.5" text-anchor="middle" x="725" y="266">KEEP por comodidad es exactamente como se acumulan los sedimentos</text>
+</svg>
+</div>
+<p class="text-xs text-neutral-400 mt-3 mb-6">
+<strong class="text-neutral-300">Qué observar:</strong> toda la pila de la izquierda entra en el embudo: ninguna línea se salta la selección.
+      Fíjate en que el único cuadro con brillo es <em>TEST</em>: es el destino predeterminado cuando no tienes evidencia, no una
+      tercera vía para aplazar la decisión. Fíjate también en que diez categorías desembocan en seis salidas: el mapeo no es uno a uno,
+      y suele ser la pregunta 3 (tema 3) la que decide hacia qué lado va la línea.
+    </p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">KEEP — se queda como está</h4>
+<p class="text-sm text-neutral-400 mb-3">Elige cuándo: sabes decir qué falla sin ella y ya viste que falla.</p>
+<p class="text-neutral-300 text-sm">Típico de CONTEXTO, GUARDRAIL e INTEGRACIÓN. <code class="text-blue-400">KEEP</code> exige una justificación; si tu justificación es "mejor no tocarlo", la decisión correcta es <code class="text-blue-400">TEST</code>.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">SIMPLIFY — la intención se mantiene, el volumen desaparece</h4>
+<p class="text-sm text-neutral-400 mb-3">Elige cuándo: la regla es válida, pero está escrita en tres párrafos con cuatro ejemplos.</p>
+<p class="text-neutral-300 text-sm">Es la salida más común para un PROCEDIMIENTO REPETIBLE inflado y un MICROGERENCIAMENTO leve. La prueba: ¿puedes decirlo en una frase que un colega entendería?</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">MOVE — la regla es buena, el lugar es incorrecto</h4>
+<p class="text-sm text-neutral-400 mb-3">Elige cuándo: la instrucción solo se aplica a un tipo de tarea, pero está en el archivo que se lee en cada ejecución.</p>
+<p class="text-neutral-300 text-sm">Del <code class="text-blue-400">CLAUDE.md</code> global por la del proyecto; del <code class="text-blue-400">CLAUDE.md</code> para una skill. Costo cero cuando la tarea no aparece.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">MERGE — varias líneas, una intención</h4>
+<p class="text-sm text-neutral-400 mb-3">Elige cuándo: la misma idea aparece en fragmentos dispersos, a veces con pequeñas contradicciones.</p>
+<p class="text-neutral-300 text-sm">Resultado natural de REDUNDANCIA. Al fusionar, elige explícitamente qué versión prevalece; si no, solo habrás reunido la contradicción en un mismo lugar.</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">5</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-blue-500/40">
+<h4 class="font-semibold text-white mb-2">TEST: elimínala en una ronda y observa</h4>
+<p class="text-sm text-neutral-400 mb-3">Elige cuándo: tú <em>cree</em> que ayuda, pero no puede citar un fallo real que haya evitado.</p>
+<p class="text-neutral-300 text-sm">Es la salida honesta para AMBÍGUA/NO COMPROBADA y para buena parte del LEGADO. No borra nada ahora: programa una medición (el plan A/B/C de la Trilha 4).</p></div></div>
+<div class="flex items-start space-x-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">6</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">ELIMINA — se quita, con el fragmento citado y el riesgo por escrito</h4>
+<p class="text-sm text-neutral-400 mb-3">Elige cuándo: la línea es un duplicado exacto, corrige un modelo que ya no usas o dirige un razonamiento que el modelo ya hace.</p>
+<p class="text-neutral-300 text-sm">Cada eliminación viene acompañada de tres cosas: el fragmento, el riesgo y cómo probarla. Eliminar sin esas tres cosas es una conjetura con apariencia de método.</p></div></div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> La regla de oro de este módulo</h3>
+<p class="text-neutral-300">
+<strong class="text-neutral-100">Sin evidencia suficiente, prefiere <code class="text-primary">TEST</code> a <code class="text-primary">KEEP</code>.</strong>
+        Ninguna configuración se vuelve demasiado grande porque alguien haya decidido deliberadamente ampliarla. Crece porque, línea a línea,
+        mantenerla parecía más barato que verificarla. <code class="text-primary">TEST</code> es el antídoto: hoy no cuesta nada y la semana que viene convierte «me parece» en datos.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span></button>
+</div>
+</section>
+<!-- ============ TOPICO 3 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">❓ Haz las 7 preguntas por instrucción</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button">
+<span aria-hidden="true">?</span><span>Tengo una duda</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t3-p1">
+      La categoría y la decisión no aparecen de la nada: surgen de siete preguntas planteadas en el mismo orden para cada instrucción.
+      Hacer siempre las siete es lo que evita que la auditoría se convierta en una impresión. Y una de ellas —la tercera— suele resolver
+      el caso por sí sola.
+    </p>
+<div class="overflow-x-auto mb-6 rounded-xl border border-dark-600">
+<table class="w-full text-sm">
+<thead class="bg-dark-800">
+<tr class="text-left">
+<th class="px-4 py-3 font-semibold text-blue-400">#</th>
+<th class="px-4 py-3 font-semibold text-blue-400">Pregunta</th>
+<th class="px-4 py-3 font-semibold text-blue-400">Hacia dónde apunta la respuesta</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600 text-neutral-300">
+<tr class="bg-dark-800/40"><td class="px-4 py-3 font-bold text-blue-400">1</td><td class="px-4 py-3">¿Qué intenta evitar o garantizar?</td><td class="px-4 py-3">Si no puedes responder: <code class="text-blue-400">AMBÍGUA</code> → <code class="text-blue-400">TEST</code>.</td></tr>
+<tr><td class="px-4 py-3 font-bold text-blue-400">2</td><td class="px-4 py-3">¿El modelo actual todavía la necesita?</td><td class="px-4 py-3">Escrita para un modelo antiguo: <code class="text-blue-400">LEGADO</code> → <code class="text-blue-400">TEST</code> o <code class="text-blue-400">REMOVE</code>.</td></tr>
+<tr class="bg-dark-800/40"><td class="px-4 py-3 font-bold text-blue-400">3</td><td class="px-4 py-3"><strong class="text-neutral-100">¿Dice QUÉ debe ocurrir o intenta dirigir CÓMO piensa o ejecuta el modelo?</strong></td><td class="px-4 py-3">"Cómo" → <code class="text-blue-400">MICROGERENCIAMENTO</code> → <code class="text-blue-400">SIMPLIFY</code>. <strong class="text-blue-400">La más discriminante.</strong></td></tr>
+<tr><td class="px-4 py-3 font-bold text-blue-400">4</td><td class="px-4 py-3">¿Está duplicada en otro archivo?</td><td class="px-4 py-3"><code class="text-blue-400">REDUNDÂNCIA</code> → <code class="text-blue-400">MERGE</code> o <code class="text-blue-400">REMOVE</code>.</td></tr>
+<tr class="bg-dark-800/40"><td class="px-4 py-3 font-bold text-blue-400">5</td><td class="px-4 py-3">¿Limita la autonomía sin necesidad?</td><td class="px-4 py-3">Cierra mejores caminos sin motivo → <code class="text-blue-400">SIMPLIFY</code> o <code class="text-blue-400">REMOVE</code>.</td></tr>
+<tr><td class="px-4 py-3 font-bold text-blue-400">6</td><td class="px-4 py-3">¿Hay una forma más breve de preservar la intención?</td><td class="px-4 py-3">Casi siempre sí → <code class="text-blue-400">SIMPLIFY</code>.</td></tr>
+<tr class="bg-dark-800/40"><td class="px-4 py-3 font-bold text-blue-400">7</td><td class="px-4 py-3">¿Qué se rompe si desaparece?</td><td class="px-4 py-3">Respuesta concreta → <code class="text-blue-400">KEEP</code>. Silencio o «no sé» → <code class="text-blue-400">TEST</code>.</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t3-p2">
+<strong class="text-blue-400">Por qué la 3 es la más discriminante.</strong> Las instrucciones que describen el resultado
+      envejecen bien: «el build debe pasar» sigue siendo cierto con cualquier modelo. Las instrucciones que describen el
+      proceso interno envejecen mal, porque se calibraron para una debilidad específica de una generación específica.
+      Cuando llega un modelo mejor, la instrucción sobre «cómo» no queda neutral: se convierte en una <em>grillete</em>, impidiendo el mejor camino que el modelo ahora podría encontrar por sí solo. Aquí, <strong class="text-neutral-100">autonomía</strong>
+      es exactamente eso: el espacio que dejas para que el modelo elija la estrategia después de que tú hayas definido el objetivo.
+    </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Dice QUÉ (envejece bien)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"El resultado tiene que funcionar offline: ninguna solicitud a un host externo."</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Antes de decir que terminaste, ejecuta las pruebas y pega la salida."</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Nunca hagas push con el autor incorrecto; comprueba <code class="text-emerald-300">git config user.email</code> antes.»</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>"Publicar = commit + push. El deploy es automático y no es tu responsabilidad."</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Dirige CÓMO (envejece mal)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Primero lee el archivo, después enumera las funciones, luego elige una y edita."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Piensa paso a paso y explica tu razonamiento antes de actuar."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"No uses más de dos herramientas por respuesta."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Siempre vuelve a leer lo que escribiste dos veces antes de continuar."</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🧾</span> Las 7 preguntas aplicadas a una línea real</h3>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300">FRAGMENTO   «Antes de editar cualquier archivo, léelo completo,
+          enumera las funciones que encuentres, elige la función objetivo,
+          y solo entonces aplica la edición».
+
+1 evita/garantiza?   editar a ciegas un archivo que el agente no leyó
+2 todavía hace falta?   no: el modelo actual ya lee antes de editar
+3 QUÉ o CÓMO?   CÓMO  ← decide el caso
+4 duplicada?       sí, ya existe una versión corta en la skill de refactor
+5 limita la autonomía? sí: prohíbe editar directamente incluso cuando es obvio
+6 forma más corta? «no edites un archivo que no hayas leído en esta sesión»
+7 qué se rompe?    no se observó nada en los últimos meses
+
+CATEGORÍA  MICROGESTIÓN
+DECISIÓN    SIMPLIFY (usar la forma de la pregunta 6)</pre>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span></button>
+</div>
+</section>
+<!-- ============ TOPICO 4 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🛡️ Protege lo que el modelo no infiere</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button">
+<span aria-hidden="true">?</span><span>Tengo una duda</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t4-p1">
+      Hay una clase de instrucción que tú <strong class="text-blue-400">nunca elimines por reflejo</strong>, por mucho
+      que el recorte parezca atractivo al contar líneas: aquello que el modelo no puede descubrir por sí solo.
+      Puede razonar; no puede adivinar que tu dominio es <code class="text-blue-400">inema.club</code>, que la fuente de verdad de los precios es una hoja de cálculo específica, o que tu empresa prohíbe enviar datos de clientes al exterior.
+    </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Contexto que solo tú conoces: protegido</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Identidad del proyecto:</strong> qué es, para quién y cuál es el nombre correcto.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Rutas de archivos:</strong> dónde está cada cosa en tu disco y en el repo.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Fuentes de verdad:</strong> qué archivo prevalece cuando dos no coinciden.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Branding:</strong> paleta, tono de voz, lo que nunca aparece en la marca.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Seguridad y cumplimiento:</strong> lo que no puede salir, lo que necesita aprobación.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Contratos de interfaz:</strong> formato del payload, nombres de campos, versiones.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Integraciones:</strong> qué servicio, qué credencial, qué límite de uso.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Convenciones internas:</strong> "aquí lo llamamos X", patrón de commit.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Razonamiento genérico — el modelo ya lo hace</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Escribe código legible y con buenos nombres."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Trata los errores y los casos límite."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Divide los problemas grandes en partes más pequeñas."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Explica qué hace una función antes de reescribirla."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Considera las alternativas antes de elegir una."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Usa buenas prácticas de seguridad en general."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Verifica si la respuesta tiene sentido."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Una skill completa que enseña «cómo depurar un problema».</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🧭</span> La prueba del colega nuevo</h3>
+<p class="text-neutral-300 mb-3">
+        Imagina a un profesional competente que se incorporó hoy a tu equipo. Sabe programar, sabe escribir, sabe
+        investigar, pero no conoce tu entorno. Toda instrucción que tendrías que darle porque <em>no habría tenido
+        cómo saberlo</em> es contexto protegido. Toda instrucción que insultaría su inteligencia es candidata a ser recortada.
+      </p>
+<p class="text-neutral-300">
+        La pregunta 3 y esta prueba se apoyan: "lee el archivo antes de editar" ofende al nuevo compañero; "el CSS del curso viene
+        de <code class="text-blue-400">assets/curso.css</code>, «no repitas inline» es exactamente el tipo de cosa que agradecería saber desde el primer día.
+      </p>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> El error costoso de una ablación mal hecha</h3>
+<p class="text-neutral-300">
+        El fallo más costoso no es mantener una línea inútil, sino eliminar contexto irremplazable y descubrirlo solo tres semanas
+        después, cuando el agente publicó en el repositorio equivocado, con el autor equivocado y siguiendo una convención que nadie
+        más documentaba. Una línea inútil cuesta contexto; perder contexto cuesta retrabajo y confianza.
+        Por eso el orden del curso es <strong class="text-neutral-100">diagnóstico → propuesta → prueba</strong>, nunca elimines por impulso.
+      </p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span></button>
+</div>
+</section>
+<!-- ============ TOPICO 5 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚖️ Optimiza la función correcta</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button">
+<span aria-hidden="true">?</span><span>Tengo una duda</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t5-p1">
+      Aquí está la parte en la que casi todos se equivocan cuando descubren la ablación: el objetivo <strong class="text-blue-400">no es
+      reducir al máximo</strong>. El objetivo no es una configuración de cero líneas. El objetivo es una proporción, y tiene tres elementos arriba y
+      uno abajo.
+    </p>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Ecuación en forma de diagrama: en el numerador, tres bloques sumados: calidad, autonomía y verificabilidad. Una barra de fracción los separa del denominador, un único bloque resaltado llamado complejidad. Abajo, dos modos de falla: recortarlo todo reduce el numerador; mantenerlo todo infla el denominador." class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m21b-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m21b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m21b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle></pattern>
+</defs>
+<rect fill="url(#m21b-grid)" height="300" width="1000" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="15" font-weight="600">
+<rect fill="#0e1622" height="56" rx="14" stroke="#60a5fa" stroke-width="2" width="200" x="120" y="46"></rect><text fill="#bfdbfe" text-anchor="middle" x="220" y="80">calidad</text>
+<text fill="#60a5fa" font-size="26" text-anchor="middle" x="345" y="82">+</text>
+<rect fill="#0e1622" height="56" rx="14" stroke="#60a5fa" stroke-width="2" width="200" x="370" y="46"></rect><text fill="#bfdbfe" text-anchor="middle" x="470" y="80">autonomía</text>
+<text fill="#60a5fa" font-size="26" text-anchor="middle" x="595" y="82">+</text>
+<rect fill="#0e1622" height="56" rx="14" stroke="#38bdf8" stroke-width="2" width="260" x="620" y="46"></rect><text fill="#bae6fd" text-anchor="middle" x="750" y="80">verificabilidad</text>
+</g>
+<path d="M110,130 L890,130" stroke="url(#m21b-grad)" stroke-linecap="round" stroke-width="4"></path>
+<g filter="url(#m21b-glow)"><rect fill="#0e1622" height="56" rx="14" stroke="url(#m21b-grad)" stroke-width="2.6" width="260" x="370" y="158"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="15" font-weight="600" text-anchor="middle" x="500" y="192">complejidad</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="22" font-weight="700" text-anchor="middle" x="940" y="138">↑ max</text>
+<g font-family="Inter,sans-serif" font-size="12.5">
+<rect fill="#1a1113" height="42" rx="11" stroke="#ef4444" stroke-width="1.6" width="330" x="120" y="238"></rect>
+<text fill="#fca5a5" text-anchor="middle" x="285" y="264">recortar un 90% y empeorar: el numerador se desploma</text>
+<rect fill="#1a1113" height="42" rx="11" stroke="#ef4444" stroke-width="1.6" width="330" x="550" y="238"></rect>
+<text fill="#fca5a5" text-anchor="middle" x="715" y="264">mantener todo: el denominador se infla</text>
+</g>
+</svg>
+</div>
+<p class="text-xs text-neutral-400 mt-3 mb-6">
+<strong class="text-neutral-300">Qué observar:</strong> es una fracción, no una meta de reducción. Las dos cajas rojas de abajo muestran las dos formas de equivocarse, y apuntan en direcciones opuestas. Fíjate que
+      <em>verificabilidad</em> está en el numerador: agregar una instrucción de verificación <strong>aumenta</strong> el
+      resultado, incluso si cuesta líneas, porque la ganancia de arriba es mayor que el costo de abajo. La ablación no es solo sustracción.
+    </p>
+<div class="space-y-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<h4 class="font-semibold text-blue-400 mb-1">Calidad: ¿el resultado sirve?</h4>
+<p class="text-sm text-neutral-300">El trabajo entregado cumple con lo que necesitabas, sin que tengas que corregirlo después. Se mide en correcciones humanas por tarea, no en sensaciones.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<h4 class="font-semibold text-blue-400 mb-1">Autonomía — ¿cuánto resuelve sin ti?</h4>
+<p class="text-sm text-neutral-300">Espacio para elegir la estrategia después de definir el objetivo. Una instrucción sobre «cómo» reduce la autonomía; un criterio de salida la preserva.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
+<h4 class="font-semibold text-blue-400 mb-1">Verificabilidad — ¿puede revisar su propio trabajo?</h4>
+<p class="text-sm text-neutral-300">Hay un comando, una prueba, una comparación que indica objetivamente «aprobado» o «no aprobado». Es el término que más gente olvida auditar —y el único que suele estar <em>faltante</em> en vez de sobrar.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/40 p-5">
+<h4 class="font-semibold text-blue-400 mb-1">Complejidad — el denominador</h4>
+<p class="text-sm text-neutral-300">Líneas que se leen en cada ejecución, reglas que compiten entre sí, excepciones acumuladas, archivos que nadie entiende por completo. Cada línea del <code class="text-blue-400">CLAUDE.md</code> global se cobra en el 100% de las tareas, incluso en las que no tienen nada que ver con ella.</p></div></div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dos auditorías que reprueban</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong class="text-neutral-100">"Recorté el 90% y el agente quedó perdido":</strong> el numerador también cayó. Eliminaste contexto irreemplazable o la única verificación que existía. Reprobado, aunque haya sido la mayor reducción del grupo.</li>
+<li><strong class="text-neutral-100">"No cambié nada, todo parecía importante":</strong> el denominador sigue inflado y no tienes ni un solo dato. También reprobado, solo que sin hacer ruido, que es como sobrevive el sedimento.</li>
+<li><strong class="text-neutral-100">Aprobado:</strong> menos líneas, la misma calidad medida en tareas reales, más autonomía y <em>al menos una verificación objetiva donde antes no había ninguna</em>.</li>
+</ul>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span></button>
+</div>
+</section>
+<!-- ============ TOPICO 6 ============ -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🎯 Busca las señales en tu config</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button">
+<span aria-hidden="true">?</span><span>Tengo una duda</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t6-p1">
+      La teoría terminó. Ahora aplicas la taxonomía a tu propia config. Antes, la lista de búsqueda: los 13 patrones que
+      aparecen en casi toda configuración acumulada. Revísala con el archivo abierto: cada elemento que reconozcas
+      ya es un candidato con la categoría casi decidida.
+    </p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4">Lista de verificación para detectar</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Paso a paso innecesario</strong> — secuencia que el modelo ya arma por sí solo</div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Reglas duplicadas</strong> entre <code class="text-blue-400">CLAUDE.md</code> y skills</div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Skills demasiado grandes</strong> — no caben en una lectura</div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Skills que enseñan razonamiento genérico</strong> en vez de tu procedimiento</div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Instrucciones que compensan modelos antiguos</strong></div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Exceso de ejemplos</strong> — cinco cuando bastaba con uno</div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Formato rígido sin motivo</strong> — forma impuesta sin motivo</div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Excepciones acumuladas</strong> — "excepto cuando... salvo que... a menos que"</div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Contradicciones y reglas que compiten</strong> por el mismo disparador</div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Contexto global que solo sirve para pocas tareas</strong> — candidato a <code class="text-blue-400">MOVE</code></div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300">☐ <strong>Reglas que deberían ser criterios de salida</strong> — <em>criterio de salida</em> = condición objetiva que indica cuándo la tarea está lista; tema del módulo 2.2</div>
+<div class="bg-dark-700/50 rounded-lg p-3 border border-blue-500/40 text-neutral-300">☐ <strong class="text-blue-400">VERIFICACIONES AUSENTES</strong> — el único elemento que se resuelve <em>sumando</em>, sin eliminar</div>
+<div class="bg-dark-700/50 rounded-lg p-3 text-neutral-300 sm:col-span-2">☐ <strong>Reglas sustituibles por una prueba objetiva</strong> — tres párrafos pidiendo cuidado que se resolverían con un comando</div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🧪</span> Ejercicio: 15 líneas clasificadas</h3>
+<p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> extraer 15 instrucciones reales de tu config y asignar una categoría y una decisión a cada una. Cópialo y ejecútalo en la terminal.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<pre class="text-sm text-neutral-300"># 1) Extraia as instruções numeradas/bulletadas do CLAUDE.md global
+grep -n "^-\|^[0-9]\." ~/.claude/CLAUDE.md | head -40
+
+# 2) Faça o mesmo no CLAUDE.md do projeto que você mais usa
+grep -n "^-\|^[0-9]\." ./CLAUDE.md | head -40
+
+# 3) Tamanho de cada skill (skill grande demais é sinal do checklist)
+wc -l ~/.claude/skills/*/SKILL.md | sort -rn | head -15
+
+# 4) Caça rápida a redundância: uma palavra-chave sua em toda a config
+grep -rn "commit\|deploy\|emoji" ~/.claude/CLAUDE.md ~/.claude/skills/ | head -20</pre>
+</div>
+<p class="text-sm text-neutral-300 mb-3">Ahora completa esta tabla con <strong class="text-blue-400">15 líneas</strong>. Una instrucción por línea, sin agrupar.</p>
+<div class="overflow-x-auto rounded-lg border border-dark-600 mb-4">
+<table class="w-full text-xs">
+<thead class="bg-dark-700">
+<tr class="text-left text-neutral-200">
+<th class="px-3 py-2">Fragmento</th>
+<th class="px-3 py-2">Categoría</th>
+<th class="px-3 py-2">Decisión</th>
+<th class="px-3 py-2">Pregunta decisiva</th>
+<th class="px-3 py-2">Qué se rompe si desaparece</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600 text-neutral-400">
+<tr class="bg-dark-800/40"><td class="px-3 py-2">"Sin emoji en la salida"</td><td class="px-3 py-2">REDUNDANCIA</td><td class="px-3 py-2">MERGE</td><td class="px-3 py-2">4 — duplicada</td><td class="px-3 py-2">nada: se queda en la versión fusionada</td></tr>
+<tr><td class="px-3 py-2">"Primero lee, después enumera, después…"</td><td class="px-3 py-2">MICROGESTIÓN</td><td class="px-3 py-2">SIMPLIFY</td><td class="px-3 py-2">3 — dirige el CÓMO</td><td class="px-3 py-2">nada observado</td></tr>
+<tr class="bg-dark-800/40"><td class="px-3 py-2">"Las API keys están en <code>~/projetos/wifi/.env</code>"</td><td class="px-3 py-2">INTEGRACIÓN</td><td class="px-3 py-2">KEEP</td><td class="px-3 py-2">7 — falla de inmediato</td><td class="px-3 py-2">el agente le pide la key al usuario</td></tr>
+<tr><td class="px-3 py-2">"Ten cuidado y piensa bien"</td><td class="px-3 py-2">AMBIGUA</td><td class="px-3 py-2">TEST</td><td class="px-3 py-2">1 — sin una intención clara</td><td class="px-3 py-2">desconocido; por eso hay que probar</td></tr>
+<tr class="bg-dark-800/40"><td class="px-3 py-2">…</td><td class="px-3 py-2">…</td><td class="px-3 py-2">…</td><td class="px-3 py-2">…</td><td class="px-3 py-2">…</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-sm text-neutral-300"><strong class="text-blue-400">Criterio de salida:</strong> 15 líneas completadas,
+        todas con categoría <em>e</em> decisión, y <strong class="text-neutral-100">al menos una en <code class="text-blue-400">TEST</code></strong>.</p>
+<p class="text-sm text-neutral-400 mt-3"><strong class="text-neutral-300">Por qué el requisito del TEST:</strong>
+        si las 15 resultaron <code class="text-blue-400">KEEP</code>, lo más probable no es que tu configuración sea perfecta, sino que la clasificaste según tu comodidad. Vuelve a las preguntas 1 y 7: si no puedes decir qué evita la línea ni qué se rompe sin ella, no es <code class="text-blue-400">KEEP</code>.</p></div></div>
+<div class="inema-check mt-8 bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6" data-inema-check="modulo-2-1#q1">
+<p class="font-medium mb-4">Revisión rápida (no bloquea nada): encuentras una línea que dice "siempre vuelve a leer el archivo dos veces antes de editarlo". No recuerdas ningún fallo que haya evitado. ¿Cuál es la combinación de categoría y decisión más defendible?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">GUARDRAIL · KEEP — es una protección contra ediciones incorrectas; mejor no tocarla</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">MICROGESTIÓN · SIMPLIFY o TEST — dirige el CÓMO y no tiene una falla real asociada</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">CONTEXTO · ELIMINAR — es un detalle del proceso; se quita directamente para reducir líneas</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4">Conceptos clave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">Una caja por línea</div><p class="text-xs text-neutral-400">¿No puedes elegir? Estás haciendo dos cosas</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">La pregunta 3 decide</div><p class="text-xs text-neutral-400">QUÉ envejece bien, CÓMO envejece mal</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">TEST &gt; KEEP</div><p class="text-xs text-neutral-400">Sin evidencia, programa la medición</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-blue-400 font-semibold text-sm mb-1">La verificación suma</div><p class="text-xs text-neutral-400">El único elemento que se resuelve agregando</p></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button"><span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como leído</span></button>
+</div>
+</section>
+<!-- ============ RESUMO ============ -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumen del Módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">10 categorías</strong><span class="text-neutral-400"> — seis describen instrucciones útiles; cuatro (microgestión, redundancia, legado, ambigua) ya son un diagnóstico.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">6 decisiones</strong><span class="text-neutral-400"> — KEEP · SIMPLIFY · MOVE · MERGE · TEST · REMOVE. Ninguna línea queda sin una.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Sin evidencia, TEST</strong><span class="text-neutral-400"> — KEEP por comodidad es exactamente como se acumula el sedimento.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">La pregunta 3 es la más discriminante</strong><span class="text-neutral-400"> — ¿dice QUÉ debe ocurrir o dirige CÓMO piensa el modelo?</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">El contexto insustituible está protegido</strong><span class="text-neutral-400"> — identidad, rutas, fuentes de verdad, branding, seguridad, contratos, integraciones, convenciones.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">La función es una razón</strong><span class="text-neutral-400"> — calidad + autonomía + verificabilidad ÷ complejidad. El objetivo no es reducir al máximo.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">2.2 — De la microgestión al criterio y la verificación: cómo reescribir «haz A, luego B, luego C» como objetivo, guardrails, criterio de salida y una forma real de comprobarlo.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-2.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Auditoría por ablación — INEMA · 2026</p>
+<p>
+<a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a>
+</p>
+<p class="text-xs">Método y visión: Boris Cherny (Anthropic) — charla en Y Combinator sobre el recorte del 80% del prompt del sistema de Claude Code.</p>
+</div>
+</footer>
+<script>
+  function toggleTopic(button) {
+    const topicItem = button.closest('.topic-item');
+    const explanation = topicItem.querySelector('.topic-explanation');
+    const moduleCard = button.closest('.bg-dark-800') || document;
+    moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) { exp.classList.remove('active'); const b = exp.closest('.topic-item').querySelector('button'); if (b) b.setAttribute('aria-expanded','false'); } });
+    explanation.classList.toggle('active');
+    button.setAttribute('aria-expanded', explanation.classList.contains('active') ? 'true' : 'false');
+  }
+  function openModal(modalId) { const m = document.getElementById(modalId); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); document.body.style.overflow = 'auto'; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  const htmlEl = document.documentElement;
+  if (htmlEl.classList.contains('dark')) themeToggleLightIcon.classList.remove('hidden'); else themeToggleDarkIcon.classList.remove('hidden');
+  themeToggle.addEventListener('click', () => {
+    themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+    htmlEl.classList.toggle('dark');
+    const dark = htmlEl.classList.contains('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    try { const p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = dark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+  });
+</script>
+<script src="../../../assets/learn.js"></script>
+<script>
+  if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.INEMA && INEMA.registerCheck) {
+      INEMA.registerCheck('modulo-2-1#q1', {
+        answer: 1,
+        explain: {
+          0: 'Não. Guardrail é limite duro sobre o que não pode acontecer ("nunca commite na main"). "Releia duas vezes" não protege contra nada verificável — e "melhor não mexer" é justamente o KEEP por conforto que este módulo combate.',
+          1: 'Isso. Ela dirige COMO o modelo executa (pergunta 3) e você não sabe dizer o que ela evita (pergunta 1) nem o que quebra sem ela (pergunta 7). SIMPLIFY se você quiser preservar a intenção numa frase curta; TEST se quiser medir antes de decidir.',
+          2: 'Não em duas frentes. Não é CONTEXTO — não carrega nenhum fato do seu mundo que o modelo não infira. E REMOVE direto exige trecho, risco e como testar; cortar só para reduzir linhas é otimizar o denominador ignorando o numerador.'
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+
+<html class="dark" lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="ablacao">
-  <title>Módulo 4.1 — O plano de ablação A/B/C | Auditoria de Ablação</title>
-  <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ablacao" name="inema-course"/>
+<title>Módulo 4.1 — O plano de ablação A/B/C | Auditoria de Ablação</title>
+<script>
   (function () {
     try {
       var html = document.documentElement;
@@ -35,7 +36,7 @@
     } catch (err) { try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {} }
   })();
   </script>
-  <script type="application/json" data-inema-manifest>
+<script data-inema-manifest="" type="application/json">
   {
     "course": "ablacao",
     "tracks": [
@@ -58,360 +59,325 @@
     ]
   }
   </script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/learn.css">
-  <link rel="stylesheet" href="../../assets/curso.css">
-</head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen">
-
-<a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700">Pular para o conteudo</a>
-
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<link href="../../assets/curso.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/curso-ablacao/curso/trilha4/modulo-4-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/en/curso/trilha4/modulo-4-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/curso-ablacao/es/curso/trilha4/modulo-4-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-4-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha4/modulo-4-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha4/modulo-4-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:m-2 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-dark-700" href="#conteudo">Pular para o conteudo</a>
 <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-14 gap-2">
-      <div class="flex items-center space-x-3 flex-shrink-0">
-        <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
-          <span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Auditoria de Ablação</span>
-        </a>
-        <span class="text-neutral-600 hidden sm:inline">|</span>
-        <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline">INEMA.CLUB</a>
-        <span class="text-neutral-600 hidden sm:inline">-</span>
-        <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline">PRO</a>
-      </div>
-      <div class="flex items-center space-x-1">
-        <a href="../trilha1/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Por que apagar</span></a>
-        <a href="../trilha2/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnosticar</span></a>
-        <a href="../trilha3/index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Auditar</span></a>
-        <a href="index.html" class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Provar e manter</span></a>
-        <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" title="Minha jornada">
-          <span aria-hidden="true">◷</span><span class="hidden xl:inline">Jornada</span><span class="inema-journey-badge hidden" aria-hidden="true"></span>
-        </button>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" aria-label="Alternar tema claro/escuro">
-          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-        </button></div>    </div>
-  </div>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">✂️</span><span class="font-bold text-lg hidden lg:inline">Auditoria de Ablação</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200 text-sm font-medium hidden sm:inline" href="https://inema.pro" target="_blank">PRO</a>
+</div>
+<div class="flex items-center space-x-1">
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="lg:hidden">T1</span><span class="hidden lg:inline">Por que apagar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="lg:hidden">T2</span><span class="hidden lg:inline">Diagnosticar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="lg:hidden">T3</span><span class="hidden lg:inline">Auditar</span></a>
+<a class="px-2 sm:px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html"><span class="lg:hidden">T4</span><span class="hidden lg:inline">Provar e manter</span></a>
+<button class="hidden sm:inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-neutral-100 transition-colors" data-inema-journey-open="" title="Minha jornada" type="button">
+<span aria-hidden="true">◷</span><span class="hidden xl:inline">Jornada</span><span aria-hidden="true" class="inema-journey-badge hidden"></span>
+</button>
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button></div> </div>
+</div>
 </nav>
-
-<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4" aria-label="Trilha de navegacao">
-  <div class="flex items-center space-x-2 text-sm text-neutral-400">
-    <a href="../../index.html" class="hover:text-amber-400">Início</a><span>/</span>
-    <a href="index.html" class="hover:text-amber-400">Trilha 4</a><span>/</span>
-    <span class="text-amber-400">Módulo 4.1</span>
-  </div>
+<nav aria-label="Trilha de navegacao" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Trilha 4</a><span>/</span>
+<span class="text-amber-400">Módulo 4.1</span>
+</div>
 </nav>
-
 <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600" data-inema-module="4-1" data-inema-track="4">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.1</span>
-    <h1 class="text-3xl sm:text-4xl font-bold mb-4">📊 O plano de ablação A/B/C</h1>
-    <p class="text-lg text-neutral-400 max-w-3xl">Você cortou. Agora prove. Este módulo transforma a sua opinião sobre o corte em <strong class="text-amber-400">evidência</strong>: três versões da config, tarefas reais do seu trabalho, nove dimensões medidas do mesmo jeito nas três. Sem esse teste, cortar é palpite — e devolver instrução também.</p>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
-      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
-      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">50</div><div class="text-xs text-neutral-400">Minutos</div></div>
-      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Avançado</div><div class="text-xs text-neutral-400">Nível</div></div>
-      <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
-    </div>
-    <div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
-      <div class="flex items-center justify-between">
-        <span class="text-sm text-neutral-300 font-semibold">Progresso deste módulo</span>
-        <div data-inema-meter="modulo:4-1" class="inema-meter text-sm" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do modulo 4.1">
-          <span class="inema-meter-pct text-amber-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span></div>      </div>
-    </div>
-  </div>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📊 O plano de ablação A/B/C</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Você cortou. Agora prove. Este módulo transforma a sua opinião sobre o corte em <strong class="text-amber-400">evidência</strong>: três versões da config, tarefas reais do seu trabalho, nove dimensões medidas do mesmo jeito nas três. Sem esse teste, cortar é palpite — e devolver instrução também.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Avançado</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="mt-6 max-w-2xl bg-dark-800 rounded-xl border border-dark-600 p-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-300 font-semibold">Progresso deste módulo</span>
+<div aria-label="Progresso do modulo 4.1" aria-valuemax="100" aria-valuemin="0" class="inema-meter text-sm" data-inema-meter="modulo:4-1" role="progressbar">
+<span class="inema-meter-pct text-amber-400 font-bold">0%</span><span class="inema-meter-count text-neutral-400 ml-2">0 de 6</span></div> </div>
+</div>
+</div>
 </header>
-
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 <div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
-
-  <nav data-inema-toc aria-label="Indice da pagina" class="hidden lg:block sticky top-24 self-start">
-    <p class="text-sm text-neutral-400 mb-3">Seção <span class="inema-toc-pos">1</span> de <span class="inema-toc-total">6</span></p>
-    <ul class="space-y-1 text-sm">
-      <li><a href="#topico-1" class="inema-toc-link text-neutral-400 hover:text-amber-400">1. Monte as três versões</a></li>
-      <li><a href="#topico-2" class="inema-toc-link text-neutral-400 hover:text-amber-400">2. Escolha 5 a 10 tarefas reais</a></li>
-      <li><a href="#topico-3" class="inema-toc-link text-neutral-400 hover:text-amber-400">3. Meça as nove dimensões</a></li>
-      <li><a href="#topico-4" class="inema-toc-link text-neutral-400 hover:text-amber-400">4. Registre sem se enganar</a></li>
-      <li><a href="#topico-5" class="inema-toc-link text-neutral-400 hover:text-amber-400">5. Leia o resultado e decida</a></li>
-      <li><a href="#topico-6" class="inema-toc-link text-neutral-400 hover:text-amber-400">6. Transforme falhas em evals</a></li>
-    </ul>
-  </nav>
-
-  <main id="conteudo" class="inema-prose">
-
-  <!-- ============ TOPICO 1 ============ -->
-  <section id="topico-1" class="mb-16" data-inema-topic="modulo-4-1#topico-1">
-    <div class="flex items-center space-x-4 mb-6">
-      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
-      <h2 class="text-2xl font-bold">🧪 Monte as três versões</h2>
-      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
-        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
-      </button>
-    </div>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t1-p1">
-      <strong class="text-amber-400">Ablação</strong> é um termo emprestado da pesquisa: remover uma parte do sistema
+<nav aria-label="Indice da pagina" class="hidden lg:block sticky top-24 self-start" data-inema-toc="">
+<p class="text-sm text-neutral-400 mb-3">Seção <span class="inema-toc-pos">1</span> de <span class="inema-toc-total">6</span></p>
+<ul class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. Monte as três versões</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Escolha 5 a 10 tarefas reais</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Meça as nove dimensões</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Registre sem se enganar</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Leia o resultado e decida</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. Transforme falhas em evals</a></li>
+</ul>
+</nav>
+<main class="inema-prose" id="conteudo">
+<!-- ============ TOPICO 1 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-1" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🧪 Monte as três versões</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar duvida neste topico" type="button">
+<span aria-hidden="true">?</span><span>Tenho dúvida</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t1-p1">
+<strong class="text-amber-400">Ablação</strong> é um termo emprestado da pesquisa: remover uma parte do sistema
       para medir o que ela realmente contribuía. Aqui a parte removida são instruções da sua config. E medir exige
       pelo menos duas configurações rodando a mesma coisa — na prática, três: <strong class="text-amber-400">A</strong>,
       <strong class="text-amber-400">B</strong> e <strong class="text-amber-400">C</strong>.
     </p>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t1-p2">
-      <strong class="text-amber-400">A</strong> é a sua config atual, intacta — a <strong class="text-amber-400">linha
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t1-p2">
+<strong class="text-amber-400">A</strong> é a sua config atual, intacta — a <strong class="text-amber-400">linha
       de base</strong> (o ponto de comparação honesto, aquilo que você tem hoje e não pode piorar sem perceber).
       <strong class="text-amber-400">B</strong> é a versão simplificada, com cerca de 50% menos instruções: você
       manteve o que parecia essencial e cortou o resto. <strong class="text-amber-400">C</strong> é a versão mínima:
       contexto essencial + objetivo + guardrails + critérios de qualidade + verificação. Nada além disso.
     </p>
-
-    <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
-      <svg viewBox="0 0 1000 360" class="w-full h-auto" role="img" aria-label="Três colunas verticais rotuladas A config atual, B simplificada e C mínima, com alturas de conteúdo decrescentes. Cinco faixas horizontais cianas rotuladas tarefa 1 a tarefa 5 atravessam as três colunas da esquerda para a direita, mostrando que as mesmas cinco tarefas passam pelas três versões. A coluna C está destacada com brilho.">
-        <defs>
-          <linearGradient id="m41a-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
-          <filter id="m41a-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          <pattern id="m41a-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#f59e0b" opacity="0.12"/></pattern>
-          <marker id="m41a-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"/></marker>
-        </defs>
-        <rect x="0" y="0" width="1000" height="360" fill="url(#m41a-grid)"/>
-        <rect x="90" y="40" width="220" height="240" rx="14" fill="#1f1604" stroke="#fbbf24" stroke-width="2"/>
-        <rect x="370" y="100" width="220" height="180" rx="14" fill="#1f1604" stroke="#fbbf24" stroke-width="2"/>
-        <g filter="url(#m41a-glow)"><rect x="650" y="180" width="220" height="100" rx="14" fill="#1f1604" stroke="url(#m41a-grad)" stroke-width="2.5"/></g>
-        <g font-family="Inter,sans-serif" text-anchor="middle">
-          <text x="200" y="28" fill="#fbbf24" font-size="15" font-weight="700">A — config atual</text><text x="480" y="88" fill="#fbbf24" font-size="15" font-weight="700">B — 50% menos</text><text x="760" y="168" fill="#fbbf24" font-size="15" font-weight="700">C — mínima</text>
-          <text x="200" y="66" fill="#fcd9a0" font-size="12">tudo que existe hoje</text><text x="480" y="126" fill="#fcd9a0" font-size="12">metade das instruções</text>
-          <text x="760" y="206" fill="#fcd9a0" font-size="12">contexto + objetivo +</text><text x="760" y="224" fill="#fcd9a0" font-size="12">guardrails + critérios + verificação</text>
-        </g>
-        <g stroke="#38bdf8" stroke-width="1.6" opacity="0.75" fill="none"><path d="M40,300 L960,300" marker-end="url(#m41a-ah)"/><path d="M40,314 L960,314" marker-end="url(#m41a-ah)"/><path d="M40,328 L960,328" marker-end="url(#m41a-ah)"/></g>
-        <text x="40" y="292" fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600">as MESMAS 5 tarefas reais atravessam A, B e C</text>
-        <text x="500" y="352" text-anchor="middle" fill="#fcd9a0" font-family="Inter,sans-serif" font-size="13">o que muda entre as colunas é só a config — a tarefa é idêntica nas três</text>
-      </svg>
-    </div>
-    <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar:</strong> as colunas encolhem da esquerda para a direita, mas as faixas cianas atravessam as três com o mesmo comprimento. É esse detalhe que faz o teste valer: a variável que muda é uma só (a config). Se você também trocar a tarefa, o modelo ou o prompt de entrada, o resultado não diz mais nada sobre o corte.</p>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
-        <h4 class="font-bold text-emerald-400 mb-4">✓ O que ENTRA na versão C</h4>
-        <ul class="space-y-3 text-neutral-300 text-sm">
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Contexto essencial</strong> — identidade do projeto, caminhos, fontes de verdade, convenções internas. O modelo não infere isso.</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Objetivo</strong> — o resultado que deve ser produzido, em uma frase.</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Guardrails</strong> — os limites inegociáveis: segurança, compliance, o que nunca pode ser tocado.</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Critérios de qualidade</strong> — o que caracteriza "ficou bom".</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Verificação</strong> — como o modelo confere o próprio trabalho antes de encerrar.</span></li>
-        </ul>
-      </div>
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-        <h4 class="font-bold text-red-400 mb-4">✗ O que FICA DE FORA da versão C</h4>
-        <ul class="space-y-3 text-neutral-300 text-sm">
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Passo a passo de execução ("primeiro faça X, depois Y, então Z").</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Regra repetida em três lugares diferentes.</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Correção de comportamento de um modelo que não roda mais.</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Exemplos em excesso e formatação rígida sem motivo declarado.</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Instruções que ensinam o modelo a <em>pensar</em> em vez de dizer o que entregar.</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> C não é "config vazia"</h3>
-      <p class="text-neutral-300">O erro mais comum ao montar C é confundir mínima com nenhuma. Se você apagar o caminho do repositório, o nome do domínio, a conta de git, o formato do arquivo de saída — o modelo não tem como adivinhar. Isso não é peso morto, é contexto que só existe na sua cabeça e nos seus arquivos. <strong class="text-neutral-100">C corta instruções de execução; C preserva contexto que o modelo não consegue inferir.</strong></p>
-    </div>
-
-    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Ablação</div><p class="text-xs text-neutral-400">Remover para medir impacto</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Linha de base</div><p class="text-xs text-neutral-400">A é o ponto de comparação</p></div>
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Versão C</div><p class="text-xs text-neutral-400">Contexto + objetivo + guardrails + critérios + verificação</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Mínima ≠ vazia</div><p class="text-xs text-neutral-400">Contexto não-inferível fica</p></div>
-      </div>
-    </div>
-
-    <div class="flex justify-start mt-6">
-      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- ============ TOPICO 2 ============ -->
-  <section id="topico-2" class="mb-16" data-inema-topic="modulo-4-1#topico-2">
-    <div class="flex items-center space-x-4 mb-6">
-      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
-      <h2 class="text-2xl font-bold">🎯 Escolha 5 a 10 tarefas reais</h2>
-      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
-        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
-      </button>
-    </div>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t2-p1">
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Três colunas verticais rotuladas A config atual, B simplificada e C mínima, com alturas de conteúdo decrescentes. Cinco faixas horizontais cianas rotuladas tarefa 1 a tarefa 5 atravessam as três colunas da esquerda para a direita, mostrando que as mesmas cinco tarefas passam pelas três versões. A coluna C está destacada com brilho." class="w-full h-auto" role="img" viewbox="0 0 1000 360">
+<defs>
+<lineargradient id="m41a-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m41a-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m41a-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#f59e0b" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m41a-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m41a-grid)" height="360" width="1000" x="0" y="0"></rect>
+<rect fill="#1f1604" height="240" rx="14" stroke="#fbbf24" stroke-width="2" width="220" x="90" y="40"></rect>
+<rect fill="#1f1604" height="180" rx="14" stroke="#fbbf24" stroke-width="2" width="220" x="370" y="100"></rect>
+<g filter="url(#m41a-glow)"><rect fill="#1f1604" height="100" rx="14" stroke="url(#m41a-grad)" stroke-width="2.5" width="220" x="650" y="180"></rect></g>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<text fill="#fbbf24" font-size="15" font-weight="700" x="200" y="28">A — config atual</text><text fill="#fbbf24" font-size="15" font-weight="700" x="480" y="88">B — 50% menos</text><text fill="#fbbf24" font-size="15" font-weight="700" x="760" y="168">C — mínima</text>
+<text fill="#fcd9a0" font-size="12" x="200" y="66">tudo que existe hoje</text><text fill="#fcd9a0" font-size="12" x="480" y="126">metade das instruções</text>
+<text fill="#fcd9a0" font-size="12" x="760" y="206">contexto + objetivo +</text><text fill="#fcd9a0" font-size="12" x="760" y="224">guardrails + critérios + verificação</text>
+</g>
+<g fill="none" opacity="0.75" stroke="#38bdf8" stroke-width="1.6"><path d="M40,300 L960,300" marker-end="url(#m41a-ah)"></path><path d="M40,314 L960,314" marker-end="url(#m41a-ah)"></path><path d="M40,328 L960,328" marker-end="url(#m41a-ah)"></path></g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" x="40" y="292">as MESMAS 5 tarefas reais atravessam A, B e C</text>
+<text fill="#fcd9a0" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="500" y="352">o que muda entre as colunas é só a config — a tarefa é idêntica nas três</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar:</strong> as colunas encolhem da esquerda para a direita, mas as faixas cianas atravessam as três com o mesmo comprimento. É esse detalhe que faz o teste valer: a variável que muda é uma só (a config). Se você também trocar a tarefa, o modelo ou o prompt de entrada, o resultado não diz mais nada sobre o corte.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ O que ENTRA na versão C</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Contexto essencial</strong> — identidade do projeto, caminhos, fontes de verdade, convenções internas. O modelo não infere isso.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Objetivo</strong> — o resultado que deve ser produzido, em uma frase.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Guardrails</strong> — os limites inegociáveis: segurança, compliance, o que nunca pode ser tocado.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Critérios de qualidade</strong> — o que caracteriza "ficou bom".</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Verificação</strong> — como o modelo confere o próprio trabalho antes de encerrar.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ O que FICA DE FORA da versão C</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Passo a passo de execução ("primeiro faça X, depois Y, então Z").</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Regra repetida em três lugares diferentes.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Correção de comportamento de um modelo que não roda mais.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Exemplos em excesso e formatação rígida sem motivo declarado.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Instruções que ensinam o modelo a <em>pensar</em> em vez de dizer o que entregar.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> C não é "config vazia"</h3>
+<p class="text-neutral-300">O erro mais comum ao montar C é confundir mínima com nenhuma. Se você apagar o caminho do repositório, o nome do domínio, a conta de git, o formato do arquivo de saída — o modelo não tem como adivinhar. Isso não é peso morto, é contexto que só existe na sua cabeça e nos seus arquivos. <strong class="text-neutral-100">C corta instruções de execução; C preserva contexto que o modelo não consegue inferir.</strong></p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Ablação</div><p class="text-xs text-neutral-400">Remover para medir impacto</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Linha de base</div><p class="text-xs text-neutral-400">A é o ponto de comparação</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Versão C</div><p class="text-xs text-neutral-400">Contexto + objetivo + guardrails + critérios + verificação</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Mínima ≠ vazia</div><p class="text-xs text-neutral-400">Contexto não-inferível fica</p></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 2 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-2" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🎯 Escolha 5 a 10 tarefas reais</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar duvida neste topico" type="button">
+<span aria-hidden="true">?</span><span>Tenho dúvida</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t2-p1">
       Tarefa real é tarefa que você já fez ou vai fazer de qualquer jeito nesta semana: publicar um post, refatorar
       um módulo, gerar um relatório, montar uma página. Tarefa hipotética — "peça pro modelo escrever uma função de
       fibonacci" — não testa nada da sua config, porque a sua config não foi escrita para fibonacci.
     </p>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t2-p2">
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t2-p2">
       Cinco tarefas é o mínimo para o resultado não ser sorte; dez é o teto prático antes de a rodada virar um projeto
       em si. O conjunto precisa ser <strong class="text-amber-400">representativo</strong>: se 70% do seu trabalho é
       escrever conteúdo e 30% é mexer em código, a grade deve refletir mais ou menos essa proporção.
     </p>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
-        <h4 class="font-bold text-emerald-400 mb-4">✓ Uma boa grade de tarefas tem</h4>
-        <ul class="space-y-3 text-neutral-300 text-sm">
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Cobertura dos tipos de trabalho que você faz de verdade</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Pelo menos uma tarefa em que a config atual claramente ajuda</strong> — sem ela, o teste já nasce torcendo pelo corte</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Pelo menos uma tarefa difícil, um pouco acima do que você acha que o modelo aguenta</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Entradas concretas: os arquivos, os links, os dados reais que a tarefa usa</span></li>
-        </ul>
-      </div>
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-        <h4 class="font-bold text-red-400 mb-4">✗ Sinais de uma grade enviesada</h4>
-        <ul class="space-y-3 text-neutral-300 text-sm">
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Todas as tarefas são fáceis — qualquer versão passa, o teste não separa nada</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Nenhuma toca as regras que você quer manter</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você escolheu as tarefas depois de já ter decidido cortar</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>São todas do mesmo tipo (só código, só texto)</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Alerta: o viés da tarefa de brinquedo</h3>
-      <p class="text-neutral-300 mb-3"><strong class="text-neutral-100">Viés</strong> aqui é qualquer escolha de teste que empurra o resultado para o lado que você já preferia. Testar com tarefa de brinquedo é a forma mais comum e mais silenciosa de "provar" aquilo em que você já queria acreditar: numa tarefa trivial, A, B e C empatam sempre — e o empate parece uma licença para cortar tudo.</p>
-      <p class="text-neutral-300">O antídoto é escolher as tarefas <em>antes</em> de montar B e C, e incluir de propósito uma em que você aposta que a config atual faz diferença. Se ela empatar mesmo assim, aí você aprendeu algo.</p>
-    </div>
-
-    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">5 a 10 tarefas</div><p class="text-xs text-neutral-400">Mínimo contra sorte</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Representativa</div><p class="text-xs text-neutral-400">Espelha o seu trabalho real</p></div>
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Viés</div><p class="text-xs text-neutral-400">Teste que já sabe o que quer provar</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Tarefa difícil</div><p class="text-xs text-neutral-400">É onde as versões se separam</p></div>
-      </div>
-    </div>
-
-    <div class="flex justify-start mt-6">
-      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- ============ TOPICO 3 ============ -->
-  <section id="topico-3" class="mb-16" data-inema-topic="modulo-4-1#topico-3">
-    <div class="flex items-center space-x-4 mb-6">
-      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
-      <h2 class="text-2xl font-bold">📏 Meça as nove dimensões</h2>
-      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
-        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
-      </button>
-    </div>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t3-p1">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Uma boa grade de tarefas tem</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Cobertura dos tipos de trabalho que você faz de verdade</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Pelo menos uma tarefa em que a config atual claramente ajuda</strong> — sem ela, o teste já nasce torcendo pelo corte</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Pelo menos uma tarefa difícil, um pouco acima do que você acha que o modelo aguenta</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Entradas concretas: os arquivos, os links, os dados reais que a tarefa usa</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Sinais de uma grade enviesada</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Todas as tarefas são fáceis — qualquer versão passa, o teste não separa nada</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Nenhuma toca as regras que você quer manter</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você escolheu as tarefas depois de já ter decidido cortar</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>São todas do mesmo tipo (só código, só texto)</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Alerta: o viés da tarefa de brinquedo</h3>
+<p class="text-neutral-300 mb-3"><strong class="text-neutral-100">Viés</strong> aqui é qualquer escolha de teste que empurra o resultado para o lado que você já preferia. Testar com tarefa de brinquedo é a forma mais comum e mais silenciosa de "provar" aquilo em que você já queria acreditar: numa tarefa trivial, A, B e C empatam sempre — e o empate parece uma licença para cortar tudo.</p>
+<p class="text-neutral-300">O antídoto é escolher as tarefas <em>antes</em> de montar B e C, e incluir de propósito uma em que você aposta que a config atual faz diferença. Se ela empatar mesmo assim, aí você aprendeu algo.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">5 a 10 tarefas</div><p class="text-xs text-neutral-400">Mínimo contra sorte</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Representativa</div><p class="text-xs text-neutral-400">Espelha o seu trabalho real</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Viés</div><p class="text-xs text-neutral-400">Teste que já sabe o que quer provar</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Tarefa difícil</div><p class="text-xs text-neutral-400">É onde as versões se separam</p></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 3 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-3" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">📏 Meça as nove dimensões</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar duvida neste topico" type="button">
+<span aria-hidden="true">?</span><span>Tenho dúvida</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t3-p1">
       "Ficou melhor" não é medida. Nove dimensões cobrem o que importa, e cada uma tem uma forma simples de pontuar:
       escala de 1 a 5 quando o julgamento é inevitável, contagem objetiva sempre que der. Contagem é sempre preferível —
       "3 correções" não admite discussão; "qualidade 4" admite.
     </p>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t3-p2">
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t3-p2">
       Três dessas dimensões costumam ser ignoradas e são justamente as que revelam config inchada:
       <strong class="text-amber-400">autonomia</strong> (quanto o modelo avança sozinho antes de parar para perguntar),
       <strong class="text-amber-400">aderência</strong> (se ele respeitou as regras que você <em>quis</em> manter — não
       todas as regras que existiam) e a <strong class="text-amber-400">capacidade de verificar o próprio trabalho</strong>.
     </p>
-
-    <div class="overflow-x-auto mb-6">
-      <table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
-        <thead class="bg-dark-800">
-          <tr class="text-left">
-            <th class="px-4 py-3 text-amber-400 font-semibold">Dimensão</th>
-            <th class="px-4 py-3 text-amber-400 font-semibold">O que é</th>
-            <th class="px-4 py-3 text-amber-400 font-semibold">Como pontuar</th>
-          </tr>
-        </thead>
-        <tbody class="text-neutral-300">
-          <tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Qualidade</td><td class="px-4 py-3">O resultado atende os critérios que você definiu</td><td class="px-4 py-3 text-neutral-400">1–5 (1 = refaria do zero, 5 = entregaria como está)</td></tr>
-          <tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Aderência</td><td class="px-4 py-3">Respeitou as regras que você quis manter</td><td class="px-4 py-3 text-neutral-400">Contagem: quantas das N regras-alvo foram cumpridas</td></tr>
-          <tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Autonomia</td><td class="px-4 py-3">Quanto avançou sem pedir socorro</td><td class="px-4 py-3 text-neutral-400">Contagem: nº de perguntas/interrupções ao humano</td></tr>
-          <tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Correções humanas</td><td class="px-4 py-3">Quantas vezes você teve de intervir e corrigir</td><td class="px-4 py-3 text-neutral-400">Contagem direta (0, 1, 2, …)</td></tr>
-          <tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Consistência</td><td class="px-4 py-3">Mesma tarefa, duas rodadas: dá o mesmo tipo de resultado?</td><td class="px-4 py-3 text-neutral-400">Igual / parecido / diferente — rode a tarefa 2×</td></tr>
-          <tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Tempo</td><td class="px-4 py-3">Do envio até a entrega utilizável</td><td class="px-4 py-3 text-neutral-400">Minutos, no relógio</td></tr>
-          <tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Uso desnecessário de ferramentas</td><td class="px-4 py-3">Buscas, leituras e comandos que não serviram para nada</td><td class="px-4 py-3 text-neutral-400">Contagem de chamadas descartáveis</td></tr>
-          <tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Complexidade</td><td class="px-4 py-3">Tamanho da config que produziu aquilo</td><td class="px-4 py-3 text-neutral-400">Nº de linhas / nº de regras da versão</td></tr>
-          <tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Autoverificação</td><td class="px-4 py-3">Ele conferiu o próprio trabalho antes de encerrar?</td><td class="px-4 py-3 text-neutral-400">Não / conferiu superficial / conferiu com evidência</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> A função-objetivo, em uma linha</h3>
-      <p class="text-neutral-300 mb-3">Você não está buscando a config mais curta. Está buscando o maior valor de <strong class="text-neutral-100">(qualidade + autonomia + verificabilidade) ÷ complexidade</strong>.</p>
-      <p class="text-neutral-300">Por isso complexidade entra na tabela como uma dimensão medida, e não como um objetivo à parte: cortar 200 linhas e perder autonomia é um péssimo negócio; cortar 200 linhas mantendo tudo igual é lucro puro de contexto.</p>
-    </div>
-
-    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Aderência</div><p class="text-xs text-neutral-400">Cumpriu as regras-alvo</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Autonomia</div><p class="text-xs text-neutral-400">Menos interrupções = melhor</p></div>
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Contagem &gt; nota</div><p class="text-xs text-neutral-400">Objetivo sempre que der</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Autoverificação</div><p class="text-xs text-neutral-400">A dimensão mais esquecida</p></div>
-      </div>
-    </div>
-
-    <div class="flex justify-start mt-6">
-      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- ============ TOPICO 4 ============ -->
-  <section id="topico-4" class="mb-16" data-inema-topic="modulo-4-1#topico-4">
-    <div class="flex items-center space-x-4 mb-6">
-      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
-      <h2 class="text-2xl font-bold">📝 Registre sem se enganar</h2>
-      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
-        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
-      </button>
-    </div>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t4-p1">
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead class="bg-dark-800">
+<tr class="text-left">
+<th class="px-4 py-3 text-amber-400 font-semibold">Dimensão</th>
+<th class="px-4 py-3 text-amber-400 font-semibold">O que é</th>
+<th class="px-4 py-3 text-amber-400 font-semibold">Como pontuar</th>
+</tr>
+</thead>
+<tbody class="text-neutral-300">
+<tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Qualidade</td><td class="px-4 py-3">O resultado atende os critérios que você definiu</td><td class="px-4 py-3 text-neutral-400">1–5 (1 = refaria do zero, 5 = entregaria como está)</td></tr>
+<tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Aderência</td><td class="px-4 py-3">Respeitou as regras que você quis manter</td><td class="px-4 py-3 text-neutral-400">Contagem: quantas das N regras-alvo foram cumpridas</td></tr>
+<tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Autonomia</td><td class="px-4 py-3">Quanto avançou sem pedir socorro</td><td class="px-4 py-3 text-neutral-400">Contagem: nº de perguntas/interrupções ao humano</td></tr>
+<tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Correções humanas</td><td class="px-4 py-3">Quantas vezes você teve de intervir e corrigir</td><td class="px-4 py-3 text-neutral-400">Contagem direta (0, 1, 2, …)</td></tr>
+<tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Consistência</td><td class="px-4 py-3">Mesma tarefa, duas rodadas: dá o mesmo tipo de resultado?</td><td class="px-4 py-3 text-neutral-400">Igual / parecido / diferente — rode a tarefa 2×</td></tr>
+<tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Tempo</td><td class="px-4 py-3">Do envio até a entrega utilizável</td><td class="px-4 py-3 text-neutral-400">Minutos, no relógio</td></tr>
+<tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Uso desnecessário de ferramentas</td><td class="px-4 py-3">Buscas, leituras e comandos que não serviram para nada</td><td class="px-4 py-3 text-neutral-400">Contagem de chamadas descartáveis</td></tr>
+<tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Complexidade</td><td class="px-4 py-3">Tamanho da config que produziu aquilo</td><td class="px-4 py-3 text-neutral-400">Nº de linhas / nº de regras da versão</td></tr>
+<tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Autoverificação</td><td class="px-4 py-3">Ele conferiu o próprio trabalho antes de encerrar?</td><td class="px-4 py-3 text-neutral-400">Não / conferiu superficial / conferiu com evidência</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> A função-objetivo, em uma linha</h3>
+<p class="text-neutral-300 mb-3">Você não está buscando a config mais curta. Está buscando o maior valor de <strong class="text-neutral-100">(qualidade + autonomia + verificabilidade) ÷ complexidade</strong>.</p>
+<p class="text-neutral-300">Por isso complexidade entra na tabela como uma dimensão medida, e não como um objetivo à parte: cortar 200 linhas e perder autonomia é um péssimo negócio; cortar 200 linhas mantendo tudo igual é lucro puro de contexto.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Aderência</div><p class="text-xs text-neutral-400">Cumpriu as regras-alvo</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Autonomia</div><p class="text-xs text-neutral-400">Menos interrupções = melhor</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Contagem &gt; nota</div><p class="text-xs text-neutral-400">Objetivo sempre que der</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Autoverificação</div><p class="text-xs text-neutral-400">A dimensão mais esquecida</p></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 4 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-4" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">📝 Registre sem se enganar</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar duvida neste topico" type="button">
+<span aria-hidden="true">?</span><span>Tenho dúvida</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t4-p1">
       Três coisas ficam congeladas em toda rodada: <strong class="text-amber-400">mesma tarefa, mesmo modelo, mesmo
       prompt de entrada</strong>. Só a config muda. Comparar o A de ontem, no modelo antigo, com o C de hoje numa
       tarefa parecida não é ablação — é anedota.
     </p>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t4-p2">
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t4-p2">
       E há uma regra que separa quem mede de quem se convence: <strong class="text-amber-400">escreva antes de olhar
       a resposta o que seria "bom"</strong>. Se você define o critério depois de ler a saída, seu cérebro ajusta o
       critério à saída — você vai achar ótimo o que veio e não vai perceber que mudou a régua. Anote a régua primeiro,
       depois rode.
     </p>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-      <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
-        <h4 class="font-bold text-emerald-400 mb-4">✓ Protocolo honesto</h4>
-        <ul class="space-y-3 text-neutral-300 text-sm">
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escrever o "o que seria bom" na grade antes de rodar</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Rodar A, B e C na mesma sessão de trabalho, no mesmo dia</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Preencher a linha da grade logo após cada rodada, não no fim do dia</span></li>
-          <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar o link/arquivo da saída de cada rodada, para reler depois</span></li>
-        </ul>
-      </div>
-      <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
-        <h4 class="font-bold text-red-400 mb-4">✗ Como você se engana</h4>
-        <ul class="space-y-3 text-neutral-300 text-sm">
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comparar A de ontem com C de hoje, em tarefas diferentes</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Trocar de modelo no meio da rodada</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reescrever o prompt de entrada "só um pouquinho" na versão C</span></li>
-          <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Julgar a qualidade de memória, dois dias depois, sem anotação</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">📋</span> Copie: a grade de registro</h3>
-      <p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> criar o arquivo <code class="text-amber-400">ablacao-grade.md</code> ao lado do seu <code class="text-amber-400">ablacao-diario.md</code> (do módulo 1.2). Uma tabela por tarefa, três linhas por tabela — A, B e C.</p>
-
-      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Protocolo honesto</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escrever o "o que seria bom" na grade antes de rodar</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Rodar A, B e C na mesma sessão de trabalho, no mesmo dia</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Preencher a linha da grade logo após cada rodada, não no fim do dia</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Guardar o link/arquivo da saída de cada rodada, para reler depois</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Como você se engana</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comparar A de ontem com C de hoje, em tarefas diferentes</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Trocar de modelo no meio da rodada</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reescrever o prompt de entrada "só um pouquinho" na versão C</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Julgar a qualidade de memória, dois dias depois, sem anotação</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">📋</span> Copie: a grade de registro</h3>
+<p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> criar o arquivo <code class="text-amber-400">ablacao-grade.md</code> ao lado do seu <code class="text-amber-400">ablacao-diario.md</code> (do módulo 1.2). Uma tabela por tarefa, três linhas por tabela — A, B e C.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
 <pre class="text-sm text-neutral-300"># Grade de ablação A/B/C
 
 Modelo usado: &lt;nome do modelo&gt;      Data: &lt;aaaa-mm-dd&gt;
@@ -432,182 +398,164 @@ Observações (o que quebrou, em qual versão, com trecho):
 
 ## Tarefa 2 — &lt;sua tarefa aqui&gt;
 (repita o bloco acima)</pre>
-      </div>
-
-      <div class="bg-dark-700/50 rounded-lg p-4">
-        <p class="text-sm text-neutral-300"><strong class="text-amber-400">Como verificar:</strong> a linha
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-sm text-neutral-300"><strong class="text-amber-400">Como verificar:</strong> a linha
         "O que seria BOM" está preenchida <em>antes</em> de qualquer célula da tabela. Se você preencheu a tabela
         primeiro e o critério depois, apague o critério e refaça a tarefa — o registro está contaminado.</p>
-      </div>
-    </div>
-
-    <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consistência custa uma rodada extra</h3>
-      <p class="text-neutral-300">A dimensão "consistência" exige rodar a mesma tarefa duas vezes na mesma versão. Faça isso pelo menos na versão C e na tarefa difícil — é ali que a instabilidade aparece. Nas outras células, se faltar tempo, marque "não medido" em vez de chutar. Célula vazia é honesta; célula chutada estraga a leitura.</p>
-    </div>
-
-    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Três congelados</div><p class="text-xs text-neutral-400">Tarefa, modelo, prompt</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Régua primeiro</div><p class="text-xs text-neutral-400">Critério antes da resposta</p></div>
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">ablacao-grade.md</div><p class="text-xs text-neutral-400">Onde o teste vira registro</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Não medido</div><p class="text-xs text-neutral-400">Melhor que chutado</p></div>
-      </div>
-    </div>
-
-    <div class="flex justify-start mt-6">
-      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- ============ TOPICO 5 ============ -->
-  <section id="topico-5" class="mb-16" data-inema-topic="modulo-4-1#topico-5">
-    <div class="flex items-center space-x-4 mb-6">
-      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
-      <h2 class="text-2xl font-bold">⚖️ Leia o resultado e decida</h2>
-      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
-        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
-      </button>
-    </div>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t5-p1">
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consistência custa uma rodada extra</h3>
+<p class="text-neutral-300">A dimensão "consistência" exige rodar a mesma tarefa duas vezes na mesma versão. Faça isso pelo menos na versão C e na tarefa difícil — é ali que a instabilidade aparece. Nas outras células, se faltar tempo, marque "não medido" em vez de chutar. Célula vazia é honesta; célula chutada estraga a leitura.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Três congelados</div><p class="text-xs text-neutral-400">Tarefa, modelo, prompt</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Régua primeiro</div><p class="text-xs text-neutral-400">Critério antes da resposta</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">ablacao-grade.md</div><p class="text-xs text-neutral-400">Onde o teste vira registro</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Não medido</div><p class="text-xs text-neutral-400">Melhor que chutado</p></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 5 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-5" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚖️ Leia o resultado e decida</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar duvida neste topico" type="button">
+<span aria-hidden="true">?</span><span>Tenho dúvida</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t5-p1">
       A leitura da grade tem três desfechos, e só três. Onde <strong class="text-amber-400">C empatou com A</strong>,
       as instruções que estavam em A e sumiram em C eram peso morto: ficam fora, definitivamente. Onde
       <strong class="text-amber-400">C piorou uma única vez</strong>, isso não conta — uma rodada ruim é ruído, e
       devolver instrução por causa dela é como reescrever a config toda vez que o modelo boceja.
     </p>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t5-p2">
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t5-p2">
       Onde <strong class="text-amber-400">C piorou de forma repetida</strong>, aí sim entra a regra de reintrodução.
       E há um quarto caso que aparece com frequência e surpreende: <strong class="text-amber-400">B ganhando de A e
       de C</strong>. Quando isso acontece, você achou o ponto ótimo — normalmente é ali que a config fica.
     </p>
-
-    <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
-      <svg viewBox="0 0 1000 320" class="w-full h-auto" role="img" aria-label="Fluxo de decisão em losango a partir da pergunta C empatou com A. Ramo sim leva a a instrução era peso morto, fica fora. Ramo não leva a segunda pergunta piorou mais de uma vez. Ramo não dessa segunda pergunta leva a foi ruído, não conta, mantenha C. Ramo sim leva à caixa destacada com brilho devolva a instrução na forma mais curta possível.">
-        <defs>
-          <linearGradient id="m41b-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
-          <filter id="m41b-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          <pattern id="m41b-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#f59e0b" opacity="0.12"/></pattern>
-          <marker id="m41b-aha" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"/></marker>
-        </defs>
-        <rect x="0" y="0" width="1000" height="320" fill="url(#m41b-grid)"/>
-        <g font-family="Inter,sans-serif" font-size="13" font-weight="600">
-          <rect x="30" y="120" width="180" height="64" rx="12" fill="#1f1604" stroke="#fbbf24" stroke-width="2"/>
-          <text x="120" y="147" text-anchor="middle" fill="#fbbf24" font-size="14">C empatou com A?</text><text x="120" y="167" text-anchor="middle" fill="#fcd9a0" font-size="11.5">olhe a linha da grade</text>
-          <rect x="290" y="24" width="230" height="60" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
-          <text x="405" y="48" text-anchor="middle" fill="#bfe6ff">SIM → era peso morto</text><text x="405" y="68" text-anchor="middle" fill="#8ecdf5" font-size="11.5">fica fora, definitivamente</text>
-          <rect x="290" y="200" width="230" height="64" rx="12" fill="#1f1604" stroke="#fbbf24" stroke-width="2"/>
-          <text x="405" y="226" text-anchor="middle" fill="#fbbf24" font-size="14">NÃO → piorou repetido?</text><text x="405" y="246" text-anchor="middle" fill="#fcd9a0" font-size="11.5">a MESMA classe de falha, 2×+</text>
-          <rect x="600" y="30" width="240" height="60" rx="12" fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8"/>
-          <text x="720" y="54" text-anchor="middle" fill="#bfe6ff">Uma vez só → foi ruído</text><text x="720" y="74" text-anchor="middle" fill="#8ecdf5" font-size="11.5">não conta, mantenha C</text>
-          <g filter="url(#m41b-glow)"><rect x="600" y="205" width="360" height="72" rx="14" fill="#1f1604" stroke="url(#m41b-grad)" stroke-width="2.5"/></g>
-          <text x="780" y="232" text-anchor="middle" fill="#fbbf24" font-size="14">Repetiu → devolva a instrução</text><text x="780" y="254" text-anchor="middle" fill="#fcd9a0" font-size="11.5">na forma mais curta que resolve aquela falha</text>
-        </g>
-        <g stroke="#38bdf8" stroke-width="1.8" fill="none" marker-end="url(#m41b-aha)"><path d="M120,120 L120,54 L290,54"/><path d="M120,184 L120,232 L290,232"/><path d="M405,200 L405,60 L600,60"/><path d="M520,240 L600,240"/></g>
-        <text x="500" y="305" text-anchor="middle" fill="#fcd9a0" font-family="Inter,sans-serif" font-size="13">só o caminho de baixo, com falha repetida, autoriza devolver instrução</text>
-      </svg>
-    </div>
-    <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar:</strong> há quatro saídas possíveis e apenas <em>uma</em> devolve instrução para a config. Repare que "C piorou" sozinho não é uma saída — ele precisa passar pelo segundo losango. Esse desenho existe para você resistir ao impulso de reescrever a config na primeira frustração.</p>
-
-    <div class="space-y-6 mb-6">
-      <div class="flex items-start space-x-4">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
-        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-          <h4 class="font-semibold text-white mb-2">Houve falha real</h4>
-          <p class="text-neutral-300 text-sm">Não "ficou meio esquisito": algo que você teve de corrigir, ou que quebrou um critério que estava escrito antes de rodar. Falha registrada na grade, com trecho.</p>
-        </div>
-      </div>
-      <div class="flex items-start space-x-4">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
-        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-          <h4 class="font-semibold text-white mb-2">A mesma classe de falha se repetiu</h4>
-          <p class="text-neutral-300 text-sm">Duas ocorrências do mesmo tipo — não dois erros diferentes. "Esqueceu de rodar o teste" duas vezes é classe repetida; "esqueceu o teste" e "usou o autor errado" são duas classes de uma ocorrência cada.</p>
-        </div>
-      </div>
-      <div class="flex items-start space-x-4">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
-        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-          <h4 class="font-semibold text-white mb-2">Está claro que uma instrução específica resolve</h4>
-          <p class="text-neutral-300 text-sm">Se você não consegue escrever a frase que teria evitado a falha, o problema não é falta de instrução — talvez seja falta de skill (procedimento) ou de contexto que o modelo não alcança.</p>
-        </div>
-      </div>
-      <div class="flex items-start space-x-4">
-        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">4</span></div>
-        <div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
-          <h4 class="font-semibold text-white mb-2">Ela cabe na forma mais curta possível</h4>
-          <p class="text-neutral-300 text-sm">Uma frase, um critério, uma verificação. Se a instrução que voltou tem oito passos, você não devolveu uma regra — devolveu o microgerenciamento que tinha acabado de cortar.</p></div>      </div>
-    </div>
-
-    <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> Quando B vence, B fica</h3>
-      <p class="text-neutral-300">Se B empata com A em qualidade e aderência, mas ganha em autonomia e complexidade — e C perde em duas tarefas repetidamente — a resposta não é forçar C. É adotar B como nova linha de base e rodar a próxima ablação a partir dela em seis meses. Ablação é iterativa: o C de hoje é o A da próxima rodada.</p>
-    </div>
-
-    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Empate = corte</div><p class="text-xs text-neutral-400">Era peso morto</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Uma vez = ruído</div><p class="text-xs text-neutral-400">Não devolve nada</p></div>
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">4 condições</div><p class="text-xs text-neutral-400">Regra de reintrodução</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">B vencedor</div><p class="text-xs text-neutral-400">O ponto ótimo comum</p></div>
-      </div>
-    </div>
-
-    <div class="flex justify-start mt-6">
-      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- ============ TOPICO 6 ============ -->
-  <section id="topico-6" class="mb-16" data-inema-topic="modulo-4-1#topico-6">
-    <div class="flex items-center space-x-4 mb-6">
-      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
-      <h2 class="text-2xl font-bold">🔁 Transforme falhas em evals</h2>
-      <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar duvida neste topico" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm">
-        <span aria-hidden="true">?</span><span>Tenho dúvida</span>
-      </button>
-    </div>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t6-p1">
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden">
+<svg aria-label="Fluxo de decisão em losango a partir da pergunta C empatou com A. Ramo sim leva a a instrução era peso morto, fica fora. Ramo não leva a segunda pergunta piorou mais de uma vez. Ramo não dessa segunda pergunta leva a foi ruído, não conta, mantenha C. Ramo sim leva à caixa destacada com brilho devolva a instrução na forma mais curta possível." class="w-full h-auto" role="img" viewbox="0 0 1000 320">
+<defs>
+<lineargradient id="m41b-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m41b-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m41b-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#f59e0b" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m41b-aha" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m41b-grid)" height="320" width="1000" x="0" y="0"></rect>
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<rect fill="#1f1604" height="64" rx="12" stroke="#fbbf24" stroke-width="2" width="180" x="30" y="120"></rect>
+<text fill="#fbbf24" font-size="14" text-anchor="middle" x="120" y="147">C empatou com A?</text><text fill="#fcd9a0" font-size="11.5" text-anchor="middle" x="120" y="167">olhe a linha da grade</text>
+<rect fill="#0e1b26" height="60" rx="12" stroke="#38bdf8" stroke-width="1.8" width="230" x="290" y="24"></rect>
+<text fill="#bfe6ff" text-anchor="middle" x="405" y="48">SIM → era peso morto</text><text fill="#8ecdf5" font-size="11.5" text-anchor="middle" x="405" y="68">fica fora, definitivamente</text>
+<rect fill="#1f1604" height="64" rx="12" stroke="#fbbf24" stroke-width="2" width="230" x="290" y="200"></rect>
+<text fill="#fbbf24" font-size="14" text-anchor="middle" x="405" y="226">NÃO → piorou repetido?</text><text fill="#fcd9a0" font-size="11.5" text-anchor="middle" x="405" y="246">a MESMA classe de falha, 2×+</text>
+<rect fill="#0e1b26" height="60" rx="12" stroke="#38bdf8" stroke-width="1.8" width="240" x="600" y="30"></rect>
+<text fill="#bfe6ff" text-anchor="middle" x="720" y="54">Uma vez só → foi ruído</text><text fill="#8ecdf5" font-size="11.5" text-anchor="middle" x="720" y="74">não conta, mantenha C</text>
+<g filter="url(#m41b-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m41b-grad)" stroke-width="2.5" width="360" x="600" y="205"></rect></g>
+<text fill="#fbbf24" font-size="14" text-anchor="middle" x="780" y="232">Repetiu → devolva a instrução</text><text fill="#fcd9a0" font-size="11.5" text-anchor="middle" x="780" y="254">na forma mais curta que resolve aquela falha</text>
+</g>
+<g fill="none" marker-end="url(#m41b-aha)" stroke="#38bdf8" stroke-width="1.8"><path d="M120,120 L120,54 L290,54"></path><path d="M120,184 L120,232 L290,232"></path><path d="M405,200 L405,60 L600,60"></path><path d="M520,240 L600,240"></path></g>
+<text fill="#fcd9a0" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="500" y="305">só o caminho de baixo, com falha repetida, autoriza devolver instrução</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">O que olhar:</strong> há quatro saídas possíveis e apenas <em>uma</em> devolve instrução para a config. Repare que "C piorou" sozinho não é uma saída — ele precisa passar pelo segundo losango. Esse desenho existe para você resistir ao impulso de reescrever a config na primeira frustração.</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Houve falha real</h4>
+<p class="text-neutral-300 text-sm">Não "ficou meio esquisito": algo que você teve de corrigir, ou que quebrou um critério que estava escrito antes de rodar. Falha registrada na grade, com trecho.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">A mesma classe de falha se repetiu</h4>
+<p class="text-neutral-300 text-sm">Duas ocorrências do mesmo tipo — não dois erros diferentes. "Esqueceu de rodar o teste" duas vezes é classe repetida; "esqueceu o teste" e "usou o autor errado" são duas classes de uma ocorrência cada.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Está claro que uma instrução específica resolve</h4>
+<p class="text-neutral-300 text-sm">Se você não consegue escrever a frase que teria evitado a falha, o problema não é falta de instrução — talvez seja falta de skill (procedimento) ou de contexto que o modelo não alcança.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-6 border border-dark-600">
+<h4 class="font-semibold text-white mb-2">Ela cabe na forma mais curta possível</h4>
+<p class="text-neutral-300 text-sm">Uma frase, um critério, uma verificação. Se a instrução que voltou tem oito passos, você não devolveu uma regra — devolveu o microgerenciamento que tinha acabado de cortar.</p></div> </div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> Quando B vence, B fica</h3>
+<p class="text-neutral-300">Se B empata com A em qualidade e aderência, mas ganha em autonomia e complexidade — e C perde em duas tarefas repetidamente — a resposta não é forçar C. É adotar B como nova linha de base e rodar a próxima ablação a partir dela em seis meses. Ablação é iterativa: o C de hoje é o A da próxima rodada.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Empate = corte</div><p class="text-xs text-neutral-400">Era peso morto</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Uma vez = ruído</div><p class="text-xs text-neutral-400">Não devolve nada</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">4 condições</div><p class="text-xs text-neutral-400">Regra de reintrodução</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">B vencedor</div><p class="text-xs text-neutral-400">O ponto ótimo comum</p></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ============ TOPICO 6 ============ -->
+<section class="mb-16" data-inema-topic="modulo-4-1#topico-6" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🔁 Transforme falhas em evals</h2>
+<button aria-pressed="false" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm" data-inema-doubt-toggle="" title="Marcar duvida neste topico" type="button">
+<span aria-hidden="true">?</span><span>Tenho dúvida</span>
+</button>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t6-p1">
       Um <strong class="text-amber-400">eval</strong> é um caso de teste para modelo: uma tarefa concreta com um
       critério de acerto que você consegue conferir. Toda falha que apareceu na sua grade já é um eval pronto —
       basta escrever "esta tarefa, este critério, o modelo falhava aqui" e guardar.
     </p>
-
-    <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t6-p2">
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t6-p2">
       Evals também envelhecem: eles sobrevivem tipicamente de 1 a 3 gerações de modelo. Quando um eval passa sempre,
       em todas as versões, ele <strong class="text-amber-400">saturou</strong> — não separa mais nada e só custa tempo
       de execução. Aposente-o e crie novos onde você viu o modelo atual tropeçar.
     </p>
-
-    <div class="overflow-x-auto mb-6">
-      <table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
-        <thead class="bg-dark-800">
-          <tr class="text-left">
-            <th class="px-4 py-3 text-amber-400 font-semibold">Tarefa</th>
-            <th class="px-4 py-3 text-amber-400 font-semibold">A (atual)</th>
-            <th class="px-4 py-3 text-amber-400 font-semibold">B (50% menos)</th>
-            <th class="px-4 py-3 text-amber-400 font-semibold">C (mínima)</th>
-            <th class="px-4 py-3 text-amber-400 font-semibold">Leitura</th>
-          </tr>
-        </thead>
-        <tbody class="text-neutral-300">
-          <tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Publicar post no blog</td><td class="px-4 py-3">Qual. 4 · 2 correções</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3 text-emerald-400">Empate → corta</td></tr>
-          <tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Refatorar módulo legado</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3">Qual. 2 · 4 correções (2×)</td><td class="px-4 py-3 text-amber-400">Piorou repetido → devolve 1 regra</td></tr>
-          <tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Gerar relatório mensal</td><td class="px-4 py-3">Qual. 3 · 3 correções</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3">Qual. 3 · 2 correções</td><td class="px-4 py-3 text-blue-400">B venceu → B vira a base</td></tr>
-          <tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Corrigir bug reportado</td><td class="px-4 py-3">Qual. 5 · 0 correções</td><td class="px-4 py-3">Qual. 5 · 0 correções</td><td class="px-4 py-3">Qual. 4 · 1 correção (1×)</td><td class="px-4 py-3 text-neutral-400">Uma vez só → ruído, mantém C</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler esta tabela de exemplo:</strong> ela é ilustrativa — os números são inventados. O que importa é a coluna "Leitura": quatro tarefas, quatro desfechos diferentes. Uma grade real raramente aponta para um único veredito, e é exatamente por isso que ela vale mais que a sua intuição.</p>
-
-    <div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🧪</span> Exercício: rode a sua grade</h3>
-      <p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> montar a grade A/B/C com 5 tarefas reais e rodar <strong class="text-neutral-300">pelo menos 2 delas nas três versões</strong>, preenchendo a tabela. Cole o prompt abaixo no Claude Code, uma versão de cada vez, sem mudar nada além da config.</p>
-
-      <div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead class="bg-dark-800">
+<tr class="text-left">
+<th class="px-4 py-3 text-amber-400 font-semibold">Tarefa</th>
+<th class="px-4 py-3 text-amber-400 font-semibold">A (atual)</th>
+<th class="px-4 py-3 text-amber-400 font-semibold">B (50% menos)</th>
+<th class="px-4 py-3 text-amber-400 font-semibold">C (mínima)</th>
+<th class="px-4 py-3 text-amber-400 font-semibold">Leitura</th>
+</tr>
+</thead>
+<tbody class="text-neutral-300">
+<tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Publicar post no blog</td><td class="px-4 py-3">Qual. 4 · 2 correções</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3 text-emerald-400">Empate → corta</td></tr>
+<tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Refatorar módulo legado</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3">Qual. 2 · 4 correções (2×)</td><td class="px-4 py-3 text-amber-400">Piorou repetido → devolve 1 regra</td></tr>
+<tr class="border-t border-dark-600"><td class="px-4 py-3 font-semibold text-neutral-100">Gerar relatório mensal</td><td class="px-4 py-3">Qual. 3 · 3 correções</td><td class="px-4 py-3">Qual. 4 · 1 correção</td><td class="px-4 py-3">Qual. 3 · 2 correções</td><td class="px-4 py-3 text-blue-400">B venceu → B vira a base</td></tr>
+<tr class="border-t border-dark-600 bg-dark-800/40"><td class="px-4 py-3 font-semibold text-neutral-100">Corrigir bug reportado</td><td class="px-4 py-3">Qual. 5 · 0 correções</td><td class="px-4 py-3">Qual. 5 · 0 correções</td><td class="px-4 py-3">Qual. 4 · 1 correção (1×)</td><td class="px-4 py-3 text-neutral-400">Uma vez só → ruído, mantém C</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6"><strong class="text-neutral-300">Como ler esta tabela de exemplo:</strong> ela é ilustrativa — os números são inventados. O que importa é a coluna "Leitura": quatro tarefas, quatro desfechos diferentes. Uma grade real raramente aponta para um único veredito, e é exatamente por isso que ela vale mais que a sua intuição.</p>
+<div class="bg-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🧪</span> Exercício: rode a sua grade</h3>
+<p class="text-sm text-neutral-400 mb-4"><strong class="text-neutral-300">Objetivo:</strong> montar a grade A/B/C com 5 tarefas reais e rodar <strong class="text-neutral-300">pelo menos 2 delas nas três versões</strong>, preenchendo a tabela. Cole o prompt abaixo no Claude Code, uma versão de cada vez, sem mudar nada além da config.</p>
+<div class="code-box bg-dark-900 rounded-lg border border-dark-600 p-4 mb-4 overflow-x-auto">
 <pre class="text-sm text-neutral-300">Rodada de ablação — versão &lt;A | B | C&gt;
 
 Tarefa: &lt;sua tarefa aqui, exatamente como você a pediria num dia normal&gt;
@@ -620,90 +568,81 @@ Faça a tarefa até o fim. Ao terminar, responda também:
 3. Em que ponto você ficou em dúvida e teria perguntado a um humano?
 
 Não peça confirmação no meio do caminho a menos que seja bloqueante.</pre>
-      </div>
-
-      <div class="bg-dark-700/50 rounded-lg p-4">
-        <p class="text-sm text-neutral-300"><strong class="text-amber-400">Como verificar (critério de saída):</strong>
-        <code class="text-amber-400">ablacao-grade.md</code> com <strong>≥2 tarefas × 3 versões</strong> preenchida; e,
+</div>
+<div class="bg-dark-700/50 rounded-lg p-4">
+<p class="text-sm text-neutral-300"><strong class="text-amber-400">Como verificar (critério de saída):</strong>
+<code class="text-amber-400">ablacao-grade.md</code> com <strong>≥2 tarefas × 3 versões</strong> preenchida; e,
         para cada instrução que voltou para a config, a falha que a justificou está registrada com trecho e
         <strong>se repetiu ao menos duas vezes</strong>. Se voltou instrução sem falha repetida registrada, apague-a
         e rode de novo.</p>
-        <p class="text-sm text-neutral-400 mt-3"><strong class="text-neutral-300">Agora troque pelo seu:</strong> as
+<p class="text-sm text-neutral-400 mt-3"><strong class="text-neutral-300">Agora troque pelo seu:</strong> as
         respostas 1, 2 e 3 do modelo alimentam três colunas da grade direto — critérios de qualidade, autoverificação
         e autonomia. Cole-as no campo "Observações" da tarefa.</p>
-      </div>
-    </div>
-
-    <!-- CHECAGEM LEVE -->
-    <div data-inema-check="modulo-4-1#q1" class="inema-check mt-8 bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6">
-      <p class="font-medium mb-4">Checagem rápida (não bloqueia nada): na tarefa "refatorar módulo legado", a versão C esqueceu de rodar os testes — uma vez. Nas outras tarefas, C empatou com A. O que você faz?</p>
-      <div class="inema-check-options space-y-2">
-        <button type="button" data-inema-check-option="0" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Devolvo já a instrução de rodar testes — falhou uma vez, pode falhar de novo</button>
-        <button type="button" data-inema-check-option="1" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Registro a falha, mantenho C e rodo a mesma tarefa de novo para ver se a falha se repete</button>
-        <button type="button" data-inema-check-option="2" class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm">Volto para a versão A inteira — se C falhou em algo, o corte foi um erro</button>
-      </div>
-      <div data-inema-check-feedback class="mt-4 text-sm" role="status" aria-live="polite"></div>
-    </div>
-
-    <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> O eval que nasce da falha</h3>
-      <p class="text-neutral-300">Cada linha "Observações" da sua grade vira um eval de uma frase: <em>"tarefa X, com config C, deve rodar os testes antes de encerrar — evidência: saída do comando de teste no log"</em>. Guarde esses casos num único arquivo e reexecute todos quando sair um modelo novo. É assim que a próxima ablação começa já com régua pronta.</p>
-    </div>
-
-    <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-      <h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Eval</div><p class="text-xs text-neutral-400">Caso de teste conferível</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Falha → eval</div><p class="text-xs text-neutral-400">Não se perde nada observado</p></div>
-        <div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Saturou</div><p class="text-xs text-neutral-400">Passa sempre, aposente</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">1 a 3 gerações</div><p class="text-xs text-neutral-400">Validade típica de um eval</p></div>
-      </div>
-    </div>
-
-    <div class="flex justify-start mt-6">
-      <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors">
-        <span class="inema-read-icon" aria-hidden="true">○</span><span class="inema-read-label">Marcar como lido</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- ============ RESUMO ============ -->
-  <section class="mb-12">
-    <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
-      <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do Módulo</h2>
-      <div class="space-y-4 mb-8">
-        <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Três versões</strong><span class="text-neutral-400"> — A atual, B com 50% menos, C mínima. C não é vazia: contexto não-inferível permanece.</span></div></div>
-        <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Tarefas reais</strong><span class="text-neutral-400"> — 5 a 10, representativas, com uma difícil e uma em que a config atual claramente ajuda.</span></div></div>
-        <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Nove dimensões</strong><span class="text-neutral-400"> — contagem objetiva sempre que der; autoverificação é a mais esquecida.</span></div></div>
-        <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Régua antes da resposta</strong><span class="text-neutral-400"> — mesma tarefa, mesmo modelo, mesmo prompt; e "o que seria bom" escrito antes de rodar.</span></div></div>
-        <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Empate corta, ruído não conta</strong><span class="text-neutral-400"> — só falha repetida devolve instrução, e na forma mais curta possível.</span></div></div>
-        <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Falha vira eval</strong><span class="text-neutral-400"> — o conjunto pessoal de casos sobrevive de 1 a 3 gerações; aposente os saturados.</span></div></div>
-      </div>
-      <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
-        <h3 class="font-semibold text-amber-400 mb-2">Próximo Módulo:</h3>
-        <p class="text-neutral-300">4.2 — O ciclo contínuo: transformar a auditoria em rotina periódica, com gatilhos de re-auditoria e política de ablação escrita.</p>
-      </div>
-      <div class="flex flex-col sm:flex-row gap-4">
-        <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar para Trilha</a>
-        <a href="modulo-4-2.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Próximo Módulo →</a>
-      </div>
-    </div>
-  </section>
-
-  </main>
 </div>
 </div>
-
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mt-8 bg-dark-800 border border-dark-600 rounded-xl p-6 mb-6" data-inema-check="modulo-4-1#q1">
+<p class="font-medium mb-4">Checagem rápida (não bloqueia nada): na tarefa "refatorar módulo legado", a versão C esqueceu de rodar os testes — uma vez. Nas outras tarefas, C empatou com A. O que você faz?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">Devolvo já a instrução de rodar testes — falhou uma vez, pode falhar de novo</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">Registro a falha, mantenho C e rodo a mesma tarefa de novo para ver se a falha se repete</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">Volto para a versão A inteira — se C falhou em algo, o corte foi um erro</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> O eval que nasce da falha</h3>
+<p class="text-neutral-300">Cada linha "Observações" da sua grade vira um eval de uma frase: <em>"tarefa X, com config C, deve rodar os testes antes de encerrar — evidência: saída do comando de teste no log"</em>. Guarde esses casos num único arquivo e reexecute todos quando sair um modelo novo. É assim que a próxima ablação começa já com régua pronta.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4">Conceitos-chave</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Eval</div><p class="text-xs text-neutral-400">Caso de teste conferível</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Falha → eval</div><p class="text-xs text-neutral-400">Não se perde nada observado</p></div>
+<div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">Saturou</div><p class="text-xs text-neutral-400">Passa sempre, aposente</p></div><div class="bg-dark-700/50 rounded-lg p-4"><div class="text-amber-400 font-semibold text-sm mb-1">1 a 3 gerações</div><p class="text-xs text-neutral-400">Validade típica de um eval</p></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-read-icon">○</span><span class="inema-read-label">Marcar como lido</span>
+</button>
+</div>
+</section>
+<!-- ============ RESUMO ============ -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do Módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Três versões</strong><span class="text-neutral-400"> — A atual, B com 50% menos, C mínima. C não é vazia: contexto não-inferível permanece.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Tarefas reais</strong><span class="text-neutral-400"> — 5 a 10, representativas, com uma difícil e uma em que a config atual claramente ajuda.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Nove dimensões</strong><span class="text-neutral-400"> — contagem objetiva sempre que der; autoverificação é a mais esquecida.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Régua antes da resposta</strong><span class="text-neutral-400"> — mesma tarefa, mesmo modelo, mesmo prompt; e "o que seria bom" escrito antes de rodar.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Empate corta, ruído não conta</strong><span class="text-neutral-400"> — só falha repetida devolve instrução, e na forma mais curta possível.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Falha vira eval</strong><span class="text-neutral-400"> — o conjunto pessoal de casos sobrevive de 1 a 3 gerações; aposente os saturados.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Próximo Módulo:</h3>
+<p class="text-neutral-300">4.2 — O ciclo contínuo: transformar a auditoria em rotina periódica, com gatilhos de re-auditoria e política de ablação escrita.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para Trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-2.html">Próximo Módulo →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
 <footer class="border-t border-dark-600 py-8 mt-16">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
-    <p>Auditoria de Ablação — INEMA · 2026</p>
-    <p>
-      <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a>
-      <span class="text-neutral-600">-</span>
-      <a href="https://inema.pro" target="_blank" class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200">PRO</a>
-    </p>
-    <p class="text-xs">Método e visão: Boris Cherny (Anthropic) — palestra na Y Combinator sobre o corte de 80% do prompt de sistema do Claude Code.</p>
-  </div>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm space-y-2">
+<p>Auditoria de Ablação — INEMA · 2026</p>
+<p>
+<a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600">-</span>
+<a class="text-amber-700 hover:text-amber-600 dark:text-slate-300 dark:hover:text-slate-200" href="https://inema.pro" target="_blank">PRO</a>
+</p>
+<p class="text-xs">Método e visão: Boris Cherny (Anthropic) — palestra na Y Combinator sobre o corte de 80% do prompt de sistema do Claude Code.</p>
+</div>
 </footer>
-
 <script>
   function toggleTopic(button) {
     const topicItem = button.closest('.topic-item');
