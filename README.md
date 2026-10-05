@@ -60,3 +60,11 @@ Sem build, sem backend, sem framework: HTML + Tailwind via CDN + JS inline. Abre
 ## Créditos
 
 Método e visão: **Boris Cherny** (Anthropic), palestra na Y Combinator sobre o corte de 80% do prompt de sistema do Claude Code. Resumos e material de base em [`doc/`](doc/). Curso montado pelo INEMA no formato `formato-curso-v2`.
+
+<!-- inema-backlink:v1 -->
+## Mais no INEMA.CLUB
+
+- [Ficha completa deste curso](https://www.inema.club/cursos/234-auditoria-de-ablacao-enxugue-seu-claude-code-sem-perder-qualidade/)
+- [Guia: como aprender inteligência artificial](https://www.inema.club/aprender-inteligencia-artificial/)
+- [Todos os cursos](https://www.inema.club/cursos/)
+<!-- /inema-backlink:v1 -->
